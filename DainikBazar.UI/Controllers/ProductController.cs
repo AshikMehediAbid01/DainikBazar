@@ -33,4 +33,10 @@ public class ProductController : Controller
 
         return View(products);
     }
+
+    [HttpGet]
+    public IActionResult CreateProduct()
+    {
+        return View();
+    }
 }

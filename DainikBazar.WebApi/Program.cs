@@ -4,6 +4,7 @@ using DainikBazar.Application.Services.Interfaces;
 using DainikBazar.Infrastructure.Data;
 using DainikBazar.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using DainikBazar.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
