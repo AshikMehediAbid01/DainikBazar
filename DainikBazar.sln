@@ -1,20 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.WebApi", "DainikBazar.WebApi\DainikBazar.WebApi.csproj", "{27DAA07A-3E49-43EB-A75A-1A8A7954B192}"
 	ProjectSection(ProjectDependencies) = postProject
 		{697B3927-BD0E-41AD-86B8-D7C05A6363B0} = {697B3927-BD0E-41AD-86B8-D7C05A6363B0}
+		{8AB88047-B934-47CF-B31C-1DB01E080563} = {8AB88047-B934-47CF-B31C-1DB01E080563}
+		{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5} = {AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Domain", "DainikBazar.Domain\DainikBazar.Domain.csproj", "{697B3927-BD0E-41AD-86B8-D7C05A6363B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Infrastructure", "DainikBazar.Infrustructure\DainikBazar.Infrastructure.csproj", "{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{697B3927-BD0E-41AD-86B8-D7C05A6363B0} = {697B3927-BD0E-41AD-86B8-D7C05A6363B0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Application", "DainikBazar.Application\DainikBazar.Application.csproj", "{8AB88047-B934-47CF-B31C-1DB01E080563}"
+	ProjectSection(ProjectDependencies) = postProject
+		{697B3927-BD0E-41AD-86B8-D7C05A6363B0} = {697B3927-BD0E-41AD-86B8-D7C05A6363B0}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.UI", "DainikBazar.UI\DainikBazar.UI.csproj", "{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.UI", "DainikBazar.UI\DainikBazar.UI.csproj", "{DF7F236D-F205-474C-9315-2D01459862AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,10 +46,10 @@ Global
 		{8AB88047-B934-47CF-B31C-1DB01E080563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AB88047-B934-47CF-B31C-1DB01E080563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AB88047-B934-47CF-B31C-1DB01E080563}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF7F236D-F205-474C-9315-2D01459862AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF7F236D-F205-474C-9315-2D01459862AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF7F236D-F205-474C-9315-2D01459862AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF7F236D-F205-474C-9315-2D01459862AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
