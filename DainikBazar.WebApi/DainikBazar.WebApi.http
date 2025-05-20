@@ -1,0 +1,6 @@
+@DainikBazar.WebApi_HostAddress = http://localhost:5110
+
+GET {{DainikBazar.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
