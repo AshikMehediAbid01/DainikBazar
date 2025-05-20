@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DainikBazar.Domain.Entities;
+namespace DainikBazar.Application.Common.DTOs;
 
-public class Product
+public class ProductDto
 {
     public int ProductId { get; set; }
     public required string Name { get; set; }
@@ -15,5 +15,4 @@ public class Product
     public int Quantity { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public string? ImageUrl { get; set; }
-
 }
