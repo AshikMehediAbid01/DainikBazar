@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Domain", "Daini
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Application", "DainikBazar.Application\DainikBazar.Application.csproj", "{8AB88047-B934-47CF-B31C-1DB01E080563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Infrustructure", "DainikBazar.Infrustructure\DainikBazar.Infrustructure.csproj", "{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Infrastructure", "DainikBazar.Infrustructure\DainikBazar.Infrastructure.csproj", "{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
