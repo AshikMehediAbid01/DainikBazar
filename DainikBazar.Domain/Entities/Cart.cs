@@ -1,0 +1,13 @@
+﻿
+namespace DainikBazar.Domain.Entities;
+
+public class Cart
+{
+    public int Id { get; set; }
+    public string UserId { get; set; }
+    public User User { get; set; }
+    public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
+    public decimal SubtotalPrice => CartItems.Sum( item => item.Quantity * item.Product.Price); 
+    public decimal TotalPrice => SubtotalPrice;  
+
+}

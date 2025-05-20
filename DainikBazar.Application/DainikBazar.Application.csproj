@@ -9,11 +9,18 @@
   <ItemGroup>
     <Folder Include="Common\DTOs\" />
     <Folder Include="Common\Utility\" />
-    <Folder Include="Mapping\" />
     <Folder Include="Common\Repository Interfaces\" />
     <Folder Include="Contract\" />
     <Folder Include="Services\Interfaces\" />
     <Folder Include="Services\Implementations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DainikBazar.Domain\DainikBazar.Domain.csproj" />
   </ItemGroup>
 
 </Project>

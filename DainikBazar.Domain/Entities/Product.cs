@@ -16,8 +16,8 @@ public class Product
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public string? ImageUrl { get; set; }
 
-    public int ReviewAndRatingId { get; set; }
-    public virtual ReviewAndRating? ReviewAndRating { get; set; }
+    //public int ReviewAndRatingId { get; set; }
+    //public virtual ReviewAndRating? ReviewAndRating { get; set; }
 
     public virtual ICollection<ReviewAndRating>? ReviewAndRatings { get; set; } = new List<ReviewAndRating>();
 }
