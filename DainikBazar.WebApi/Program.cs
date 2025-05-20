@@ -21,6 +21,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 
+builder.Services.AddAutoMapper( 
+    typeof( ApplicationMappingProfile )
+);
+builder.Services.AddDbContext<AppDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString( "DefaultConnection" ))
+);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
