@@ -4,12 +4,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.13.35913.81 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.WebApi", "DainikBazar.WebApi\DainikBazar.WebApi.csproj", "{27DAA07A-3E49-43EB-A75A-1A8A7954B192}"
+	ProjectSection(ProjectDependencies) = postProject
+		{697B3927-BD0E-41AD-86B8-D7C05A6363B0} = {697B3927-BD0E-41AD-86B8-D7C05A6363B0}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Domain", "DainikBazar.Domain\DainikBazar.Domain.csproj", "{697B3927-BD0E-41AD-86B8-D7C05A6363B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Infrastructure", "DainikBazar.Infrustructure\DainikBazar.Infrastructure.csproj", "{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Application", "DainikBazar.Application\DainikBazar.Application.csproj", "{8AB88047-B934-47CF-B31C-1DB01E080563}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Infrastructure", "DainikBazar.Infrustructure\DainikBazar.Infrastructure.csproj", "{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.UI", "DainikBazar.UI\DainikBazar.UI.csproj", "{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +30,18 @@ Global
 		{697B3927-BD0E-41AD-86B8-D7C05A6363B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{697B3927-BD0E-41AD-86B8-D7C05A6363B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{697B3927-BD0E-41AD-86B8-D7C05A6363B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8AB88047-B934-47CF-B31C-1DB01E080563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8AB88047-B934-47CF-B31C-1DB01E080563}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8AB88047-B934-47CF-B31C-1DB01E080563}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8AB88047-B934-47CF-B31C-1DB01E080563}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA588CB6-2CC5-4090-9E9F-E1DD43C97FA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB88047-B934-47CF-B31C-1DB01E080563}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB88047-B934-47CF-B31C-1DB01E080563}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB88047-B934-47CF-B31C-1DB01E080563}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB88047-B934-47CF-B31C-1DB01E080563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B1D7241-00A2-40D9-B0A7-2EE814E1D559}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
