@@ -61,6 +61,39 @@ public class ProductsController : ControllerBase
         }
     }
 
+    // Get product
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetProduct(int? id)
+    {
+        if (id == null) return NotFound();
+        var product = await _service.GetByIdAsync(id.Value);
+        if (product == null) return NotFound();
+
+        return Ok(product);
+
+    }
+
+    // Update Product
+    [HttpPut]
+    public async Task<IActionResult> UpdateProduct(Product product)
+    {
+        if (product == null || product.ProductId == 0) return BadRequest("Product id Invalid");
+
+        await _service.UpdateAsync(product);
+        return Ok(product);
+
+    }
+
+
+    // Delete Product 
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProduct(int? id)
+    {
+        if (id == null) return NotFound();
+        await _service.DeleteAsync(id.Value);
+        return Ok();
+    }
+
 }
 
 

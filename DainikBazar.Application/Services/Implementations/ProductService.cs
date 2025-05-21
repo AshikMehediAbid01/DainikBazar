@@ -30,4 +30,20 @@ public class ProductService : IProductService
         var products = await _repo.GetAllAsync();
         return products.ToList();
     }
+
+    public async Task<Product?> GetByIdAsync(int id)
+    {
+        var product = await _repo.GetByIdAsync(id);
+        return product;
+    }
+
+    public async Task UpdateAsync(Product product)
+    {
+        await _repo.UpdateAsync(product);
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        await _repo.DeleteAsync(id);
+    }
 }

@@ -25,9 +25,32 @@ public class ProductRepository : IProductRepository
         await _db.SaveChangesAsync();
     }
 
+    public async Task DeleteAsync(int id)
+    {
+        var product = await GetByIdAsync(id);
+        if(product != null)
+        {
+            _db.Products.Remove(product);
+            await _db.SaveChangesAsync();
+        }
+       
+    }
+
     public async Task<IEnumerable<Product>> GetAllAsync()
     {
         var products = await _db.Products.ToListAsync();
         return products;
+    }
+
+    public async Task<Product?> GetByIdAsync(int id)
+    {
+        var product = await _db.Products.FirstOrDefaultAsync(c => c.ProductId == id);
+        return product;
+    }
+
+    public async Task UpdateAsync(Product product)
+    {
+        _db.Products.Update(product);
+        await _db.SaveChangesAsync();
     }
 }

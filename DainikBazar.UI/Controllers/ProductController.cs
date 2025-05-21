@@ -69,4 +69,99 @@ public class ProductController : Controller
         }
 
     }
+
+    // Product Details
+    [HttpGet]
+    public IActionResult DetailsProduct(int id)
+    {
+        var response = _httpClient.GetAsync(_httpClient.BaseAddress + "Products/GetProduct/" + id).Result;
+
+        if (response.IsSuccessStatusCode)
+        {
+            var data = response.Content.ReadAsStringAsync().Result;
+            var product = JsonConvert.DeserializeObject<ProductVM>(data);
+
+            return View(product);
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "Something went wrong";
+            return View();
+        }
+    }
+
+
+    // Update Product
+    [HttpGet]
+    public IActionResult UpdateProduct(int id)
+    {
+        var response = _httpClient.GetAsync(_httpClient.BaseAddress + "Products/GetProduct/" + id).Result;
+
+        if (response.IsSuccessStatusCode)
+        {
+            var data = response.Content.ReadAsStringAsync().Result;
+           var product = JsonConvert.DeserializeObject<ProductVM>(data);
+
+            return View(product);
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "Something went wrong";
+            return View();
+        }
+    }
+
+    [HttpPost]
+    public IActionResult UpdateProduct(ProductVM product)
+    {
+        string data = JsonConvert.SerializeObject(product);
+        StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+        var response = _httpClient.PutAsync(_httpClient.BaseAddress + "Products/UpdateProduct", content).Result;
+
+        if (response.IsSuccessStatusCode)
+        {
+            TempData["SuccessMessage"] = "Product Updated successfully";
+            return RedirectToAction(nameof(Index));
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "Something went wrong";
+            return View(product);
+        }
+
+    }
+
+
+    // Delete Product
+    [HttpGet]
+    public IActionResult DeleteProduct(int id)
+    {
+        var response = _httpClient.GetAsync(_httpClient.BaseAddress + "Products/GetProduct/" + id).Result;
+
+        if (response.IsSuccessStatusCode)
+        {
+            var data = response.Content.ReadAsStringAsync().Result;
+            var product = JsonConvert.DeserializeObject<ProductVM>(data);
+
+            return View(product);
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "Something went wrong";
+            return View();
+        }
+    }
+
+    [HttpPost,ActionName("DeleteProduct")]
+    public IActionResult DeleteProductConfirmed(int id)
+    {
+        HttpResponseMessage response = _httpClient.DeleteAsync(_httpClient.BaseAddress + "Products/DeleteProduct/" + id).Result;
+
+        if(response.IsSuccessStatusCode)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        return View();
+    }
+
 }
