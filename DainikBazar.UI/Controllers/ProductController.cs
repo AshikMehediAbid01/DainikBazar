@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text;
+using System.Text.Json.Serialization;
 using DainikBazar.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -38,5 +39,34 @@ public class ProductController : Controller
     public IActionResult CreateProduct()
     {
         return View();
+    }
+
+    [HttpPost]
+    public IActionResult CreateProduct(ProductVM product)
+    {
+        try
+        {
+            string data = JsonConvert.SerializeObject(product);
+            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+
+            var response = _httpClient.PostAsync(_httpClient.BaseAddress + "Products/CreateProduct", content).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                TempData["SuccessMessage"] = "New Product Created successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Something went wrong";
+                return View();
+            }
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return View();
+        }
+
     }
 }
