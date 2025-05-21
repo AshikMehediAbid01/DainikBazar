@@ -1,9 +1,17 @@
+using DainikBazar.UI.ApiServices.Implementations;
+using DainikBazar.UI.ApiServices.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddHttpClient<IProductApiService, ProductApiService>();
+
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using System.Text.Json.Serialization;
+using DainikBazar.UI.ApiServices.Interfaces;
 using DainikBazar.UI.Models;
+
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -8,117 +10,105 @@ namespace DainikBazar.UI.Controllers;
 
 public class ProductController : Controller
 {
-    Uri baseAddress = new Uri("https://localhost:7155/api/");
-    private readonly HttpClient _httpClient;
-    public ProductController()
+    private readonly IProductApiService _apiService;
+
+    public ProductController(IProductApiService apiService)
     {
-        _httpClient = new HttpClient();
-        _httpClient.BaseAddress = baseAddress;
+        _apiService = apiService;
     }
+
+
 
     [HttpGet]
     public IActionResult Index()
     {
-        List<ProductVM> products = new List<ProductVM>();
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + "Products/GetAllProducts").Result;
+        var products = _apiService.GetAllProductsAsync().Result;
 
-        if (response.IsSuccessStatusCode)
+        if (products == null)
         {
-            var data = response.Content.ReadAsStringAsync().Result;
-            products = JsonConvert.DeserializeObject<List<ProductVM>>(data);
-        }
-        else
-        {
-            ViewBag.ErrorMessage = "Error while fetching data from API";
+            TempData["ErrorMessage"] = "No products found";
+            return View(new List<ProductVM>());
         }
 
         return View(products);
     }
+
+
+
+
 
     [HttpGet]
     public IActionResult CreateProduct()
     {
         return View();
     }
-
     [HttpPost]
     public IActionResult CreateProduct(ProductVM product)
     {
-        try
-        {
-            string data = JsonConvert.SerializeObject(product);
-            StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
+        if (!ModelState.IsValid) return View(product);
 
-            var response = _httpClient.PostAsync(_httpClient.BaseAddress + "Products/CreateProduct", content).Result;
+        bool isSuccess = _apiService.CreateProductAsync(product).Result;
 
-            if (response.IsSuccessStatusCode)
-            {
-                TempData["SuccessMessage"] = "New Product Created successfully";
-                return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "Something went wrong";
-                return View();
-            }
-        }
-        catch (Exception ex)
+
+        if (isSuccess)
         {
-            TempData["ErrorMessage"] = ex.Message;
-            return View();
+            TempData["SuccessMessage"] = "New Product Created successfully";
+            return RedirectToAction(nameof(Index));
         }
+        else
+        {
+            TempData["ErrorMessage"] = "Something went wrong";
+            return View(product);
+        }
+
 
     }
+
+
+
+
 
     // Product Details
     [HttpGet]
     public IActionResult DetailsProduct(int id)
     {
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + "Products/GetProduct/" + id).Result;
+        var product = _apiService.GetProductByIdAsync(id).Result;
 
-        if (response.IsSuccessStatusCode)
+        if (product == null)
         {
-            var data = response.Content.ReadAsStringAsync().Result;
-            var product = JsonConvert.DeserializeObject<ProductVM>(data);
+            TempData["ErrorMessage"] = "Product not found";
+            return RedirectToAction(nameof(Index));
+        }
 
-            return View(product);
-        }
-        else
-        {
-            TempData["ErrorMessage"] = "Something went wrong";
-            return View();
-        }
+        return View(product);
     }
+
+
 
 
     // Update Product
     [HttpGet]
     public IActionResult UpdateProduct(int id)
     {
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + "Products/GetProduct/" + id).Result;
+        var product = _apiService.GetProductByIdAsync(id).Result;
 
-        if (response.IsSuccessStatusCode)
+        if (product == null)
         {
-            var data = response.Content.ReadAsStringAsync().Result;
-           var product = JsonConvert.DeserializeObject<ProductVM>(data);
+            TempData["ErrorMessage"] = "Product not found";
+            return RedirectToAction(nameof(Index));
+        }
 
-            return View(product);
-        }
-        else
-        {
-            TempData["ErrorMessage"] = "Something went wrong";
-            return View();
-        }
+        return View(product);
     }
 
     [HttpPost]
     public IActionResult UpdateProduct(ProductVM product)
     {
-        string data = JsonConvert.SerializeObject(product);
-        StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
-        var response = _httpClient.PutAsync(_httpClient.BaseAddress + "Products/UpdateProduct", content).Result;
+        if (!ModelState.IsValid) return View(product);
 
-        if (response.IsSuccessStatusCode)
+        bool isSuccess = _apiService.CreateProductAsync(product).Result;
+
+        if (isSuccess)
         {
             TempData["SuccessMessage"] = "Product Updated successfully";
             return RedirectToAction(nameof(Index));
@@ -136,31 +126,27 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult DeleteProduct(int id)
     {
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + "Products/GetProduct/" + id).Result;
+        var product = _apiService.GetProductByIdAsync(id).Result;
 
-        if (response.IsSuccessStatusCode)
+        if (product == null)
         {
-            var data = response.Content.ReadAsStringAsync().Result;
-            var product = JsonConvert.DeserializeObject<ProductVM>(data);
+            TempData["ErrorMessage"] = "Product not found";
+            return RedirectToAction(nameof(Index));
+        }
 
-            return View(product);
-        }
-        else
-        {
-            TempData["ErrorMessage"] = "Something went wrong";
-            return View();
-        }
+        return View(product);
     }
 
-    [HttpPost,ActionName("DeleteProduct")]
+    [HttpPost, ActionName("DeleteProduct")]
     public IActionResult DeleteProductConfirmed(int id)
     {
-        HttpResponseMessage response = _httpClient.DeleteAsync(_httpClient.BaseAddress + "Products/DeleteProduct/" + id).Result;
+        bool isSuccess = _apiService.DeleteProductAsync(id).Result;
 
-        if(response.IsSuccessStatusCode)
+        if (isSuccess)
         {
             return RedirectToAction(nameof(Index));
         }
+
         return View();
     }
 
