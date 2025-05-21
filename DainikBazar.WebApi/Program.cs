@@ -1,6 +1,7 @@
 using DainikBazar.Application.Common.Repository_Interfaces;
 using DainikBazar.Application.Services.Implementations;
 using DainikBazar.Application.Services.Interfaces;
+using DainikBazar.Application.Mapping;
 using DainikBazar.Infrastructure.Data;
 using DainikBazar.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,12 @@ builder.Services.AddAutoMapper(
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(builder.Configuration.GetConnectionString( "DefaultConnection" ))
 );
+builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
+
+
+
 
 var app = builder.Build();
 

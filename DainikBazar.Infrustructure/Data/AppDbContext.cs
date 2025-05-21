@@ -23,5 +23,26 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Cart>()
+            .HasOne( c => c.User )
+            .WithOne( u => u.Cart )
+            .HasForeignKey<Cart>( c => c.UserId );
+
+        modelBuilder.Entity<Order>()
+            .HasOne( o => o.User )
+            .WithMany(u => u.Order )
+            .HasForeignKey( o => o.UserId );
+
+        modelBuilder.Entity<CartItem>()
+            .HasOne( ci => ci.Cart )
+            .WithMany( c=> c.CartItems )
+            .HasForeignKey(ci => ci.CartId );
+
+        modelBuilder.Entity<OrderItem>()
+            .HasOne( oi => oi.Order )
+            .WithMany( o => o.OrderItems )
+            .HasForeignKey( oi => oi.OrderId );
+
     }
 }
