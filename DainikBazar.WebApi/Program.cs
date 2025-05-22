@@ -16,7 +16,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -51,5 +52,13 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var seeder = new ProductAndUserSeeder();
+    await seeder.SeedProductsAsync(dbContext);
+    await seeder.SeedUsersAsync( dbContext );
+}
 
 app.Run();
