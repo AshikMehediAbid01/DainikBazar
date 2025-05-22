@@ -18,6 +18,7 @@ public class CartRepository: ICartRepository
         return await _dbContext.Carts
             .Include( c => c.CartItems )
             .ThenInclude( ci => ci.Product )
-            .FirstOrDefaultAsync( c => c.UserId == userId );
+            .FirstOrDefaultAsync( c => c.UserId == userId && c.CartStatus == "Active" );
+
     }
 }

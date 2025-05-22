@@ -1,4 +1,6 @@
-﻿using DainikBazar.Application.Services.Interfaces;
+﻿using AutoMapper;
+using DainikBazar.Application.Common.DTOs;
+using DainikBazar.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DainikBazar.WebApi.Controllers;
@@ -8,19 +10,26 @@ namespace DainikBazar.WebApi.Controllers;
 public class CartController : ControllerBase
 {
     private readonly ICartService _cartService;
-    public CartController( ICartService cartService )
+    private readonly IMapper _mapper;
+    public CartController( ICartService cartService, IMapper mapper )
     {
         _cartService = cartService;
+        _mapper = mapper;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetCart()
+    [HttpGet("userId")]
+    public async Task<IActionResult> GetCart( string userId )
     {
         try
         {
-            var userId = ""; //var user = _httpContext.GetUserAsync( User );
+            //string userId = ""; //var user = _httpContext.GetUserAsync( User );
             var cart = await _cartService.GetCartAsync( userId );
-            return Ok( cart );
+            if (cart == null)
+            {
+                return Ok( "No Item in the Cart." );
+            }
+            var cartDto = _mapper.Map<CartDto>(cart);
+            return Ok( cartDto );
         }
         catch (Exception ex) 
         { 
@@ -29,11 +38,11 @@ public class CartController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddToCart(int productId)
+    public async Task<IActionResult> AddToCart(string userId, int productId)
     {
         try
         {
-            var userId = ""; //var user = _httpContext.GetUserAsync( User );
+            //var userId = ""; //var user = _httpContext.GetUserAsync( User );
             await _cartService.AddToCartAsync( productId, userId );
             return Ok( "Product Added to Cart" );
         }
@@ -47,11 +56,11 @@ public class CartController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> UpdateCart(int cartItemId, int quantity)
+    public async Task<IActionResult> UpdateCart( [FromBody] UpdateProductDto updateProduct ) //int cartItemId, int quantity
     {
         try
         {
-            await _cartService.UpdateCartAsync( cartItemId, quantity );
+            await _cartService.UpdateCartAsync( updateProduct.cartItemId, updateProduct.quantity );
             return Ok( "Quantity Updated" );
         }
         catch ( InvalidOperationException ex)
@@ -64,7 +73,7 @@ public class CartController : ControllerBase
         }
     }
 
-    [HttpPost]
+    [HttpDelete("{cartItemId}")]
     public async Task<IActionResult> RemoveCart( int cartItemId )
     {
         try

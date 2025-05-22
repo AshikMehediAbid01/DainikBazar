@@ -22,7 +22,7 @@ public class CartService: ICartService
     }
     public async Task AddToCartAsync( int productId, string userId )
     {
-        var product = _repository.GetByIdAsync<Product>( productId );
+        var product = await _repository.GetByIdAsync<Product>( productId );
         if ( product == null ) 
         {
             throw new InvalidOperationException( "Product Not Found!" );
@@ -32,12 +32,13 @@ public class CartService: ICartService
         var cartItem = new CartItem
         {
             ProductId = productId,
+            UnitPrice = product.Price,
             Quantity = 1
         };
 
         if (cart == null)
         {
-            cart = new Cart { UserId = userId };
+            cart = new Cart { UserId = userId, CartStatus = "Active" };
             //cart.CartItems.Add( cartItem );
             await _repository.AddAsync<Cart>( cart );
         }
