@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Utility\" />
-    <Folder Include="Common\Repository Interfaces\" />
     <Folder Include="Mapping\" />
     <Folder Include="Contract\" />
   </ItemGroup>

@@ -19,9 +19,17 @@ public class AppDbContext : DbContext
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<ReviewAndRating> ReviewAndRatings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+
+        modelBuilder.Entity<ReviewAndRating>()
+            .HasOne(b => b.Product)
+            .WithMany(a => a.ReviewAndRatings)
+            .HasForeignKey(b => b.ProductId);
+
     }
 }

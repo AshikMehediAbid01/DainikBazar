@@ -5,20 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DainikBazar.Domain.Entities;
+namespace DainikBazar.Application.Common.DTOs;
 
-public class ReviewAndRating
+public class ReviewDto
 {
-    public int ReviewAndRatingId { get; set; }
     public string? Review { get; set; }
 
     [Range(1, 5, ErrorMessage = "Please select a rating between 1 and 5.")]
     public required int Rating { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.Now;
-
-    public int ProductId { get; set; }
-    public Product? Product { get; set; }
-
-    public int UserId { get; set; }
-    public User? User { get; set; }
 }
