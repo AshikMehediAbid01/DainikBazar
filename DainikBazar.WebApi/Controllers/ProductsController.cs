@@ -2,13 +2,12 @@
 using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Application.Services.Interfaces;
 using DainikBazar.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DainikBazar.WebApi.Controllers;
 
 //localhost:7155/api/products
-[Route("api/[controller]/[acTion]")]
+[Route("api/[controller]/[action]")]
 [ApiController]
 public class ProductsController : ControllerBase
 {
