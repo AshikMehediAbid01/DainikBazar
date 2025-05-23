@@ -26,8 +26,8 @@ public class ReviewRepository : IReviewRepository
         await _db.SaveChangesAsync();
     }
 
-    public async Task<List<ReviewAndRating>> GetAllAsync()
+    public async Task<List<ReviewAndRating>> GetAllByIdAsync(int productId)
     {
-        return await _db.ReviewAndRatings.ToListAsync();
+        return await _db.ReviewAndRatings.Where(c=>c.ProductId == productId).ToListAsync();
     }
 }

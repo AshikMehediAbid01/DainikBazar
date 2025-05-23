@@ -21,9 +21,9 @@ public class ReviewAndRatingController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateReview(int productId,int userId,[FromBody] ReviewDto reviewAndRating)
+    public async Task<IActionResult> CreateReview(int productId, string userId, [FromForm] ReviewDto reviewAndRating)
     {
-        if (!ModelState.IsValid)return BadRequest(ModelState);
+        if (!ModelState.IsValid) return BadRequest(ModelState);
 
         try
         {
@@ -40,23 +40,23 @@ public class ReviewAndRatingController : ControllerBase
         }
         catch (Exception ex)
         {
-
             return BadRequest(ex.Message);
         }
     }
 
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllReview()
+
+    [HttpGet("{ProductId}")]
+    public async Task<IActionResult> GetAllReviewByProductId(int? ProductId)
     {
+        if (ProductId == null) return NotFound();
         try
         {
-            var reviews = await _service.GetAllAsync();
+            var reviews = await _service.GetAllByIdAsync(ProductId.Value);
             return Ok(reviews);
         }
         catch (Exception ex)
         {
-
             return BadRequest(ex.Message);
         }
     }

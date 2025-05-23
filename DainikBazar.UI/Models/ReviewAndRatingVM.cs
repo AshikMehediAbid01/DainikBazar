@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DainikBazar.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DainikBazar.Domain.Entities;
+namespace DainikBazar.UI.Models;
 
-public class ReviewAndRating
+public class ReviewAndRatingVM
 {
     public int Id { get; set; }
     public string? Review { get; set; }

@@ -22,10 +22,9 @@ public class ReviewService : IReviewService
         await _repo.CreateNewAsync(reviewAndRating);
     }
 
-    public async Task<List<ReviewAndRating>> GetAllAsync()
+    public async Task<List<ReviewAndRating>> GetAllByIdAsync(int productId)
     {
-       return await _repo.GetAllAsync();
-
+       return await _repo.GetAllByIdAsync(productId);
 
     }
 }

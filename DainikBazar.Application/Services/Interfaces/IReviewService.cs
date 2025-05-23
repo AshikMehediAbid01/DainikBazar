@@ -10,6 +10,6 @@ namespace DainikBazar.Application.Services.Interfaces;
 public interface IReviewService
 {
     Task CreateNewAsync(ReviewAndRating reviewAndRating);
-    Task<List<ReviewAndRating>> GetAllAsync();
+    Task<List<ReviewAndRating>> GetAllByIdAsync(int productId);
 
 }

@@ -10,6 +10,6 @@ namespace DainikBazar.Application.Common.Repository_Interfaces;
 public interface IReviewRepository
 {
     Task CreateNewAsync(ReviewAndRating reviewAndRating);
-    Task<List<ReviewAndRating>> GetAllAsync();
+    Task<List<ReviewAndRating>> GetAllByIdAsync(int productId);
 
 }

@@ -32,14 +32,11 @@ namespace DainikBazar.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId1")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Carts");
                 });
@@ -106,14 +103,11 @@ namespace DainikBazar.Infrastructure.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId1")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -149,11 +143,11 @@ namespace DainikBazar.Infrastructure.Migrations
 
             modelBuilder.Entity("DainikBazar.Domain.Entities.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -174,18 +168,18 @@ namespace DainikBazar.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("DainikBazar.Domain.Entities.ReviewAndRating", b =>
                 {
-                    b.Property<int>("ReviewAndRatingId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewAndRatingId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -199,10 +193,11 @@ namespace DainikBazar.Infrastructure.Migrations
                     b.Property<string>("Review")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ReviewAndRatingId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
@@ -213,17 +208,14 @@ namespace DainikBazar.Infrastructure.Migrations
 
             modelBuilder.Entity("DainikBazar.Domain.Entities.User", b =>
                 {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("User");
                 });
@@ -232,7 +224,7 @@ namespace DainikBazar.Infrastructure.Migrations
                 {
                     b.HasOne("DainikBazar.Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -262,7 +254,7 @@ namespace DainikBazar.Infrastructure.Migrations
                 {
                     b.HasOne("DainikBazar.Domain.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

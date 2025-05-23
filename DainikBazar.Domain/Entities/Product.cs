@@ -8,7 +8,7 @@ namespace DainikBazar.Domain.Entities;
 
 public class Product
 {
-    public int ProductId { get; set; }
+    public int Id { get; set; }
     public required string Name { get; set; }
     public string? Description { get; set; }
     public required decimal Price { get; set; }

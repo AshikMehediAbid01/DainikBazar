@@ -37,7 +37,7 @@ public class ProductsController : ControllerBase
 
     // Create Product
     [HttpPost]
-    public async Task<IActionResult> CreateProduct([FromForm]ProductDto product)
+    public async Task<IActionResult> CreateProduct([FromBody]ProductDto product)
     {
         try
         {
@@ -77,7 +77,7 @@ public class ProductsController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> UpdateProduct(Product product)
     {
-        if (product == null || product.ProductId == 0) return BadRequest("Product id Invalid");
+        if (product == null || product.Id == 0) return BadRequest("Product id Invalid");
 
         await _service.UpdateAsync(product);
         return Ok(product);
