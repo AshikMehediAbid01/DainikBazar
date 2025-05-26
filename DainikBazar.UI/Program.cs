@@ -3,10 +3,13 @@ using DainikBazar.UI.ApiServices.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient<IProductApiService, ProductApiService>();
+builder.Services.AddHttpClient<IReviewApiService, ReviewApiService>();
 
 
 var app = builder.Build();

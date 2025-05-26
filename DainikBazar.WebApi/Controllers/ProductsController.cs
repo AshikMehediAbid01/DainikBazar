@@ -77,7 +77,7 @@ public class ProductsController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> UpdateProduct(Product product)
     {
-        if (product == null || product.Id == 0) return BadRequest("Product id Invalid");
+        if (product == null || product.ProductId == 0) return BadRequest("Product id Invalid");
 
         await _service.UpdateAsync(product);
         return Ok(product);

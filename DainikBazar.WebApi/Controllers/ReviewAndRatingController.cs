@@ -21,19 +21,18 @@ public class ReviewAndRatingController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateReview(int productId, string userId, [FromForm] ReviewDto reviewAndRating)
+    public async Task<IActionResult> CreateReview([FromBody] ReviewDto reviewAndRating)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         try
         {
-            var productReview = new ReviewAndRating
+            var productReview = new ReviewDto
             {
                 Review = reviewAndRating.Review,
                 Rating = reviewAndRating.Rating,
-                CreatedAt = DateTime.Now,
-                ProductId = productId,
-                UserId = userId, // Assumed
+                ProductId = reviewAndRating.ProductId,
+                UserId = reviewAndRating.UserId // Assumed
             };
             await _service.CreateNewAsync(productReview);
             return Ok(productReview);

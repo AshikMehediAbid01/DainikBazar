@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Application.Common.Repository_Interfaces;
 using DainikBazar.Domain.Entities;
 using DainikBazar.Infrastructure.Data;
@@ -20,9 +21,18 @@ public class ReviewRepository : IReviewRepository
     }
 
 
-    public async Task CreateNewAsync(ReviewAndRating reviewAndRating)
+    public async Task CreateNewAsync(ReviewDto reviewAndRating)
     {
-        await _db.ReviewAndRatings.AddAsync(reviewAndRating);
+        var review = new ReviewAndRating
+        {
+            Review = reviewAndRating.Review,
+            Rating = reviewAndRating.Rating,
+            CreatedAt = reviewAndRating.CreatedAt,
+            ProductId = reviewAndRating.ProductId,
+            UserId = reviewAndRating.UserId
+        };
+
+        await _db.ReviewAndRatings.AddAsync(review);
         await _db.SaveChangesAsync();
     }
 

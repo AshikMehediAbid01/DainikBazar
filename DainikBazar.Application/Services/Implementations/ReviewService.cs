@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Application.Common.Repository_Interfaces;
 using DainikBazar.Application.Services.Interfaces;
 using DainikBazar.Domain.Entities;
@@ -17,7 +18,7 @@ public class ReviewService : IReviewService
     {
         _repo = repo;
     }
-    public async Task CreateNewAsync(ReviewAndRating reviewAndRating)
+    public async Task CreateNewAsync(ReviewDto reviewAndRating)
     {
         await _repo.CreateNewAsync(reviewAndRating);
     }

@@ -21,7 +21,7 @@ public class ProductRepository : IProductRepository
 
     public async Task CreateNewAsync(Product product)
     {
-        await _db.AddAsync(product);
+        await _db.Products.AddAsync(product);
         await _db.SaveChangesAsync();
     }
 
@@ -44,7 +44,7 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product?> GetByIdAsync(int id)
     {
-        var product = await _db.Products.FirstOrDefaultAsync(c => c.Id == id);
+        var product = await _db.Products.FirstOrDefaultAsync(c => c.ProductId == id);
         return product;
     }
 
