@@ -106,7 +106,7 @@ public class ProductController : Controller
     {
         if (!ModelState.IsValid) return View(product);
 
-        bool isSuccess = _apiService.CreateProductAsync(product).Result;
+        bool isSuccess = _apiService.UpdateProductAsync(product).Result;
 
         if (isSuccess)
         {

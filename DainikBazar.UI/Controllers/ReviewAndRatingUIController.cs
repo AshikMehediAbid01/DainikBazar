@@ -27,7 +27,7 @@ public class ReviewAndRatingUIController : Controller
         {
             ProductId = Id.Value,
             Rating = 2,
-            UserId = "ddc8f4f7-16c4-4fef-bc67-c353d9086d53"
+            UserId = "f15061b4-d79c-4596-b8e5-8ec21f6f69a2"
         };
         return View(reviewEntity);
     }
@@ -52,7 +52,7 @@ public class ReviewAndRatingUIController : Controller
         if (isSuccess)
         {
             TempData["SuccessMessage"] = "New Product Created successfully";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("DetailsProduct", "Product", new { id = ProductId } );
         }
         else
         {

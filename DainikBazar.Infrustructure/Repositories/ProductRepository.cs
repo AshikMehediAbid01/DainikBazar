@@ -44,7 +44,9 @@ public class ProductRepository : IProductRepository
 
     public async Task<Product?> GetByIdAsync(int id)
     {
-        var product = await _db.Products.FirstOrDefaultAsync(c => c.ProductId == id);
+        var product = await _db.Products
+            .Include(r=>r.ReviewAndRatings)
+            .FirstOrDefaultAsync(c => c.ProductId == id);
         return product;
     }
 
