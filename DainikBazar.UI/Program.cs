@@ -1,5 +1,9 @@
+
 using DainikBazar.UI.ApiServices.Implementations;
 using DainikBazar.UI.ApiServices.Interfaces;
+
+
+using DainikBazar.UI.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//builder.Services.AddHttpClient<CartController>( client =>
+//{
+//    client.BaseAddress = new Uri( "https://localhost:7155/api/" );
+//} );
 
 builder.Services.AddHttpClient<IProductApiService, ProductApiService>();
 builder.Services.AddHttpClient<IReviewApiService, ReviewApiService>();

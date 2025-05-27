@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DainikBazar.Domain.Entities;
+﻿using DainikBazar.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DainikBazar.Infrastructure.Data;
@@ -13,10 +8,9 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
-
+    public DbSet<User> Users { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Cart> Carts { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ReviewAndRating> ReviewAndRatings { get; set; }
@@ -31,6 +25,27 @@ public class AppDbContext : DbContext
             .HasOne(b => b.Product)
             .WithMany(a => a.ReviewAndRatings)
             .HasForeignKey(b => b.ProductId);
+
+
+        modelBuilder.Entity<Cart>()
+            .HasOne( c => c.User )
+            .WithMany( u => u.Cart )
+            .HasForeignKey( c => c.UserId );
+
+        modelBuilder.Entity<Order>()
+            .HasOne( o => o.User )
+            .WithMany(u => u.Order )
+            .HasForeignKey( o => o.UserId );
+
+        modelBuilder.Entity<CartItem>()
+            .HasOne( ci => ci.Cart )
+            .WithMany( c=> c.CartItems )
+            .HasForeignKey(ci => ci.CartId );
+
+        modelBuilder.Entity<Product>()
+            .HasOne(p => p.Order)
+            .WithOne(o => o.Product)
+            .HasForeignKey<Product>(p => p.OrderId);
 
     }
 }
