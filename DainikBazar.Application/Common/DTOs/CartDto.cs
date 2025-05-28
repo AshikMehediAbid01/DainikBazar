@@ -1,5 +1,4 @@
-﻿using DainikBazar.Domain.Entities;
-
+﻿
 
 namespace DainikBazar.Application.Common.DTOs;
 

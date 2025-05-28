@@ -1,11 +1,11 @@
-﻿using DainikBazar.Domain.Entities;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace DainikBazar.UI.Models;
 
 public class ReviewAndRatingVM
 {
-   // public int Id { get; set; }
+    public int Id { get; set; }
     public string? Review { get; set; }
 
     [Range(1, 5, ErrorMessage = "Please select a rating between 1 and 5.")]
@@ -14,5 +14,6 @@ public class ReviewAndRatingVM
 
     public int ProductId { get; set; }
     public string UserId { get; set; }
+
    
 }

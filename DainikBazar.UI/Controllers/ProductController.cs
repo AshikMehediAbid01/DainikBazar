@@ -72,15 +72,15 @@ public class ProductController : Controller
     [HttpGet]
     public IActionResult DetailsProduct(int id)
     {
-        var product = _apiService.GetProductByIdAsync(id).Result;
+        var productDto = _apiService.GetProductByIdAsync(id).Result;
 
-        if (product == null)
+        if (productDto == null)
         {
             TempData["ErrorMessage"] = "Product not found";
             return RedirectToAction(nameof(Index));
         }
 
-        return View(product);
+        return View(productDto);
     }
 
 

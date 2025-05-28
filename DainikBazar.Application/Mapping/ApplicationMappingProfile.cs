@@ -16,5 +16,10 @@ public class ApplicationMappingProfile: Profile
         CreateMap<CartItemDto, CartItem>();
         CreateMap<Order,OrderDto>();
         CreateMap<OrderDto, Order>();
+
+
+        //===================
+        CreateMap<ProductDto, Product>().ReverseMap();
+        CreateMap<ReviewAndRating, ReviewDto>().ReverseMap();
     }
 }

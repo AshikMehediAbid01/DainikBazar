@@ -56,9 +56,6 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-    var seeder = new UserSeeder();
-    await seeder.SeedInitialUserAsync(dbContext);
-
     var seeder = new ProductAndUserSeeder();
     await seeder.SeedProductsAsync(dbContext);
     await seeder.SeedUsersAsync( dbContext );

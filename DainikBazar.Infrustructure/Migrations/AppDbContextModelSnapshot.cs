@@ -30,6 +30,10 @@ namespace DainikBazar.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CartStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -58,6 +62,9 @@ namespace DainikBazar.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CartId");
@@ -81,6 +88,10 @@ namespace DainikBazar.Infrastructure.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("OrderHistory")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("OrderStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -88,6 +99,12 @@ namespace DainikBazar.Infrastructure.Migrations
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReceiverAddress")
                         .IsRequired()
@@ -101,6 +118,12 @@ namespace DainikBazar.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("SubtotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UnitPrice")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -110,35 +133,6 @@ namespace DainikBazar.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("DainikBazar.Domain.Entities.OrderItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("DainikBazar.Domain.Entities.Product", b =>
@@ -162,6 +156,9 @@ namespace DainikBazar.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -169,6 +166,10 @@ namespace DainikBazar.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique()
+                        .HasFilter("[OrderId] IS NOT NULL");
 
                     b.ToTable("Products");
                 });
@@ -223,7 +224,7 @@ namespace DainikBazar.Infrastructure.Migrations
             modelBuilder.Entity("DainikBazar.Domain.Entities.Cart", b =>
                 {
                     b.HasOne("DainikBazar.Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Cart")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -253,7 +254,7 @@ namespace DainikBazar.Infrastructure.Migrations
             modelBuilder.Entity("DainikBazar.Domain.Entities.Order", b =>
                 {
                     b.HasOne("DainikBazar.Domain.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Order")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -261,23 +262,13 @@ namespace DainikBazar.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DainikBazar.Domain.Entities.OrderItem", b =>
+            modelBuilder.Entity("DainikBazar.Domain.Entities.Product", b =>
                 {
                     b.HasOne("DainikBazar.Domain.Entities.Order", "Order")
-                        .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DainikBazar.Domain.Entities.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Product")
+                        .HasForeignKey("DainikBazar.Domain.Entities.Product", "OrderId");
 
                     b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("DainikBazar.Domain.Entities.ReviewAndRating", b =>
@@ -306,12 +297,20 @@ namespace DainikBazar.Infrastructure.Migrations
 
             modelBuilder.Entity("DainikBazar.Domain.Entities.Order", b =>
                 {
-                    b.Navigation("OrderItems");
+                    b.Navigation("Product")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DainikBazar.Domain.Entities.Product", b =>
                 {
                     b.Navigation("ReviewAndRatings");
+                });
+
+            modelBuilder.Entity("DainikBazar.Domain.Entities.User", b =>
+                {
+                    b.Navigation("Cart");
+
+                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

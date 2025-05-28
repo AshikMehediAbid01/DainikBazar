@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
 using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Application.Services.Interfaces;
 using DainikBazar.Domain.Entities;
@@ -12,9 +13,12 @@ namespace DainikBazar.WebApi.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly IProductService _service;
-    public ProductsController(IProductService service)
+    private readonly IMapper _mapper;
+
+    public ProductsController(IProductService service, IMapper mapper)
     {
         _service = service;
+        _mapper = mapper;
     }
 
 
@@ -36,19 +40,12 @@ public class ProductsController : ControllerBase
 
     // Create Product
     [HttpPost]
-    public async Task<IActionResult> CreateProduct([FromBody]ProductDto product)
+    public async Task<IActionResult> CreateProduct([FromBody]ProductDto productDto)
     {
         try
         {
-            var productEntity = new Product()
-            {
-                Name = product.Name,
-                Description = product.Description,
-                Quantity = product.Quantity,
-                Price = product.Price,
-                ImageUrl = product.ImageUrl,
-                CreatedAt = product.CreatedAt
-            };
+            var productEntity = _mapper.Map<Product>(productDto);
+
 
             await _service.CreateNewAsync(productEntity);
             return Ok(productEntity);
@@ -68,18 +65,22 @@ public class ProductsController : ControllerBase
         var product = await _service.GetByIdAsync(id.Value);
         if (product == null) return NotFound();
 
-        return Ok(product);
+        var productDto = _mapper.Map<ProductDto>(product);
+
+        return Ok(productDto);
 
     }
 
     // Update Product
     [HttpPut]
-    public async Task<IActionResult> UpdateProduct(Product product)
+    public async Task<IActionResult> UpdateProduct(ProductDto productDto)
     {
-        if (product == null || product.ProductId == 0) return BadRequest("Product id Invalid");
+        if (productDto == null || productDto.ProductId == 0) return BadRequest("Product id Invalid");
 
-        await _service.UpdateAsync(product);
-        return Ok(product);
+        var entityProduct = _mapper.Map<Product>(productDto);
+
+        await _service.UpdateAsync(entityProduct);
+        return Ok(entityProduct);
 
     }
 
