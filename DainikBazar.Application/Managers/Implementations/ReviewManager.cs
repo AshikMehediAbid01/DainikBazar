@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Application.Common.Repository_Interfaces;
-using DainikBazar.Application.Services.Interfaces;
+using DainikBazar.Application.Managers.Interfaces;
 using DainikBazar.Domain.Entities;
 
-namespace DainikBazar.Application.Services.Implementations;
+namespace DainikBazar.Application.Managers.Implementations;
 
-public class ReviewService : IReviewService
+public class ReviewManager : IReviewManager
 {
     private readonly IReviewRepository _repo;
 
-    public ReviewService(IReviewRepository repo)
+    public ReviewManager(IReviewRepository repo)
     {
         _repo = repo;
     }

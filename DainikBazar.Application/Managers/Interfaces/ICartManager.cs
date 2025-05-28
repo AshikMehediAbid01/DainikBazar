@@ -1,8 +1,8 @@
 ﻿using DainikBazar.Domain.Entities;
 
-namespace DainikBazar.Application.Services.Interfaces;
+namespace DainikBazar.Application.Managers.Interfaces;
 
-public interface ICartService
+public interface ICartManager
 {
     Task<Cart> GetCartAsync( string userId );
     Task AddToCartAsync( int productId, string userId );

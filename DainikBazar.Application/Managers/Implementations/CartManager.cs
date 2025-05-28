@@ -1,16 +1,16 @@
 ﻿
 
 using DainikBazar.Application.Common.Repository_Interfaces;
-using DainikBazar.Application.Services.Interfaces;
+using DainikBazar.Application.Managers.Interfaces;
 using DainikBazar.Domain.Entities;
 
-namespace DainikBazar.Application.Services.Implementations;
+namespace DainikBazar.Application.Managers.Implementations;
 
-public class CartService: ICartService
+public class CartManager: ICartManager
 {
     private readonly IRepository _repository;
     private readonly ICartRepository _cartRepository;
-    public CartService( IRepository repository, ICartRepository cartRepository )
+    public CartManager( IRepository repository, ICartRepository cartRepository )
     {
         _repository = repository;
         _cartRepository = cartRepository;

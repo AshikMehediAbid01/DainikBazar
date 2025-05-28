@@ -1,21 +1,21 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using DainikBazar.Application.Common.DTOs;
-using DainikBazar.Application.Services.Interfaces;
+using DainikBazar.Application.Managers.Interfaces;
 using DainikBazar.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DainikBazar.WebApi.Controllers;
+namespace DainikBazar.Service.Controllers;
 
 //localhost:7155/api/products
 [Route("api/[controller]/[action]")]
 [ApiController]
 public class ProductsController : ControllerBase
 {
-    private readonly IProductService _service;
+    private readonly IProductManager _service;
     private readonly IMapper _mapper;
 
-    public ProductsController(IProductService service, IMapper mapper)
+    public ProductsController(IProductManager service, IMapper mapper)
     {
         _service = service;
         _mapper = mapper;

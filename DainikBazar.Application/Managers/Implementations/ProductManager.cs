@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DainikBazar.Application.Common.Repository_Interfaces;
-using DainikBazar.Application.Services.Interfaces;
+using DainikBazar.Application.Managers.Interfaces;
 using DainikBazar.Domain.Entities;
 
-namespace DainikBazar.Application.Services.Implementations;
+namespace DainikBazar.Application.Managers.Implementations;
 
-public class ProductService : IProductService
+public class ProductManager : IProductManager
 {
     private readonly IProductRepository _repo;
 
-    public ProductService(IProductRepository repo)
+    public ProductManager(IProductRepository repo)
     {
         _repo = repo;
     }

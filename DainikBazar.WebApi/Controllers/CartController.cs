@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 using DainikBazar.Application.Common.DTOs;
-using DainikBazar.Application.Services.Interfaces;
+using DainikBazar.Application.Managers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DainikBazar.WebApi.Controllers;
+namespace DainikBazar.Service.Controllers;
 
 [Route( "api/[controller]/[action]" )]
 [ApiController]
 public class CartController : ControllerBase
 {
-    private readonly ICartService _cartService;
+    private readonly ICartManager _cartService;
     private readonly IMapper _mapper;
-    public CartController( ICartService cartService, IMapper mapper )
+    public CartController( ICartManager cartService, IMapper mapper )
     {
         _cartService = cartService;
         _mapper = mapper;

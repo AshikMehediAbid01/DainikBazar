@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DainikBazar.Domain.Entities;
 
-namespace DainikBazar.Application.Services.Interfaces;
+namespace DainikBazar.Application.Managers.Interfaces;
 
-public interface IProductService
+public interface IProductManager
 {
     Task<List<Product>> GetAllAsync();
     Task CreateNewAsync(Product product);

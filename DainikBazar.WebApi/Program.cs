@@ -1,11 +1,11 @@
 using DainikBazar.Application.Common.Repository_Interfaces;
-using DainikBazar.Application.Services.Implementations;
-using DainikBazar.Application.Services.Interfaces;
 using DainikBazar.Application.Mapping;
 using DainikBazar.Infrastructure.Data;
 using DainikBazar.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using DainikBazar.Application.Mapping;
+using DainikBazar.Application.Managers.Interfaces;
+using DainikBazar.Application.Managers.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,16 +21,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductManager, ProductManager>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
-builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IReviewManager, ReviewManager>();
 
 builder.Services.AddAutoMapper( 
     typeof( ApplicationMappingProfile )
 );
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
-builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICartManager, CartManager>();
 
 
 

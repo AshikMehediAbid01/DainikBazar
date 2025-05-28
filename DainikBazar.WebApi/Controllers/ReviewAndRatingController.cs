@@ -1,19 +1,19 @@
 ﻿using System.Threading.Tasks;
 using DainikBazar.Application.Common.DTOs;
-using DainikBazar.Application.Services.Interfaces;
+using DainikBazar.Application.Managers.Interfaces;
 using DainikBazar.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DainikBazar.WebApi.Controllers;
+namespace DainikBazar.Service.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
 public class ReviewAndRatingController : ControllerBase
 {
-    private readonly IReviewService _service;
+    private readonly IReviewManager _service;
 
-    public ReviewAndRatingController(IReviewService service)
+    public ReviewAndRatingController(IReviewManager service)
     {
         _service = service;
     }
