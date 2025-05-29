@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DainikBazar.Application.Common.DTOs;
-using DainikBazar.Application.Common.Repository_Interfaces;
 using DainikBazar.Domain.Entities;
+using DainikBazar.Domain.Repository_Interfaces;
 using DainikBazar.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +13,7 @@ namespace DainikBazar.Repository.Repositories;
 
 public class ReviewRepository(AppDbContext db) : IReviewRepository
 {
-    public async Task CreateNewAsync(ReviewDto reviewAndRating)
+    public async Task CreateNewAsync(ReviewAndRating reviewAndRating)
     {
         var review = new ReviewAndRating
         {
@@ -27,6 +27,7 @@ public class ReviewRepository(AppDbContext db) : IReviewRepository
         await db.ReviewAndRatings.AddAsync(review);
         await db.SaveChangesAsync();
     }
+
 
     public async Task<List<ReviewAndRating>> GetAllByIdAsync(int productId)
     {

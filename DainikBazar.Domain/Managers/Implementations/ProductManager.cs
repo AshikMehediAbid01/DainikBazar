@@ -13,7 +13,8 @@ public class ProductManager(IProductRepository productRepo, IGenericRepository g
 {
     public async Task CreateNewAsync(Product product)
     {
-        await genericRepo.AddAsync<Product>(product);
+        // await genericRepo.AddAsync<Product>(product);
+        await productRepo.CreateNewAsync(product);
     }
 
     public async Task<List<Product>> GetAllAsync()

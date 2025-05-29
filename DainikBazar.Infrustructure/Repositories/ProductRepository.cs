@@ -13,11 +13,11 @@ namespace DainikBazar.Repository.Repositories;
 public class ProductRepository(AppDbContext db) : IProductRepository
 {
 
-/*    public async Task CreateNewAsync(Product product)
+    public async Task CreateNewAsync(Product product)
     {
         await db.Products.AddAsync(product);
         await db.SaveChangesAsync();
-    }*/
+    }
 
     public async Task DeleteAsync(int id)
     {

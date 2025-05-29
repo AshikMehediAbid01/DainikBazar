@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using DainikBazar.Application.Common.DTOs;
-using DainikBazar.Application.Managers.Interfaces;
+using DainikBazar.Domain.Managers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DainikBazar.Service.Controllers;

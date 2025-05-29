@@ -1,4 +1,4 @@
-using DainikBazar.Application.Common.Repository_Interfaces;
+
 using DainikBazar.Application.Mapping;
 using Microsoft.EntityFrameworkCore;
 using DainikBazar.Repository.Data;

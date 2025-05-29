@@ -11,7 +11,7 @@ namespace DainikBazar.Domain.Managers.Implementations;
 
 public class ReviewManager(IReviewRepository repo) : IReviewManager
 {
-    public async Task CreateNewAsync(ReviewDto reviewAndRating)
+    public async Task CreateNewAsync(ReviewAndRating reviewAndRating)
     {
         await repo.CreateNewAsync(reviewAndRating);
     }

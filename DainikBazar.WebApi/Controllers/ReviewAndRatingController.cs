@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using DainikBazar.Application.Common.DTOs;
-using DainikBazar.Application.Managers.Interfaces;
 using DainikBazar.Domain.Entities;
+using DainikBazar.Domain.Managers.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +18,7 @@ public class ReviewAndRatingController(IReviewManager service) : ControllerBase
 
         try
         {
-            var productReview = new ReviewDto
+            var productReview = new ReviewAndRating
             {
                 Review = reviewAndRating.Review,
                 Rating = reviewAndRating.Rating,

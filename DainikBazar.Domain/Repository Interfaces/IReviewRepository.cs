@@ -9,7 +9,7 @@ namespace DainikBazar.Domain.Repository_Interfaces;
 
 public interface IReviewRepository
 {
-    Task CreateNewAsync(ReviewDto reviewAndRating);
+    Task CreateNewAsync(ReviewAndRating reviewAndRating);
     Task<List<ReviewAndRating>> GetAllByIdAsync(int productId);
 
 }
