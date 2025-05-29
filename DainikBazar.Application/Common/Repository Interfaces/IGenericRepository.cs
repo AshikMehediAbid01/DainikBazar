@@ -1,8 +1,6 @@
-﻿
+﻿namespace DainikBazar.Application.Common.Repository_Interfaces;
 
-namespace DainikBazar.Application.Common.Repository_Interfaces;
-
-public interface IRepository
+public interface IGenericRepository
 {
     Task<T> GetByIdAsync<T>(int id) where T : class;
     Task<IEnumerable<T>> GetAllAsync<T>() where T : class;

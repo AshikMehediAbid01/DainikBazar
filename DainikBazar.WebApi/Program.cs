@@ -1,7 +1,6 @@
 using DainikBazar.Application.Common.Repository_Interfaces;
 using DainikBazar.Application.Mapping;
 using Microsoft.EntityFrameworkCore;
-using DainikBazar.Application.Mapping;
 using DainikBazar.Application.Managers.Interfaces;
 using DainikBazar.Application.Managers.Implementations;
 using DainikBazar.Repository.Data;
@@ -28,7 +27,7 @@ builder.Services.AddScoped<IReviewManager, ReviewManager>();
 builder.Services.AddAutoMapper( 
     typeof( ApplicationMappingProfile )
 );
-builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<IGenericRepository, GenericRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartManager, CartManager>();
 

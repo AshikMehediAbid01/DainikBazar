@@ -8,9 +8,9 @@ namespace DainikBazar.Application.Managers.Implementations;
 
 public class CartManager: ICartManager
 {
-    private readonly IRepository _repository;
+    private readonly IGenericRepository _repository;
     private readonly ICartRepository _cartRepository;
-    public CartManager( IRepository repository, ICartRepository cartRepository )
+    public CartManager( IGenericRepository repository, ICartRepository cartRepository )
     {
         _repository = repository;
         _cartRepository = cartRepository;

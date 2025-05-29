@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DainikBazar.Repository.Repositories;
 
-public class Repository: IRepository
+public class GenericRepository: IGenericRepository
 {
     private readonly AppDbContext _dbContext;
-    public Repository( AppDbContext dbContext )
+    public GenericRepository( AppDbContext dbContext )
     {
         _dbContext = dbContext;
     }
@@ -20,6 +20,8 @@ public class Repository: IRepository
     {
         return await _dbContext.Set<T>().ToListAsync();
     }
+
+
     public async Task AddAsync<T>( T entity ) where T : class
     {
         await _dbContext.Set<T>().AddAsync( entity );
