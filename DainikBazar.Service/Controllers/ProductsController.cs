@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using DainikBazar.Application.Common.DTOs;
-using DainikBazar.Domain.Entities;
 using DainikBazar.Domain.Managers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+
 namespace DainikBazar.Service.Controllers;
 
 //localhost:7155/api/products

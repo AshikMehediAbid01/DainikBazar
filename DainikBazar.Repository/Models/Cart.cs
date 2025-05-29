@@ -1,5 +1,5 @@
 ﻿
-namespace DainikBazar.Domain.Entities;
+namespace DainikBazar.Repository.Models;
 
 public class Cart
 {

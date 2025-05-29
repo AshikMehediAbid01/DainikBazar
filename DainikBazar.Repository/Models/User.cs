@@ -1,8 +1,6 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace DainikBazar.Domain.Entities;
+namespace DainikBazar.Repository.Models;
 
 public class User
 {
@@ -13,3 +11,4 @@ public class User
     public ICollection<Order> Order { get; set; } = new List<Order>();
 
 }
+

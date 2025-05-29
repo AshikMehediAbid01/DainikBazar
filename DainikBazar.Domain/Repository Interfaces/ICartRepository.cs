@@ -1,4 +1,4 @@
-﻿using DainikBazar.Domain.Entities;
+﻿using DainikBazar.Domain.Models;
 
 namespace DainikBazar.Domain.Repository_Interfaces;
 

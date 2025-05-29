@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DainikBazar.Domain.Entities;
+namespace DainikBazar.Repository.Models;
 
 public class ReviewAndRating
 {

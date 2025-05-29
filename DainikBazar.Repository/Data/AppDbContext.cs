@@ -1,4 +1,4 @@
-﻿using DainikBazar.Domain.Entities;
+﻿using DainikBazar.Repository.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DainikBazar.Repository.Data;
