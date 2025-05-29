@@ -23,6 +23,7 @@ public class GenericRepository: IGenericRepository
     }
 
 
+
     public async Task AddAsync<T>( T entity ) where T : class
     {
         await _dbContext.Set<T>().AddAsync( entity );
