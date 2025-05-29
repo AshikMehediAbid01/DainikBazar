@@ -11,16 +11,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DainikBazar.Infrastructure.Repositories;
 
-public class ReviewRepository : IReviewRepository
+public class ReviewRepository(AppDbContext db) : IReviewRepository
 {
-    private readonly AppDbContext _db;
-
-    public ReviewRepository(AppDbContext db)
-    {
-        _db = db;
-    }
-
-
     public async Task CreateNewAsync(ReviewDto reviewAndRating)
     {
         var review = new ReviewAndRating
@@ -32,12 +24,12 @@ public class ReviewRepository : IReviewRepository
             UserId = reviewAndRating.UserId
         };
 
-        await _db.ReviewAndRatings.AddAsync(review);
-        await _db.SaveChangesAsync();
+        await db.ReviewAndRatings.AddAsync(review);
+        await db.SaveChangesAsync();
     }
 
     public async Task<List<ReviewAndRating>> GetAllByIdAsync(int productId)
     {
-        return await _db.ReviewAndRatings.Where(c=>c.ProductId == productId).ToListAsync();
+        return await db.ReviewAndRatings.Where(c=>c.ProductId == productId).ToListAsync();
     }
 }

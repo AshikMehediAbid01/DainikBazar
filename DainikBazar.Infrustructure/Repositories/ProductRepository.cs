@@ -10,19 +10,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DainikBazar.Infrastructure.Repositories;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(AppDbContext db) : IProductRepository
 {
-    private readonly AppDbContext _db;
-
-    public ProductRepository(AppDbContext db)
-    {
-        _db = db;
-    }
-
     public async Task CreateNewAsync(Product product)
     {
-        await _db.Products.AddAsync(product);
-        await _db.SaveChangesAsync();
+        await db.Products.AddAsync(product);
+        await db.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(int id)
@@ -30,21 +23,21 @@ public class ProductRepository : IProductRepository
         var product = await GetByIdAsync(id);
         if(product != null)
         {
-            _db.Products.Remove(product);
-            await _db.SaveChangesAsync();
+            db.Products.Remove(product);
+            await db.SaveChangesAsync();
         }
        
     }
 
     public async Task<IEnumerable<Product>> GetAllAsync()
     {
-        var products = await _db.Products.ToListAsync();
+        var products = await db.Products.ToListAsync();
         return products;
     }
 
     public async Task<Product?> GetByIdAsync(int id)
     {
-        var product = await _db.Products
+        var product = await db.Products
             .Include(r=>r.ReviewAndRatings)
             .FirstOrDefaultAsync(c => c.ProductId == id);
         return product;
@@ -52,7 +45,7 @@ public class ProductRepository : IProductRepository
 
     public async Task UpdateAsync(Product product)
     {
-        _db.Products.Update(product);
-        await _db.SaveChangesAsync();
+        db.Products.Update(product);
+        await db.SaveChangesAsync();
     }
 }

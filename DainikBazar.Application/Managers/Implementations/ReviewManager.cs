@@ -10,22 +10,16 @@ using DainikBazar.Domain.Entities;
 
 namespace DainikBazar.Application.Managers.Implementations;
 
-public class ReviewManager : IReviewManager
+public class ReviewManager(IReviewRepository repo) : IReviewManager
 {
-    private readonly IReviewRepository _repo;
-
-    public ReviewManager(IReviewRepository repo)
-    {
-        _repo = repo;
-    }
     public async Task CreateNewAsync(ReviewDto reviewAndRating)
     {
-        await _repo.CreateNewAsync(reviewAndRating);
+        await repo.CreateNewAsync(reviewAndRating);
     }
 
     public async Task<List<ReviewAndRating>> GetAllByIdAsync(int productId)
     {
-       return await _repo.GetAllByIdAsync(productId);
+       return await repo.GetAllByIdAsync(productId);
 
     }
 }

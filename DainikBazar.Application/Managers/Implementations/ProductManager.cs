@@ -9,41 +9,32 @@ using DainikBazar.Domain.Entities;
 
 namespace DainikBazar.Application.Managers.Implementations;
 
-public class ProductManager : IProductManager
+public class ProductManager(IProductRepository repo) : IProductManager
 {
-    private readonly IProductRepository _repo;
-
-    public ProductManager(IProductRepository repo)
-    {
-        _repo = repo;
-    }
-
-
-
     public async Task CreateNewAsync(Product product)
     {
-       await _repo.CreateNewAsync(product);
+       await repo.CreateNewAsync(product);
     }
 
     public async Task<List<Product>> GetAllAsync()
     {
-        var products = await _repo.GetAllAsync();
+        var products = await repo.GetAllAsync();
         return products.ToList();
     }
 
     public async Task<Product?> GetByIdAsync(int id)
     {
-        var product = await _repo.GetByIdAsync(id);
+        var product = await repo.GetByIdAsync(id);
         return product;
     }
 
     public async Task UpdateAsync(Product product)
     {
-        await _repo.UpdateAsync(product);
+        await repo.UpdateAsync(product);
     }
 
     public async Task DeleteAsync(int id)
     {
-        await _repo.DeleteAsync(id);
+        await repo.DeleteAsync(id);
     }
 }

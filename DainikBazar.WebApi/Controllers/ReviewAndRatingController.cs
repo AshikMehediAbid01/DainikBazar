@@ -9,17 +9,8 @@ namespace DainikBazar.Service.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class ReviewAndRatingController : ControllerBase
+public class ReviewAndRatingController(IReviewManager service) : ControllerBase
 {
-    private readonly IReviewManager _service;
-
-    public ReviewAndRatingController(IReviewManager service)
-    {
-        _service = service;
-    }
-
-
-
     [HttpPost]
     public async Task<IActionResult> CreateReview([FromBody] ReviewDto reviewAndRating)
     {
@@ -34,7 +25,7 @@ public class ReviewAndRatingController : ControllerBase
                 ProductId = reviewAndRating.ProductId,
                 UserId = reviewAndRating.UserId // Assumed
             };
-            await _service.CreateNewAsync(productReview);
+            await service.CreateNewAsync(productReview);
             return Ok(productReview);
         }
         catch (Exception ex)
@@ -51,7 +42,7 @@ public class ReviewAndRatingController : ControllerBase
         if (ProductId == null) return NotFound();
         try
         {
-            var reviews = await _service.GetAllByIdAsync(ProductId.Value);
+            var reviews = await service.GetAllByIdAsync(ProductId.Value);
             return Ok(reviews);
         }
         catch (Exception ex)

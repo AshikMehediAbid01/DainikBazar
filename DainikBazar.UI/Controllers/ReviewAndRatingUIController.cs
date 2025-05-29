@@ -6,16 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DainikBazar.UI.Controllers;
 
-public class ReviewAndRatingUIController : Controller
+public class ReviewAndRatingUIController(IReviewApiService apiService) : Controller
 {
-    private readonly IReviewApiService _apiService;
-
-    public ReviewAndRatingUIController(IReviewApiService apiService)
-    {
-        _apiService = apiService;
-    }
-
-
     [HttpGet]
     public IActionResult CreateReview(int? Id)
     {
@@ -47,7 +39,7 @@ public class ReviewAndRatingUIController : Controller
 
         if (!ModelState.IsValid) return View(review);
 
-        bool isSuccess = await _apiService.CreateReviewAsync(review);
+        bool isSuccess = await apiService.CreateReviewAsync(review);
 
         if (isSuccess)
         {

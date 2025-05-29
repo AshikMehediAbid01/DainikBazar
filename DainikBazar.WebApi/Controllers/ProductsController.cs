@@ -10,25 +10,15 @@ namespace DainikBazar.Service.Controllers;
 //localhost:7155/api/products
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class ProductsController : ControllerBase
+public class ProductsController(IProductManager service, IMapper mapper) : ControllerBase
 {
-    private readonly IProductManager _service;
-    private readonly IMapper _mapper;
-
-    public ProductsController(IProductManager service, IMapper mapper)
-    {
-        _service = service;
-        _mapper = mapper;
-    }
-
-
 
     [HttpGet]
     public async Task<IActionResult> GetAllProducts()
     {
         try
         {
-            var products = await _service.GetAllAsync();
+            var products = await service.GetAllAsync();
             return Ok(products);
         }
         catch (Exception ex)
@@ -44,10 +34,10 @@ public class ProductsController : ControllerBase
     {
         try
         {
-            var productEntity = _mapper.Map<Product>(productDto);
+            var productEntity = mapper.Map<Product>(productDto);
 
 
-            await _service.CreateNewAsync(productEntity);
+            await service.CreateNewAsync(productEntity);
             return Ok(productEntity);
         }
         catch (Exception ex)
@@ -62,10 +52,10 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> GetProduct(int? id)
     {
         if (id == null) return NotFound();
-        var product = await _service.GetByIdAsync(id.Value);
+        var product = await service.GetByIdAsync(id.Value);
         if (product == null) return NotFound();
 
-        var productDto = _mapper.Map<ProductDto>(product);
+        var productDto = mapper.Map<ProductDto>(product);
 
         return Ok(productDto);
 
@@ -77,9 +67,9 @@ public class ProductsController : ControllerBase
     {
         if (productDto == null || productDto.ProductId == 0) return BadRequest("Product id Invalid");
 
-        var entityProduct = _mapper.Map<Product>(productDto);
+        var entityProduct = mapper.Map<Product>(productDto);
 
-        await _service.UpdateAsync(entityProduct);
+        await service.UpdateAsync(entityProduct);
         return Ok(entityProduct);
 
     }
@@ -90,7 +80,7 @@ public class ProductsController : ControllerBase
     public async Task<IActionResult> DeleteProduct(int? id)
     {
         if (id == null) return NotFound();
-        await _service.DeleteAsync(id.Value);
+        await service.DeleteAsync(id.Value);
         return Ok();
     }
 
