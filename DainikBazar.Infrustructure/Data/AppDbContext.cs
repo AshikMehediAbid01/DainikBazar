@@ -1,7 +1,7 @@
 ﻿using DainikBazar.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DainikBazar.Infrastructure.Data;
+namespace DainikBazar.Repository.Data;
 
 public class AppDbContext : DbContext
 {

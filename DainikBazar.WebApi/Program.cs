@@ -1,11 +1,11 @@
 using DainikBazar.Application.Common.Repository_Interfaces;
 using DainikBazar.Application.Mapping;
-using DainikBazar.Infrastructure.Data;
-using DainikBazar.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using DainikBazar.Application.Mapping;
 using DainikBazar.Application.Managers.Interfaces;
 using DainikBazar.Application.Managers.Implementations;
+using DainikBazar.Repository.Data;
+using DainikBazar.Repository.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

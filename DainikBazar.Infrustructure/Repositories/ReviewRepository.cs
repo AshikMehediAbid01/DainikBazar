@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Application.Common.Repository_Interfaces;
 using DainikBazar.Domain.Entities;
-using DainikBazar.Infrastructure.Data;
+using DainikBazar.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace DainikBazar.Infrastructure.Repositories;
+namespace DainikBazar.Repository.Repositories;
 
 public class ReviewRepository(AppDbContext db) : IReviewRepository
 {

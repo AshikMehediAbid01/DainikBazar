@@ -1,8 +1,8 @@
 ﻿using DainikBazar.Application.Common.Repository_Interfaces;
-using DainikBazar.Infrastructure.Data;
+using DainikBazar.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace DainikBazar.Infrastructure.Repositories;
+namespace DainikBazar.Repository.Repositories;
 
 public class Repository: IRepository
 {
