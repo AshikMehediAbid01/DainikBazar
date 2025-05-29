@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Domain.Entities;
 
-namespace DainikBazar.Application.Managers.Interfaces;
+namespace DainikBazar.Domain.Managers.Interfaces;
 
 public interface IReviewManager
 {
@@ -14,3 +13,4 @@ public interface IReviewManager
     Task<List<ReviewAndRating>> GetAllByIdAsync(int productId);
 
 }
+

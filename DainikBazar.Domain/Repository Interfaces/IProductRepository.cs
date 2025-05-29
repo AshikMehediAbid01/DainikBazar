@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using DainikBazar.Domain.Entities;
 
-namespace DainikBazar.Application.Common.Repository_Interfaces;
+namespace DainikBazar.Domain.Repository_Interfaces;
 
 public interface IProductRepository
 {
     Task<IEnumerable<Product>> GetAllAsync();
-    Task CreateNewAsync(Product product);
+    // Task CreateNewAsync(Product product);
     Task<Product?> GetByIdAsync(int id);
     Task UpdateAsync(Product product);
     Task DeleteAsync(int id);

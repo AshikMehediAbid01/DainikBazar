@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DainikBazar.Domain.Entities;
 
-namespace DainikBazar.Application.Managers.Interfaces;
+namespace DainikBazar.Domain.Managers.Interfaces;
 
 public interface IProductManager
 {

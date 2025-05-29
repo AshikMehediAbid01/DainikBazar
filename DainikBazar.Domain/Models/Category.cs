@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DainikBazar.Domain.Entities;
+namespace DainikBazar.Domain.Models;
 
 public class Category
 {

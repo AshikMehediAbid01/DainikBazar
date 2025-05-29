@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DainikBazar.Domain.Entities
+namespace DainikBazar.Domain.Entities;
+
+public class Seller
 {
-    internal class Seller
-    {
-    }
 }

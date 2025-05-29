@@ -1,10 +1,9 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using DainikBazar.Application.Common.DTOs;
-using DainikBazar.Application.Managers.Interfaces;
 using DainikBazar.Domain.Entities;
+using DainikBazar.Domain.Managers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-
 namespace DainikBazar.Service.Controllers;
 
 //localhost:7155/api/products
@@ -55,7 +54,7 @@ public class ProductsController(IProductManager service, IMapper mapper) : Contr
         var product = await service.GetByIdAsync(id.Value);
         if (product == null) return NotFound();
 
-        var productDto = mapper.Map<ProductDto>(product);
+    var productDto = mapper.Map<ProductDto>(product);
 
         return Ok(productDto);
 

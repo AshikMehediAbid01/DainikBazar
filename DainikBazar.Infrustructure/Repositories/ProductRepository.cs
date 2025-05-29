@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DainikBazar.Application.Common.Repository_Interfaces;
 using DainikBazar.Domain.Entities;
+using DainikBazar.Domain.Repository_Interfaces;
 using DainikBazar.Repository.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,11 +12,12 @@ namespace DainikBazar.Repository.Repositories;
 
 public class ProductRepository(AppDbContext db) : IProductRepository
 {
-    public async Task CreateNewAsync(Product product)
+
+/*    public async Task CreateNewAsync(Product product)
     {
         await db.Products.AddAsync(product);
         await db.SaveChangesAsync();
-    }
+    }*/
 
     public async Task DeleteAsync(int id)
     {
