@@ -54,7 +54,7 @@ public class CartController : ControllerBase
             return StatusCode(500, $"Internal Server Error: {ex.Message}" );
         }
     }
-
+/*
     [HttpPost]
     public async Task<IActionResult> UpdateCart( [FromBody] UpdateProductDto updateProduct ) //int cartItemId, int quantity
     {
@@ -72,7 +72,7 @@ public class CartController : ControllerBase
             return StatusCode( 500, $"Internal Server Error: {ex.Message}" );
         }
     }
-
+*/
     [HttpDelete("{cartItemId}")]
     public async Task<IActionResult> RemoveCart( int cartItemId )
     {

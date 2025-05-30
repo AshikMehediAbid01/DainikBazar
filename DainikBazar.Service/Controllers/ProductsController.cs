@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Domain.Managers.Interfaces;
-using DainikBazar.Domain.Models;
+using DainikBazar.Service.Models;
+using DomainModels = DainikBazar.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DainikBazar.Service.Controllers;
@@ -18,31 +18,33 @@ public class ProductsController(IProductManager service, IMapper mapper) : Contr
     {
         try
         {
-            var products = await service.GetAllAsync();
-            return Ok(products);
+            var domainModel = await service.GetAllAsync();
+            if (domainModel == null || !domainModel.Any()) return NotFound("No products found.");
+
+            var serviceModel = mapper.Map<IEnumerable<Product>>(domainModel);
+            return Ok(serviceModel);
         }
         catch (Exception ex)
         {
-
             return BadRequest(ex.Message);
         }
     }
 
     // Create Product
     [HttpPost]
-    public async Task<IActionResult> CreateProduct([FromBody]ProductDto productDto)
+    public async Task<IActionResult> CreateProduct([FromBody] Product serviceModel)
     {
         try
         {
-            var productEntity = mapper.Map<Product>(productDto);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
+            var domainModel = mapper.Map<DomainModels.Product>(serviceModel);
 
-            await service.CreateNewAsync(productEntity);
-            return Ok(productEntity);
+            await service.CreateNewAsync(domainModel);
+            return Created();
         }
         catch (Exception ex)
         {
-
             return BadRequest(ex.Message);
         }
     }
@@ -51,27 +53,27 @@ public class ProductsController(IProductManager service, IMapper mapper) : Contr
     [HttpGet("{id}")]
     public async Task<IActionResult> GetProduct(int? id)
     {
-        if (id == null) return NotFound();
-        var product = await service.GetByIdAsync(id.Value);
-        if (product == null) return NotFound();
+        if (id == null || id <= 0)return BadRequest("Invalid product ID.");
 
-    var productDto = mapper.Map<ProductDto>(product);
+        var domainModel = await service.GetByIdAsync(id.Value);
+        if (domainModel == null) return NotFound("Product not found.");
 
-        return Ok(productDto);
-
+        var serviceModel = mapper.Map<Product>(domainModel);
+        return Ok(serviceModel);
     }
+
 
     // Update Product
     [HttpPut]
-    public async Task<IActionResult> UpdateProduct(ProductDto productDto)
+    public async Task<IActionResult> UpdateProduct([FromBody] Product serviceModel)
     {
-        if (productDto == null || productDto.ProductId == 0) return BadRequest("Product id Invalid");
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (serviceModel == null || serviceModel.ProductId == 0) return BadRequest("Product id Invalid");
 
-        var entityProduct = mapper.Map<Product>(productDto);
+        var domainModel = mapper.Map<DomainModels.Product>(serviceModel);
 
-        await service.UpdateAsync(entityProduct);
-        return Ok(entityProduct);
-
+        await service.UpdateAsync(domainModel);
+        return NoContent();
     }
 
 
@@ -79,9 +81,15 @@ public class ProductsController(IProductManager service, IMapper mapper) : Contr
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProduct(int? id)
     {
-        if (id == null) return NotFound();
-        await service.DeleteAsync(id.Value);
-        return Ok();
+        try
+        {
+            if (id == null || id <= 0) return BadRequest("Product id Invalid");
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
 }
