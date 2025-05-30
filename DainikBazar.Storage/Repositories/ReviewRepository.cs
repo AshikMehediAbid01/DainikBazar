@@ -1,5 +1,5 @@
 ﻿
-using DainikBazar.Domain.Repository_Interfaces;
+using DainikBazar.Domain.Interfaces;
 using DainikBazar.Storage.Data;
 using DainikBazar.Storage.Models;
 using DomainModels = DainikBazar.Domain.Models;

@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Storage", "Dain
 		{697B3927-BD0E-41AD-86B8-D7C05A6363B0} = {697B3927-BD0E-41AD-86B8-D7C05A6363B0}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Application", "DainikBazar.Application\DainikBazar.Application.csproj", "{8AB88047-B934-47CF-B31C-1DB01E080563}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DainikBazar.Client", "DainikBazar.Client\DainikBazar.Client.csproj", "{8AB88047-B934-47CF-B31C-1DB01E080563}"
 	ProjectSection(ProjectDependencies) = postProject
 		{697B3927-BD0E-41AD-86B8-D7C05A6363B0} = {697B3927-BD0E-41AD-86B8-D7C05A6363B0}
 	EndProjectSection

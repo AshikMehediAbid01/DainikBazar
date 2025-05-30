@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DomainModels = DainikBazar.Domain.Models;
 using DainikBazar.Storage.Models;
-using DainikBazar.Domain.Repository_Interfaces;
+using DainikBazar.Domain.Interfaces;
 using DainikBazar.Storage.Data;
 using Microsoft.EntityFrameworkCore;
 

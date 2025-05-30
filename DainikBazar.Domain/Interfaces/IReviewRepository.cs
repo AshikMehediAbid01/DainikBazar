@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DainikBazar.Domain.Models;
 
-namespace DainikBazar.Domain.Repository_Interfaces;
+namespace DainikBazar.Domain.Interfaces;
 
 public interface IReviewRepository
 {

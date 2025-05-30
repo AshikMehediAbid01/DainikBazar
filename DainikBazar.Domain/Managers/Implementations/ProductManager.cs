@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DainikBazar.Domain.Managers.Interfaces;
 using DainikBazar.Domain.Models;
-using DainikBazar.Domain.Repository_Interfaces;
+using DainikBazar.Domain.Interfaces;
 
 namespace DainikBazar.Domain.Managers.Implementations;
 

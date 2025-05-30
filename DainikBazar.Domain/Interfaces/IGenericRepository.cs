@@ -1,4 +1,4 @@
-﻿namespace DainikBazar.Domain.Repository_Interfaces;
+﻿namespace DainikBazar.Domain.Interfaces;
 
 public interface IGenericRepository
 {

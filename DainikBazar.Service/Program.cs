@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using DainikBazar.Domain.Managers.Implementations;
-using DainikBazar.Domain.Repository_Interfaces;
+using DainikBazar.Domain.Interfaces;
 using DainikBazar.Domain.Managers.Interfaces;
 using DainikBazar.Storage.Data;
 using DainikBazar.Storage.Repositories;
