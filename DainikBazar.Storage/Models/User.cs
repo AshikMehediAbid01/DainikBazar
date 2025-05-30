@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace DainikBazar.Domain.Models;
+namespace DainikBazar.Storage.Models;
 
 public class User
 {
@@ -16,3 +11,4 @@ public class User
     public ICollection<Order> Order { get; set; } = new List<Order>();
 
 }
+

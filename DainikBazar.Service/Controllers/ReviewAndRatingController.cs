@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
-using DainikBazar.Application.Common.DTOs;
-using DainikBazar.Domain.Entities;
+using AutoMapper;
 using DainikBazar.Domain.Managers.Interfaces;
+using DainikBazar.Service.Models;
+using DomainModels = DainikBazar.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,24 +10,20 @@ namespace DainikBazar.Service.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class ReviewAndRatingController(IReviewManager service) : ControllerBase
+public class ReviewAndRatingController(IReviewManager service, IMapper mapper) : ControllerBase
 {
-    [HttpPost]
-    public async Task<IActionResult> CreateReview([FromBody] ReviewDto reviewAndRating)
+    [HttpPost] 
+    public async Task<IActionResult> CreateReview([FromBody] ReviewAndRating serviceModel)
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
         try
         {
-            var productReview = new ReviewAndRating
-            {
-                Review = reviewAndRating.Review,
-                Rating = reviewAndRating.Rating,
-                ProductId = reviewAndRating.ProductId,
-                UserId = reviewAndRating.UserId // Assumed
-            };
-            await service.CreateNewAsync(productReview);
-            return Ok(productReview);
+            if (serviceModel == null) return BadRequest("Review cannot be null");
+            var domainModel = mapper.Map<DomainModels.ReviewAndRating>(serviceModel);
+
+            await service.CreateNewAsync(domainModel);
+            return Ok(domainModel);
         }
         catch (Exception ex)
         {
@@ -42,8 +39,9 @@ public class ReviewAndRatingController(IReviewManager service) : ControllerBase
         if (ProductId == null) return NotFound();
         try
         {
-            var reviews = await service.GetAllByIdAsync(ProductId.Value);
-            return Ok(reviews);
+            var domainModel = await service.GetAllByIdAsync(ProductId.Value);
+            var serviceModel = mapper.Map<List<ReviewAndRating>>(domainModel);
+            return Ok(serviceModel);
         }
         catch (Exception ex)
         {

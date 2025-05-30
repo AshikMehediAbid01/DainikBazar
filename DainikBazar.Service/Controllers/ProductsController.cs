@@ -2,6 +2,7 @@
 using AutoMapper;
 using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Domain.Managers.Interfaces;
+using DainikBazar.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DainikBazar.Service.Controllers;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using DainikBazar.Application.Common.DTOs;
 using DainikBazar.Domain.Managers.Interfaces;
+using DainikBazar.Service.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DainikBazar.Service.Controllers;
@@ -28,7 +28,7 @@ public class CartController : ControllerBase
             {
                 return Ok( "No Item in the Cart." );
             }
-            var cartDto = _mapper.Map<CartDto>(cart);
+            var cartDto = _mapper.Map<Cart>(cart);
             return Ok( cartDto );
         }
         catch (Exception ex) 

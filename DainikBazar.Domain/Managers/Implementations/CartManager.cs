@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DainikBazar.Domain.Entities;
 using DainikBazar.Domain.Managers.Interfaces;
+using DainikBazar.Domain.Models;
 using DainikBazar.Domain.Repository_Interfaces;
 
 namespace DainikBazar.Domain.Managers.Implementations;

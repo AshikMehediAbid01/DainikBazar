@@ -1,6 +1,5 @@
 ﻿using System.Net.Http;
 using System.Text;
-using DainikBazar.Domain.Entities;
 using DainikBazar.UI.ApiServices.Interfaces;
 using DainikBazar.UI.Models;
 using Newtonsoft.Json;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DainikBazar.Domain.Models;
+namespace DainikBazar.Service.Models;
 
 
 public class Product
