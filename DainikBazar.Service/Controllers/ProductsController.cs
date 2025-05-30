@@ -18,11 +18,8 @@ public class ProductsController(IProductManager service, IMapper mapper) : Contr
     {
         try
         {
-            var domainModel = await service.GetAllAsync();
-            if (domainModel == null || !domainModel.Any()) return NotFound("No products found.");
-
-            var serviceModel = mapper.Map<IEnumerable<Product>>(domainModel);
-            return Ok(serviceModel);
+            var products = await service.GetAllAsync();
+            return Ok(products);
         }
         catch (Exception ex)
         {

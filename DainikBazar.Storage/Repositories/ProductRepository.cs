@@ -18,7 +18,7 @@ public class ProductRepository(AppDbContext db, IMapper mapper) : IProductReposi
         await db.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+public async Task DeleteAsync(int id)
     {
         var domainModel = await GetByIdAsync(id);
         if (domainModel == null) return;

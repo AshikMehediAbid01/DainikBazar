@@ -1,0 +1,14 @@
+@DainikBazar.Services_HostAddress = https://localhost:7155
+
+GET {{DainikBazar.Services_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{DainikBazar.Services_HostAddress}}/api/products
+
+###
+
+GET {{DainikBazar.Services_HostAddress}}/api/products
+
+###
