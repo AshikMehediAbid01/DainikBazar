@@ -1,14 +1,24 @@
 ﻿using AutoMapper;
 using DainikBazar.Service.Models;
-using DomainModels = DainikBazar.Domain.Models;
+using Domains = DainikBazar.Domain.Models;
 
 namespace DainikBazar.Service.Mapping;
 
-public class ServiceMappingProfile :Profile
+public class ServiceMappingProfile : Profile
 {
     public ServiceMappingProfile()
     {
-        CreateMap<ReviewAndRating,DomainModels.ReviewAndRating>().ReverseMap();
-        CreateMap<Product,DomainModels.Product>().ReverseMap();
+
+        CreateMap<ReviewAndRating, Domains.ReviewAndRating>().ReverseMap();
+        CreateMap<Product, Domains.Product>().ReverseMap();
+
+        CreateMap<ReviewAndRating,Domains.ReviewAndRating>().ReverseMap();
+        CreateMap<Cart, Domains.Cart>()
+            .ReverseMap();
+
+        CreateMap<CartItem, Domains.CartItem>()
+            .ReverseMap();
+
+        CreateMap<Order, Domains.Order>().ReverseMap();
     }
 }

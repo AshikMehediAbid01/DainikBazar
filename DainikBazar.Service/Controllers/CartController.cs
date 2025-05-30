@@ -1,84 +1,85 @@
 ﻿using AutoMapper;
-using DainikBazar.Domain.Managers.Interfaces;
 using DainikBazar.Service.Models;
+using DainikBazar.Domain.Managers.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DainikBazar.Service.Controllers;
 
-[Route( "api/[controller]/[action]" )]
+[Route( "api/cart" )]
 [ApiController]
-public class CartController : ControllerBase
+public class CartController(ICartManager cartService, IMapper mapper) : ControllerBase
 {
-    private readonly ICartManager _cartService;
-    private readonly IMapper _mapper;
-    public CartController( ICartManager cartService, IMapper mapper )
-    {
-        _cartService = cartService;
-        _mapper = mapper;
-    }
-
-    [HttpGet("userId")]
-    public async Task<IActionResult> GetCart( string userId )
+    [HttpGet]
+    [Route("{userId}")]
+    public async Task<IActionResult> GetCart(string userId)
     {
         try
         {
             //string userId = ""; //var user = _httpContext.GetUserAsync( User );
-            var cart = await _cartService.GetCartAsync( userId );
+            var cart = await cartService.GetCartAsync(userId);
             if (cart == null)
             {
                 return Ok( "No Item in the Cart." );
             }
-            var cartDto = _mapper.Map<Cart>(cart);
+            var cartDto = mapper.Map<Cart>( cart );
             return Ok( cartDto );
         }
-        catch (Exception ex) 
-        { 
-            return BadRequest( ex.Message );
+        catch (Exception ex)
+        {
+            return StatusCode( 500, ex.Message );
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="addCart"></param>
+    /// <returns></returns>
     [HttpPost]
-    public async Task<IActionResult> AddToCart(string userId, int productId)
+    [Route("")]
+    public async Task<IActionResult> AddToCart( [FromBody] AddCart addCart )//string userId, int productId
     {
         try
         {
             //var userId = ""; //var user = _httpContext.GetUserAsync( User );
-            await _cartService.AddToCartAsync( productId, userId );
+            await cartService.AddToCartAsync( addCart.ProductId, addCart.UserId );
             return Ok( "Product Added to Cart" );
         }
-        catch (InvalidOperationException ex) 
-        { 
+        catch (InvalidOperationException ex)
+        {
             return NotFound( ex.Message );
         }
-        catch (Exception ex) {
-            return StatusCode(500, $"Internal Server Error: {ex.Message}" );
-        }
-    }
-/*
-    [HttpPost]
-    public async Task<IActionResult> UpdateCart( [FromBody] UpdateProductDto updateProduct ) //int cartItemId, int quantity
-    {
-        try
-        {
-            await _cartService.UpdateCartAsync( updateProduct.cartItemId, updateProduct.quantity );
-            return Ok( "Quantity Updated" );
-        }
-        catch ( InvalidOperationException ex)
-        {
-            return NotFound(ex.Message);
-        }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             return StatusCode( 500, $"Internal Server Error: {ex.Message}" );
         }
     }
-*/
-    [HttpDelete("{cartItemId}")]
+
+    [HttpPost]
+    [Route("{cartId}")]
+    public async Task<IActionResult> UpdateCart([FromQuery] string cartId, [FromBody] UpdateCart updateProduct ) //int cartItemId, int quantity
+    {
+        try
+        {
+            await cartService.UpdateCartAsync( updateProduct.CartItemId, updateProduct.Quantity );
+            return Ok( "Quantity Updated" );
+        }
+        catch (InvalidOperationException ex)
+        {
+            return NotFound( ex.Message );
+        }
+        catch (Exception ex)
+        {
+            return StatusCode( 500, $"Internal Server Error: {ex.Message}" );
+        }
+    }
+
+    [HttpDelete( "{cartItemId}" )]
     public async Task<IActionResult> RemoveCart( int cartItemId )
     {
         try
         {
-            await _cartService.RemoveFromCartAsync( cartItemId );
+            await cartService.RemoveFromCartAsync( cartItemId );
             return Ok( "Cart Item Removed" );
         }
         catch (InvalidOperationException ex)

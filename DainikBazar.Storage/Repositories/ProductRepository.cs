@@ -18,7 +18,7 @@ public class ProductRepository(AppDbContext db, IMapper mapper) : IProductReposi
         await db.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+public async Task DeleteAsync(int id)
     {
         var storageModel = await db.Products
             .Include(r => r.ReviewAndRatings)

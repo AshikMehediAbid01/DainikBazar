@@ -1,0 +1,73 @@
+﻿@model DainikBazar.UI.Models.OrderVM
+
+@{
+    ViewData["Title"] = "Buy Now";
+    var culture = new System.Globalization.CultureInfo( "bn-BD" );
+}
+
+<h1>Buy Now</h1>
+
+<hr />
+<div class="row">
+    <h2>Your Order Details</h2>
+    @if (!string.IsNullOrEmpty( ViewBag.ErrorMessage ))
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+    <form asp-action="PlaceOrder" asp-controller="Order" method="post">
+        <div class="form-group mb-2">
+            <label asp-for="ReceiverName" class="mb-1">Receiver Name</label>
+            <input type="text" asp-for="ReceiverName" class="form-control" required />
+            <span asp-validation-for="ReceiverName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="ReceiverPhone" class="mb-1">Receiver Phone</label>
+            <input type="text" asp-for="ReceiverPhone" class="form-control" maxlength="11" required />
+            <span asp-validation-for="ReceiverPhone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="ReceiverAddress" class="mb-1">Receiver Address</label>
+            <textarea asp-for="ReceiverAddress" class="form-control" rows="3" required></textarea>
+            <span asp-validation-for="ReceiverAddress" class="text-danger"></span>
+        </div>
+
+        <div class="form-group mb-2">
+            <label asp-for="PaymentMethod" class="mb-1">Payment Method</label>
+            <select name="PaymentMethod" id="PaymentMethod" class="form-control">
+                <option value="">Select Payment Method</option>
+                <option value="COD" selected="@(Model.PaymentMethod == "COD" ? "selected" : null)">COD</option>
+
+            </select>
+            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+        </div>
+
+        <input type="hidden" asp-for="OrderDate" value="@DateTime.Now" />
+        <input type="hidden" asp-for="OrderStatus" value="Pending" />
+        <input type="hidden" asp-for="SubtotalPrice" value="@Model.SubtotalPrice" />
+        <input type="hidden" asp-for="DeliveryCharge" value="@Model.DeliveryCharge" />
+        <input type="hidden" asp-for="TotalPrice" value="@Model.TotalPrice" />
+
+        <hr />
+        <h4>Your Order Summary</h4>
+        <div>
+            <p><strong>Total Book Price:</strong> @Model.SubtotalPrice.ToString( "C", culture )</p>
+            <p><strong>Delivery Charge:</strong> @Model.DeliveryCharge.ToString( "C", culture )</p>
+            <p><strong>Grand Total:</strong> @Model.TotalPrice.ToString( "C", culture )</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Place Order</button>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync( "_ValidationScriptsPartial" );
+    }
+}

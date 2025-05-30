@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace DainikBazar.Domain.Models;
-
 
 public class Order
 {
@@ -15,10 +8,11 @@ public class Order
     public decimal SubtotalPrice { get; set; }
     public decimal DeliveryCharge { get; set; }
     public decimal TotalPrice => SubtotalPrice + DeliveryCharge;
-    public int ProductId { get; set; }
-    public Product Product { get; set; }
+    public int? ProductId { get; set; }
+    public List<CartItem>? CartItems { get; set; }
+    public int? CartId { get; set; }
     public int Quantity { get; set; }
-    public int UnitPrice { get; set; }
+    public decimal UnitPrice { get; set; }
     public string OrderStatus { get; set; }
     public DateTime OrderDate { get; set; }
     public string PaymentMethod { get; set; }

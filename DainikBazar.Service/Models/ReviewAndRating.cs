@@ -12,7 +12,6 @@ public class ReviewAndRating
     public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     public int ProductId { get; set; }
-
     public string UserId { get; set; }
 
 }

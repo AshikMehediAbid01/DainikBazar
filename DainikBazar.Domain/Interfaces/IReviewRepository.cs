@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DainikBazar.Domain.Models;
+﻿using DainikBazar.Domain.Models;
 
 namespace DainikBazar.Domain.Interfaces;
 

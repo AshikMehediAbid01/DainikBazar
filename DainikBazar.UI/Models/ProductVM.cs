@@ -1,6 +1,4 @@
-﻿using DainikBazar.Domain.Models;
-
-namespace DainikBazar.UI.Models;
+﻿namespace DainikBazar.UI.Models;
 
 public class ProductVM
 {
@@ -13,6 +11,4 @@ public class ProductVM
     public string? ImageUrl { get; set; }
     public ICollection<ReviewAndRatingVM>? ReviewAndRatings { get; set; } = new List<ReviewAndRatingVM>();
 
-    public int? OrderId { get; set; }
-    public Order? Order { get; set; }
 }
