@@ -5,7 +5,7 @@ namespace DainikBazar.Storage.Data;
 
 public class ProductAndUserSeeder
 {
-    public async Task SeedProductsAsync( AppDbContext dbContext )
+    public async Task SeedProductsAsync(AppDbContext dbContext)
     {
         if (await dbContext.Products.AnyAsync())
         {
@@ -42,7 +42,7 @@ public class ProductAndUserSeeder
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task SeedUsersAsync( AppDbContext dbContext )
+    public async Task SeedUsersAsync(AppDbContext dbContext)
     {
         if (await dbContext.Users.AnyAsync())
         {

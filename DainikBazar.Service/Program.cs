@@ -1,13 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using DainikBazar.Domain.Managers.Implementations;
-using DainikBazar.Domain.Interfaces;
-using DainikBazar.Domain.Managers.Interfaces;
-using DainikBazar.Storage.Data;
-using DainikBazar.Storage.Repositories;
+using DainikBazar.Domain.Mapping;
 using DainikBazar.Service.Mapping;
-using DainikBazar.Storage.Mapping;
+using DainikBazar.Storage.Extensions;
+using DainikBazar.Domain.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddConsole().SetMinimumLevel( LogLevel.Information );
 
 // Add services to the container.
 
@@ -16,26 +14,17 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProductManager, ProductManager>();
-builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
-builder.Services.AddScoped<IReviewManager, ReviewManager>();
+// Registration of Managers for DI in Application
+builder.Services.ManagerRegistration();
+
+// Registration of Repositories for DI in Application
+builder.Services.RepositoryRegistration(builder.Configuration);
 
 builder.Services.AddAutoMapper( 
-    typeof( ServiceMappingProfile ),
-    typeof(StorageMappingProfile)
+    typeof( DomainMappingProfile ),
+    typeof( ServiceMappingProfile)
 );
-
-builder.Services.AddScoped<IGenericRepository, GenericRepository>();
-builder.Services.AddScoped<ICartRepository, CartRepository>();
-builder.Services.AddScoped<ICartManager, CartManager>();
-
-
-
 
 var app = builder.Build();
 
@@ -54,14 +43,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-    var seeder = new ProductAndUserSeeder();
-    await seeder.SeedProductsAsync(dbContext);
-    await seeder.SeedUsersAsync( dbContext );
-
-}
+//Seed Data using Storage extension method
+await app.Services.SeedStorageDataAsync();
 
 app.Run();

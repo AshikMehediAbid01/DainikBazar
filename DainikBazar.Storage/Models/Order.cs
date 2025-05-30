@@ -1,4 +1,3 @@
-﻿
 namespace DainikBazar.Storage.Models;
 
 public class Order
@@ -11,6 +10,8 @@ public class Order
     public decimal TotalPrice => SubtotalPrice + DeliveryCharge; 
     public int ProductId { get; set; }
     public Product Product { get; set; }
+    public int CartId { get; set; }
+    public Cart Cart { get; set; }
     public int Quantity { get; set; }
     public int UnitPrice { get; set; }
     public string OrderStatus { get; set; }
