@@ -9,5 +9,6 @@ public class ServiceMappingProfile :Profile
     public ServiceMappingProfile()
     {
         CreateMap<ReviewAndRating,DomainModels.ReviewAndRating>().ReverseMap();
+        CreateMap<Product,DomainModels.Product>().ReverseMap();
     }
 }

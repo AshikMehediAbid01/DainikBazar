@@ -9,5 +9,6 @@ public class StorageMappingProfile : Profile
     public StorageMappingProfile()
     {
         CreateMap<Product, StorageModels.Product>().ReverseMap();
+        CreateMap<ReviewAndRating, StorageModels.ReviewAndRating>().ReverseMap();
     }
 }

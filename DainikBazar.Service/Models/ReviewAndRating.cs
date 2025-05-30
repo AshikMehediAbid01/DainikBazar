@@ -1,8 +1,6 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DainikBazar.Service.Models;
-
 
 public class ReviewAndRating
 {
