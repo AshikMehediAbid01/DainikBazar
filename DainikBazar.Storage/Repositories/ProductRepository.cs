@@ -20,11 +20,13 @@ public class ProductRepository(AppDbContext db, IMapper mapper) : IProductReposi
 
     public async Task DeleteAsync(int id)
     {
-        var domainModel = await GetByIdAsync(id);
-        if (domainModel == null) return;
-        var StorageModel = mapper.Map<Product>(domainModel);
+        var storageModel = await db.Products
+            .Include(r => r.ReviewAndRatings)
+            .FirstOrDefaultAsync(c => c.ProductId == id);
 
-        db.Products.Remove(StorageModel);
+        if (storageModel == null) return;
+
+        db.Products.Remove(storageModel);
         await db.SaveChangesAsync();
     }
 
@@ -34,7 +36,7 @@ public class ProductRepository(AppDbContext db, IMapper mapper) : IProductReposi
         var domainModels = mapper.Map<IEnumerable<DomainModels.Product>>(storageMOdel);
         return domainModels;
     }
-       
+
     public async Task<DomainModels.Product?> GetByIdAsync(int id)
     {
         var storageModel = await db.Products
@@ -46,7 +48,7 @@ public class ProductRepository(AppDbContext db, IMapper mapper) : IProductReposi
         var domainModel = mapper.Map<DomainModels.Product>(storageModel);
         return domainModel;
     }
-     
+
     public async Task UpdateAsync(DomainModels.Product domainModel)
     {
         var storageModel = mapper.Map<Product>(domainModel);
