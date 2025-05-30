@@ -1,4 +1,6 @@
-﻿namespace DainikBazar.UI.Models;
+﻿
+
+namespace DainikBazar.UI.Models;
 
 public class ProductVM
 {
@@ -7,6 +9,7 @@ public class ProductVM
     public string? Description { get; set; }
     public required decimal Price { get; set; }
     public int Quantity { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
     public string? ImageUrl { get; set; }
+    public ICollection<ReviewAndRatingVM>? ReviewAndRatings { get; set; } = new List<ReviewAndRatingVM>();
 }

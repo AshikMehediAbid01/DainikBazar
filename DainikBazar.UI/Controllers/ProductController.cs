@@ -1,36 +1,144 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text;
+using System.Text.Json.Serialization;
+using DainikBazar.UI.ApiServices.Interfaces;
 using DainikBazar.UI.Models;
+
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace DainikBazar.UI.Controllers;
 
-public class ProductController : Controller
+public class ProductController(IProductApiService apiService) : Controller
 {
-    Uri baseAddress = new Uri("https://localhost:7155/api/");
-    private readonly HttpClient _httpClient;
-    public ProductController()
-    {
-        _httpClient = new HttpClient();
-        _httpClient.BaseAddress = baseAddress;
-    }
-
     [HttpGet]
     public IActionResult Index()
     {
-        List<ProductVM> products = new List<ProductVM>();
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + "Products/GetAllProducts").Result;
+        var products = apiService.GetAllProductsAsync().Result;
 
-        if (response.IsSuccessStatusCode)
+        if (products == null)
         {
-            var data = response.Content.ReadAsStringAsync().Result;
-            products = JsonConvert.DeserializeObject<List<ProductVM>>(data);
-        }
-        else
-        {
-            ViewBag.ErrorMessage = "Error while fetching data from API";
+            TempData["ErrorMessage"] = "No products found";
+            return View(new List<ProductVM>());
         }
 
         return View(products);
     }
+
+
+
+
+
+    [HttpGet]
+    public IActionResult CreateProduct()
+    {
+        return View();
+    }
+    [HttpPost]
+    public IActionResult CreateProduct(ProductVM product)
+    {
+        if (!ModelState.IsValid) return View(product);
+
+        bool isSuccess = apiService.CreateProductAsync(product).Result;
+
+
+        if (isSuccess)
+        {
+            TempData["SuccessMessage"] = "New Product Created successfully";
+            return RedirectToAction(nameof(Index));
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "Something went wrong";
+            return View(product);
+        }
+
+
+    }
+
+
+
+
+
+    // Product Details
+    [HttpGet]
+    public IActionResult DetailsProduct(int id)
+    {
+        var productDto = apiService.GetProductByIdAsync(id).Result;
+
+        if (productDto == null)
+        {
+            TempData["ErrorMessage"] = "Product not found";
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(productDto);
+    }
+
+
+
+
+    // Update Product
+    [HttpGet]
+    public IActionResult UpdateProduct(int id)
+    {
+        var product = apiService.GetProductByIdAsync(id).Result;
+
+        if (product == null)
+        {
+            TempData["ErrorMessage"] = "Product not found";
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(product);
+    }
+
+    [HttpPost]
+    public IActionResult UpdateProduct(ProductVM product)
+    {
+        if (!ModelState.IsValid) return View(product);
+
+        bool isSuccess = apiService.UpdateProductAsync(product).Result;
+
+        if (isSuccess)
+        {
+            TempData["SuccessMessage"] = "Product Updated successfully";
+            return RedirectToAction(nameof(Index));
+        }
+        else
+        {
+            TempData["ErrorMessage"] = "Something went wrong";
+            return View(product);
+        }
+
+    }
+
+
+    // Delete Product
+    [HttpGet]
+    public IActionResult DeleteProduct(int id)
+    {
+        var product = apiService.GetProductByIdAsync(id).Result;
+
+        if (product == null)
+        {
+            TempData["ErrorMessage"] = "Product not found";
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View(product);
+    }
+
+    [HttpPost, ActionName("DeleteProduct")]
+    public IActionResult DeleteProductConfirmed(int id)
+    {
+        bool isSuccess = apiService.DeleteProductAsync(id).Result;
+
+        if (isSuccess)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        return View();
+    }
+
 }

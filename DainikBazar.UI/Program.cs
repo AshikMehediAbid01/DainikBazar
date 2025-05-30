@@ -1,5 +1,13 @@
+
+using DainikBazar.UI.ApiServices.Implementations;
+using DainikBazar.UI.ApiServices.Interfaces;
+
+
 using DainikBazar.UI.Controllers;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -8,7 +16,13 @@ builder.Services.AddControllersWithViews();
 //    client.BaseAddress = new Uri( "https://localhost:7155/api/" );
 //} );
 
+builder.Services.AddHttpClient<IProductApiService, ProductApiService>();
+builder.Services.AddHttpClient<IReviewApiService, ReviewApiService>();
+
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
