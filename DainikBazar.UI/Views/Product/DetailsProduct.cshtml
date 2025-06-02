@@ -2,6 +2,16 @@
 
 @{
     ViewData["Title"] = "DetailsProduct";
+
+    var totalRating = 0;
+    var avgRating = 0.0;
+    if(Model.ReviewAndRatings != null && Model.ReviewAndRatings.Any())
+    {
+        totalRating = Model.ReviewAndRatings.Count();
+        avgRating = Math.Round(Model.ReviewAndRatings.Average((r => r.Rating)), 1);
+    }
+     
+
 }
 
 
@@ -65,6 +75,36 @@
 
  
 <div class="mt-4">
+
+
+    <div class="row">
+        <div class="col-6 mb-3"><h2>Reviews and Ratings</h2></div>
+
+        @if (totalRating != 0)
+        {
+            <div class="col-6">
+                <h2 class="text-end"><span class="fs-1">@avgRating</span><span class="fs-3 text-secondary">/5</span></h2>
+                <h3 class="text-end">
+                    
+                    @for (int i = 0; i < (int)avgRating; i++)
+                    {
+                        <i class="fa fa-star text-warning"></i>
+                    }
+                    @if (avgRating % 1 != 0)
+                    {
+                        <i class="fa-solid fa-star-half-stroke text-warning"></i>
+                    }
+                    @for (int i = (int)Math.Ceiling((double)avgRating); i < 5; i++)
+                    {
+                        <i class="fa fa-star text-secondary"></i>
+                    }
+
+                    <span>(@totalRating)</span>
+                </h3>
+            </div>
+        }
+
+    </div>
 
     <div class="mb-3">
         <a asp-action="CreateReview" asp-controller="ReviewAndRatingUI" class="btn btn-primary btn-sm" asp-route-Id="@Model.ProductId">
