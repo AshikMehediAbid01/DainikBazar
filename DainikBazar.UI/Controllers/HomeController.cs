@@ -1,32 +1,32 @@
 using System.Diagnostics;
+using DainikBazar.UI.ApiServices.Interfaces;
 using DainikBazar.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DainikBazar.UI.Controllers
+namespace DainikBazar.UI.Controllers;
+
+public class HomeController(IProductApiService apiService, ILogger<HomeController> _logger) : Controller
 {
-    public class HomeController : Controller
+    [HttpGet]
+    public IActionResult Index()
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        var products = apiService.GetAllProductsAsync().Result;
+        if (products == null)
         {
-            _logger = logger;
+            TempData["ErrorMessage"] = "No products found";
+            return View(new List<ProductVM>());
         }
+        return View(products);
+    }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+    public IActionResult Privacy()
+    {
+        return View();
+    }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

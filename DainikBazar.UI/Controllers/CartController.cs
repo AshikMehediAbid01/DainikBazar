@@ -26,7 +26,7 @@ public class CartController : Controller
     public async Task<IActionResult> Index()
     {
         var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"Cart/GetCart/userId?userId={userId}").Result;
+        var response = await _httpClient.GetAsync(_httpClient.BaseAddress + $"Cart/GetCart/userId?userId={userId}");
         var cartVM = new CartVM();
         if (response.IsSuccessStatusCode)
         {
@@ -51,7 +51,7 @@ public class CartController : Controller
         //var content = new FormUrlEncodedContent( value );
         var payload = new { cartItemId, quantity };
         var content = new StringContent( JsonConvert.SerializeObject( payload ), Encoding.UTF8, "application/json" );
-        var response = _httpClient.PostAsync( _httpClient.BaseAddress + "Cart/UpdateCart", content ).Result;
+        var response = await _httpClient.PostAsync(_httpClient.BaseAddress + "Cart/UpdateCart", content);
         if (response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -70,7 +70,7 @@ public class CartController : Controller
     {
         var payload = new { cartItemId };
         var content = new StringContent(JsonConvert.SerializeObject( payload ), Encoding.UTF8, "application/json");
-        var response = _httpClient.DeleteAsync( _httpClient.BaseAddress + $"Cart/RemoveCart/{cartItemId}" ).Result;
+        var response = await _httpClient.DeleteAsync( _httpClient.BaseAddress + $"Cart/RemoveCart/{cartItemId}" );
         if (response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
