@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using DainikBazar.UI.ApiServices.Interfaces;
 using DainikBazar.UI.Models;
 
@@ -129,9 +130,9 @@ public class ProductController(IProductApiService apiService) : Controller
     }
 
     [HttpPost, ActionName("DeleteProduct")]
-    public IActionResult DeleteProductConfirmed(int id)
+    public async Task<IActionResult> DeleteProductConfirmed(int id)
     {
-        bool isSuccess = apiService.DeleteProductAsync(id).Result;
+        bool isSuccess = await apiService.DeleteProductAsync(id);
 
         if (isSuccess)
         {

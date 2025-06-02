@@ -1,6 +1,6 @@
 ﻿using AutoMapper; 
-using DainikBazar.Domain.Models;
-using StorageModels = DainikBazar.Storage.Models;
+using DomainModels = DainikBazar.Domain.Models;
+using DainikBazar.Storage.Models;
 
 namespace DainikBazar.Storage.Mapping;
 
@@ -8,6 +8,7 @@ public class StorageMappingProfile : Profile
 {
     public StorageMappingProfile()
     {
-        CreateMap<Product, StorageModels.Product>().ReverseMap();
+        CreateMap<Product, DomainModels.Product>().ReverseMap();
+        CreateMap<ReviewAndRating, DomainModels.ReviewAndRating>().ReverseMap();
     }
 }

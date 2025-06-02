@@ -81,6 +81,8 @@ public class ProductsController(IProductManager service, IMapper mapper) : Contr
         try
         {
             if (id == null || id <= 0) return BadRequest("Product id Invalid");
+            await service.DeleteAsync(id.Value);
+
             return NoContent();
         }
         catch (Exception ex)

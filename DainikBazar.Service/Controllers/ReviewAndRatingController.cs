@@ -17,8 +17,8 @@ public class ReviewAndRatingController(IReviewManager service, IMapper mapper) :
     {
         if (!ModelState.IsValid) return BadRequest(ModelState);
 
-        try
-        {
+        try 
+        {   
             if (serviceModel == null) return BadRequest("Review cannot be null");
             var domainModel = mapper.Map<DomainModels.ReviewAndRating>(serviceModel);
 
