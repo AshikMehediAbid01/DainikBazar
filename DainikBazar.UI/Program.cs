@@ -18,6 +18,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient<IProductApiService, ProductApiService>();
 builder.Services.AddHttpClient<IReviewApiService, ReviewApiService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 
 var app = builder.Build();

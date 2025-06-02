@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace DainikBazar.UI.Controllers;
 
-public class ProductController(IProductApiService apiService) : Controller
+public class ProductController(IProductApiService apiService, IImageService _imageService) : Controller
 {
     [HttpGet]
     public IActionResult Index()
@@ -35,9 +35,28 @@ public class ProductController(IProductApiService apiService) : Controller
         return View();
     }
     [HttpPost]
-    public IActionResult CreateProduct(ProductVM product)
+    public async Task<IActionResult> CreateProduct(ProductVM product, IFormFile? ImageUrl)
     {
         if (!ModelState.IsValid) return View(product);
+
+        // Handle image upload
+        if (ImageUrl != null && ImageUrl.Length > 0)
+        {
+            try
+            {
+                product.ImageUrl = await _imageService.ImageMappingAsync(ImageUrl);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("ImageUpload", $"Image upload failed: {ex.Message}");
+                return View(product);
+            }
+        }
+        else
+        {
+            product.ImageUrl = "Images/NoImageFound.jpg";
+        }
+
 
         bool isSuccess = apiService.CreateProductAsync(product).Result;
 
