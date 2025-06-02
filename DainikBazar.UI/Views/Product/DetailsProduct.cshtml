@@ -10,66 +10,90 @@
         totalRating = Model.ReviewAndRatings.Count();
         avgRating = Math.Round(Model.ReviewAndRatings.Average((r => r.Rating)), 1);
     }
-     
+
+    var role = "User";
 
 }
 
 
 <h1>Product Details</h1>
+<hr />
 
-<div>
-    
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-    </dl>
+
+<div class="row">
+
+    <div class="col-8">
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ProductId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ProductId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CreatedAt)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ImageUrl)
+            </dd>
+        </dl>
+
+        <div class="text-end">
+
+            @if (role == "Admin")
+            {
+                <a asp-action="UpdateProduct" class="btn btn-warning btn-sm" asp-route-id="@Model.ProductId">Edit</a>
+                <a asp-action="Index" class="btn btn-outline-warning btn-sm">Back to List</a>
+            }
+            else
+            {
+                <a asp-action = "BuyNow" asp-controller = "Order" class="btn btn-primary btn-lg" asp-route-id="@Model.ProductId">Buy Now</a>
+                <a asp-action="Index" class="btn btn-warning btn-lg">Add to Cart</a>
+            }
+
+        </div>
+
+    </div>
+    <div class="col-4">
+        <p class="text-center">Image</p>
+    </div>
+
 </div>
 
-<div>
-    <a asp-action="UpdateProduct" class="btn btn-warning btn-sm" asp-route-id="@Model.ProductId">Edit</a>
-    <a asp-action="Index" class="btn btn-outline-warning btn-sm">Back to List</a>
-</div>
+
+
+
 <hr />
 
 

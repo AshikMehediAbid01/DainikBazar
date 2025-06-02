@@ -11,7 +11,7 @@ public class Product
     public string? ImageUrl { get; set; }
 
     public ICollection<ReviewAndRating>? ReviewAndRatings { get; set; } = [];
-    public int? OrderId { get; set; }
+   // public int? OrderId { get; set; }
     public Order? Order { get; set; }
 
 }

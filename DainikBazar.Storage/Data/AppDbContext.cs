@@ -27,24 +27,24 @@ public class AppDbContext : DbContext
 
 
         modelBuilder.Entity<Cart>()
-            .HasOne( c => c.User )
-            .WithMany( u => u.Cart )
-            .HasForeignKey( c => c.UserId );
+            .HasOne(c => c.User)
+            .WithMany(u => u.Cart)
+            .HasForeignKey(c => c.UserId);
 
         modelBuilder.Entity<Order>()
-            .HasOne( o => o.User )
-            .WithMany(u => u.Order )
-            .HasForeignKey( o => o.UserId );
+            .HasOne(o => o.User)
+            .WithMany(u => u.Order)
+            .HasForeignKey(o => o.UserId);
 
         modelBuilder.Entity<CartItem>()
-            .HasOne( ci => ci.Cart )
-            .WithMany( c=> c.CartItems )
-            .HasForeignKey(ci => ci.CartId );
+            .HasOne(ci => ci.Cart)
+            .WithMany(c => c.CartItems)
+            .HasForeignKey(ci => ci.CartId);
 
-        modelBuilder.Entity<Product>()
-            .HasOne(p => p.Order)
-            .WithOne(o => o.Product)
-            .HasForeignKey<Product>(p => p.OrderId);
+        modelBuilder.Entity<Order>()
+            .HasOne(o => o.Product)
+            .WithOne(p => p.Order)
+            .HasForeignKey<Order>(o => o.ProductId);
 
     }
 }
