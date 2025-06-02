@@ -9,4 +9,6 @@ public class ProductVM
     public int Quantity { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public string? ImageUrl { get; set; }
+    public ICollection<ReviewAndRatingVM>? ReviewAndRatings { get; set; } = [];
+
 }
