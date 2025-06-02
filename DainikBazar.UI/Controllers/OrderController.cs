@@ -18,7 +18,7 @@ public class OrderController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        ICollection<OrderVM> orderVM = new List<OrderVM>();
+        ICollection<OrderVM> orderVM = [];
         var response = _httpClient.GetAsync( _httpClient.BaseAddress + "Order/GetAllOrders" ).Result;
         if(response.IsSuccessStatusCode)
         {
@@ -35,13 +35,13 @@ public class OrderController : Controller
     [HttpGet]
     public IActionResult OrderHistory()
     {
-        ICollection<OrderVM> orderVM = new List<OrderVM>();
+        ICollection<OrderVM> orderVM = [];
         var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
         var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"Order/GetOrderByCustomerId/userId?userId={userId}").Result;
         if (response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
-            orderVM = JsonConvert.DeserializeObject<ICollection<OrderVM>>( viewData );
+            orderVM = JsonConvert.DeserializeObject<ICollection<OrderVM>>(viewData);
         }
         else
         {
@@ -53,7 +53,7 @@ public class OrderController : Controller
     [HttpGet]
     public IActionResult GetOrderBySeller()
     {
-        ICollection<OrderVM> orderVM = new List<OrderVM>();
+        ICollection<OrderVM> orderVM = [];
         var sellerId = "";
         var response = _httpClient.GetAsync( _httpClient.BaseAddress + $"Order/GetOrderByCustomerId/sellerId?sellerId={sellerId}" ).Result;
         if (response.IsSuccessStatusCode)

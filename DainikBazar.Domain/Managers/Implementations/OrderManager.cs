@@ -7,13 +7,12 @@ namespace DainikBazar.Domain.Managers.Implementations;
 
 public class OrderManager(
         IOrderRepository orderRepository,
-        IGenericRepository repository,
         ILogger<OrderManager> logger
     ) : IOrderManager
 {
     public async Task<List<Order>> GetAllOrdersAsync()
     {
-        return await repository.GetAllAsync<Order>();
+        return await orderRepository.GetAllOrdersAsync();
     }
     public async Task<List<Order>> GetOrdersByCustomerIdAsync( string userId )
     {
@@ -25,13 +24,13 @@ public class OrderManager(
     }
     public async Task ManageOrdersAsync( int orderId, string orderHistory )
     {
-        Order order = await repository.GetByIdAsync<Order>( orderId);
+        Order order = await orderRepository.GetOrderByIdAsync( orderId);
         if( order == null)
         {
             throw new InvalidOperationException( "Order not found!" );
         }
         order.OrderHistory = orderHistory;
-        await repository.SaveChangesAsync();
+        await orderRepository.SaveChangesAsync();
     }
     public async Task<Order> GetCartByUserAsync(string userId )
     {
@@ -55,21 +54,21 @@ public class OrderManager(
     }
     public async Task UpdateCartStausAsync( int cartId, string cartStatus )
     {
-        Cart cart = await repository.GetByIdAsync<Cart>( cartId );
+        Cart cart = await orderRepository.GetCartByIdAsync( cartId );
         if(cart == null || cart.CartStatus == "InActive")
         {
             throw new InvalidOperationException( "Cart not available!" );
         }
         cart.CartStatus = cartStatus;
-        await repository.SaveChangesAsync();
+        await orderRepository.SaveChangesAsync();
     }
     public async Task PlaceOrderAsync(Order order)
     {
         try
         {
             order.OrderHistory = "Pending";
-            await repository.AddAsync<Order>( order );
-            await repository.SaveChangesAsync();
+            await orderRepository.AddOrderAsync( order );
+            await orderRepository.SaveChangesAsync();
         }
         catch (Exception ex)
         {
@@ -79,7 +78,7 @@ public class OrderManager(
 
     public async Task<Order> BuyNowAsync(int productId, int quantity)
     {
-        Product product = await repository.GetByIdAsync<Product>( productId );
+        Product product = await orderRepository.GetProductByIdAsync( productId );
         if(product == null)
         {
             throw new InvalidOperationException( "Product not found!" );

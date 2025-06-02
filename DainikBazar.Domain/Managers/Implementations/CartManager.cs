@@ -4,7 +4,7 @@ using DainikBazar.Domain.Models;
 
 namespace DainikBazar.Domain.Managers.Implementations;
 
-public class CartManager(IGenericRepository repository, ICartRepository cartRepository) : ICartManager
+public class CartManager(ICartRepository cartRepository) : ICartManager
 {
 
     public async Task<Cart> GetCartAsync(string userId)
@@ -13,7 +13,7 @@ public class CartManager(IGenericRepository repository, ICartRepository cartRepo
     }
     public async Task AddToCartAsync( int productId, string userId )
     {
-        var product = await repository.GetByIdAsync<Product>( productId );
+        var product = await cartRepository.GetProductByIdAsync( productId );
         if ( product == null ) 
         {
             throw new InvalidOperationException( "Product Not Found!" );
@@ -27,49 +27,49 @@ public class CartManager(IGenericRepository repository, ICartRepository cartRepo
             Quantity = 1
         };
 
-        if (cart == null)
+        if(cart == null)
         {
-            cart = new Cart { UserId = userId, CartStatus = "Active" };
-
-            await repository.AddAsync<Cart>( cart );
-        }
-        var existingItem = cart.CartItems.FirstOrDefault( ci => ci.ProductId == productId );
-        if (existingItem == null)
-        {
-            cart.CartItems.Add( cartItem );
+            cart = new Cart { UserId = userId, CartStatus = "Active", CartItems = [] };
+            cart.CartItems.Add(cartItem);
+            cart.ActualPrice = cart.CartItems.Sum(item => item.Quantity * item.UnitPrice);
+            await cartRepository.AddCartAsync(cart);
         }
         else
         {
-            existingItem.Quantity += 1;
+            var existingItem = cart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
+            if(existingItem == null)
+            {
+                cart.CartItems.Add(cartItem);
+            }
+            else
+            {
+                existingItem.Quantity += 1;
+            }
+            cart.ActualPrice = cart.CartItems.Sum(item => item.Quantity * item.UnitPrice);
+            await cartRepository.UpdateAsync(cart);
+            await cartRepository.SaveChangesAsync();
         }
-
-        await repository.SaveChangesAsync();
     }
     public async Task UpdateCartAsync( int cartItemId, int quantity )
     {
-        var cartItem = await repository.GetByIdAsync<CartItem>( cartItemId );
+        var cartItem = await cartRepository.GetCartItemByIdAsync( cartItemId );
         if ( cartItem == null )
         {
             throw new InvalidOperationException( "Product Not Found!" );
         }
         cartItem.Quantity = quantity;
-        await repository.SaveChangesAsync();
+        await cartRepository.SaveChangesAsync();
     }
     public async Task RemoveFromCartAsync( int cartItemId )
     {
-        var cartItem = await repository.GetByIdAsync<CartItem>( cartItemId );
-        if (cartItem == null)
-        {
-            throw new InvalidOperationException( "Product Not Found!" );
-        }
-        await repository.DeleteAsync( cartItem );
-        await repository.SaveChangesAsync();
+        await cartRepository.DeleteAsync( cartItemId );
+        await cartRepository.SaveChangesAsync();
     }
 
     public async Task MakeCartStatusActive(string userId)
     {
         Cart cart = await cartRepository.GetProcessingCartAsync( userId );
         cart.CartStatus = "Active";
-        await repository.SaveChangesAsync();
+        await cartRepository.SaveChangesAsync();
     }
 }

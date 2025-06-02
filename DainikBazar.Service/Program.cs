@@ -1,4 +1,4 @@
-using DainikBazar.Domain.Mapping;
+using DainikBazar.Storage.Mapping;
 using DainikBazar.Service.Mapping;
 using DainikBazar.Storage.Extensions;
 using DainikBazar.Domain.Extensions;
@@ -22,7 +22,7 @@ builder.Services.ManagerRegistration();
 builder.Services.RepositoryRegistration(builder.Configuration);
 
 builder.Services.AddAutoMapper( 
-    typeof( DomainMappingProfile ),
+    typeof( StorageMappingProfile ),
     typeof( ServiceMappingProfile)
 );
 

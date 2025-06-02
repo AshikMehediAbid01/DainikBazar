@@ -9,9 +9,5 @@ public class Product
     public int Quantity { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public string? ImageUrl { get; set; }
-
     public ICollection<ReviewAndRating>? ReviewAndRatings { get; set; } = new List<ReviewAndRating>();
-    public int? OrderId { get; set; }
-    public Order Order { get; set; }
-
 }
