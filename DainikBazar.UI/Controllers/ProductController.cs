@@ -6,6 +6,7 @@ using DainikBazar.UI.Models;
 
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DainikBazar.UI.Controllers;
 
@@ -99,9 +100,9 @@ public class ProductController(IProductApiService apiService, IImageService _ima
 
     // Update Product
     [HttpGet]
-    public IActionResult UpdateProduct(int id)
+    public async Task<IActionResult> UpdateProduct(int id)
     {
-        var product = apiService.GetProductByIdAsync(id).Result;
+        var product = await apiService.GetProductByIdAsync(id);
 
         if (product == null)
         {
@@ -113,9 +114,19 @@ public class ProductController(IProductApiService apiService, IImageService _ima
     }
 
     [HttpPost]
-    public IActionResult UpdateProduct(ProductVM product)
+    public async Task<IActionResult> UpdateProduct(ProductVM product, IFormFile? ImageUrl)
     {
         if (!ModelState.IsValid) return View(product);
+
+        try
+        {
+            product.ImageUrl = await _imageService.ImageMappingAsync(ImageUrl);
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("ImageUpload", $"Image upload failed: {ex.Message}");
+            return View(product);
+        }
 
         bool isSuccess = apiService.UpdateProductAsync(product).Result;
 
