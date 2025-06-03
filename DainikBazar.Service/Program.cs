@@ -22,8 +22,8 @@ builder.Services.ManagerRegistration();
 builder.Services.RepositoryRegistration(builder.Configuration);
 
 builder.Services.AddAutoMapper( 
-    typeof( StorageMappingProfile ),
-    typeof( ServiceMappingProfile)
+    typeof(DainikBazar.Storage.Mapping.MappingProfile ),
+    typeof(DainikBazar.Service.Mapping.MappingProfile)
 );
 
 var app = builder.Build();

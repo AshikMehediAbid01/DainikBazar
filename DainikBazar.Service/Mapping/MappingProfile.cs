@@ -4,9 +4,9 @@ using Domains = DainikBazar.Domain.Models;
 
 namespace DainikBazar.Service.Mapping;
 
-public class ServiceMappingProfile : Profile
+public class MappingProfile : Profile
 {
-    public ServiceMappingProfile()
+    public MappingProfile()
     {
 
         CreateMap<ReviewAndRating, Domains.ReviewAndRating>().ReverseMap();
