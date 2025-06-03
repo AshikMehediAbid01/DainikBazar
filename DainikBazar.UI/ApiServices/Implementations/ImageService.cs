@@ -16,7 +16,7 @@ public class ImageService : IImageService
         {
             await imagefile.CopyToAsync(stream);
         }
-        return $"/images/{fileName}";
+        return $"Images/{fileName}";
     }
 
 

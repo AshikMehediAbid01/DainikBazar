@@ -54,11 +54,11 @@ public class ProductController(IProductApiService apiService, IImageService _ima
         }
         else
         {
-            product.ImageUrl = "Images/NoImageFound.jpg";
+            product.ImageUrl = "Images/NoImageFound.jpg"; 
         }
 
 
-        bool isSuccess = apiService.CreateProductAsync(product).Result;
+        bool isSuccess = await apiService.CreateProductAsync(product);
 
 
         if (isSuccess)
