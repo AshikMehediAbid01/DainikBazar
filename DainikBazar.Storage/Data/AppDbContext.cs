@@ -9,9 +9,9 @@ public class AppDbContext : DbContext
     {
     }
     public DbSet<User> Users { get; set; }
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<Cart> Carts { get; set; }
-    public DbSet<CartItem> CartItems { get; set; }
+   // public DbSet<Order> Orders { get; set; }
+  //  public DbSet<Cart> Carts { get; set; }
+   // public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ReviewAndRating> ReviewAndRatings { get; set; }
 
@@ -26,7 +26,7 @@ public class AppDbContext : DbContext
             .HasForeignKey(b => b.ProductId);
 
 
-        modelBuilder.Entity<Cart>()
+/*        modelBuilder.Entity<Cart>()
             .HasOne(c => c.User)
             .WithMany(u => u.Cart)
             .HasForeignKey(c => c.UserId);
@@ -35,16 +35,16 @@ public class AppDbContext : DbContext
             .HasOne(o => o.User)
             .WithMany(u => u.Order)
             .HasForeignKey(o => o.UserId);
-/*
+*//*
         modelBuilder.Entity<CartItem>()
             .HasOne(ci => ci.Cart)
             .WithMany(c => c.CartItems)
             .HasForeignKey(ci => ci.CartId);
-*/
+*//*
         modelBuilder.Entity<Order>()
             .HasOne(o => o.Product)
             .WithOne(p => p.Order)
             .HasForeignKey<Order>(o => o.ProductId);
-
+*/
     }
 }

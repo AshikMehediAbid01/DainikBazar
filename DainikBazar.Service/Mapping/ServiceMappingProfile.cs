@@ -13,12 +13,13 @@ public class ServiceMappingProfile : Profile
         CreateMap<Product, Domains.Product>().ReverseMap();
 
         CreateMap<ReviewAndRating,Domains.ReviewAndRating>().ReverseMap();
-        CreateMap<Cart, Domains.Cart>()
-            .ReverseMap();
+        /*        CreateMap<Cart, Domains.Cart>()
+                    .ReverseMap();
 
-        CreateMap<CartItem, Domains.CartItem>()
-            .ReverseMap();
+                CreateMap<CartItem, Domains.CartItem>()
+                    .ReverseMap();
 
-        CreateMap<Order, Domains.Order>().ReverseMap();
+                CreateMap<Order, Domains.Order>().ReverseMap();
+        */
     }
 }
