@@ -44,7 +44,7 @@ public class OrderManager(
         logger.LogInformation( $"CartId: {cart.Id}, SubtotalPrice: {cart.TotalPrice}, User: {cart.UserId}" );
         Order order = new Order
         {
-            CartId = cart.Id,
+          //  CartId = cart.Id,
             SubtotalPrice = cart.TotalPrice,
             DeliveryCharge = 80,
             UserId = cart.UserId,

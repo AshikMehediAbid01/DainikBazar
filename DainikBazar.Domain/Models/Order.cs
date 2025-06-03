@@ -9,8 +9,8 @@ public class Order
     public decimal DeliveryCharge { get; set; }
     public decimal TotalPrice => SubtotalPrice + DeliveryCharge;
     public int? ProductId { get; set; }
-    public List<CartItem>? CartItems { get; set; }
-    public int? CartId { get; set; }
+//    public List<CartItem>? CartItems { get; set; }
+ //   public int? CartId { get; set; }
     public int Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public string OrderStatus { get; set; }

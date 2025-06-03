@@ -88,7 +88,7 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
         try 
         {
             var order = await orderService.GetCartByUserAsync( userId );
-            if (order.CartId == 0)
+/*            if (order.CartId == 0)
             {
                 order.CartId = null;
             }
@@ -99,7 +99,7 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
             if (order.CartId.HasValue)
             {
                 await orderService.UpdateCartStausAsync( order.CartId.Value, "Processing" );
-            }
+            }*/
             var orderDto = mapper.Map<Order>( order );
             return Ok( orderDto );
         }
@@ -119,10 +119,10 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
         try 
         {
             var order = await orderService.BuyNowAsync( buyNow.ProductId, buyNow.Quantity );
-            if (order.CartId == 0)
+/*            if (order.CartId == 0)
             {
                 order.CartId = null;
-            }
+            }*/
             if (order.ProductId == 0)
             {
                 order.ProductId = null;
@@ -164,7 +164,7 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
         try
         { 
             var order = mapper.Map<Domains.Order>( orderDto );
-            if (orderDto.CartId == 0)
+/*            if (orderDto.CartId == 0)
             {
                 order.CartId = null;
             }
@@ -177,7 +177,7 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
             if (order.CartId.HasValue)
             {
                 await orderService.UpdateCartStausAsync( order.CartId.Value, "InActive" );
-            }
+            }*/
             return Ok("Your Order Is Placed Successfully");
         }
         catch (DbException ex)

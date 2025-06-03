@@ -9,6 +9,8 @@ public class ProductManager(IProductRepository productRepo, IGenericRepository g
     public async Task CreateNewAsync(Product product)
     {
         // await genericRepo.AddAsync<Product>(product);
+
+        product.ProductguId = Guid.NewGuid().ToString();
         await productRepo.CreateNewAsync(product);
     }
 

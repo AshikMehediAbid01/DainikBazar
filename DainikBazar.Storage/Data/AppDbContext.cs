@@ -35,12 +35,12 @@ public class AppDbContext : DbContext
             .HasOne(o => o.User)
             .WithMany(u => u.Order)
             .HasForeignKey(o => o.UserId);
-
+/*
         modelBuilder.Entity<CartItem>()
             .HasOne(ci => ci.Cart)
             .WithMany(c => c.CartItems)
             .HasForeignKey(ci => ci.CartId);
-
+*/
         modelBuilder.Entity<Order>()
             .HasOne(o => o.Product)
             .WithOne(p => p.Order)

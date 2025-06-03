@@ -3,6 +3,7 @@
 public class ProductVM
 {
     public int ProductId { get; set; }
+    public string? ProductguId { get; set; }
     public required string Name { get; set; }
     public string? Description { get; set; }
     public required decimal Price { get; set; }
