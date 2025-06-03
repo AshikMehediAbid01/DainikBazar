@@ -12,9 +12,9 @@ public class OrderRepository( AppDbContext dbContext, IMapper mapper ) : IOrderR
     public async Task<List<Order>> GetOrdersByCustomerIdAsync( string userId )
     {
         var orderList = await dbContext.Orders
-            .Include( o => o.Cart )
-            .ThenInclude( c => c.CartItems )
-            .ThenInclude( ci => ci.Product )
+        //    .Include( o => o.Cart )
+         //   .ThenInclude( c => c.CartItems )
+         //   .ThenInclude( ci => ci.Product )
             .Where( o => o.UserId == userId )
             .OrderByDescending(o => o.OrderDate )
             .ToListAsync();
@@ -24,9 +24,9 @@ public class OrderRepository( AppDbContext dbContext, IMapper mapper ) : IOrderR
     public async Task<List<Order>> GetOrdersBySellerIdAsync( string sellerId )
     {
         var orderList = await dbContext.Orders
-            .Include( o => o.Cart )
-            .ThenInclude( c => c.CartItems )
-            .ThenInclude( ci => ci.Product )
+           // .Include( o => o.Cart )
+          //  .ThenInclude( c => c.CartItems )
+          //  .ThenInclude( ci => ci.Product )
             //.Where( p => p.SellerId == sellerId )
             .OrderByDescending (o => o.OrderDate )
             .ToListAsync();
