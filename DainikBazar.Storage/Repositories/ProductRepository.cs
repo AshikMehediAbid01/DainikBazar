@@ -13,7 +13,7 @@ public class ProductRepository(AppDbContext db, IMapper mapper) : IProductReposi
     public async Task CreateNewAsync(DomainModels.Product domainModel)
     {
         var storageModel = mapper.Map<Product>(domainModel);
-
+        storageModel.ProductGuid = Guid.NewGuid().ToString();
         await db.Products.AddAsync(storageModel);
         await db.SaveChangesAsync();
     }

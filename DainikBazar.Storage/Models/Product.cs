@@ -3,7 +3,7 @@ namespace DainikBazar.Storage.Models;
 public class Product
 {
     public int ProductId { get; set; }
-    public string ProductGuid { get; set; } = Guid.NewGuid().ToString();
+    public string? ProductGuid { get; set; } = Guid.NewGuid().ToString();
     public string Name { get; set; }
     public string? Description { get; set; }
     public decimal Price { get; set; }
