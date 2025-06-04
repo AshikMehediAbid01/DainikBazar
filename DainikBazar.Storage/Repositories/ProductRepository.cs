@@ -37,11 +37,11 @@ public async Task DeleteAsync(int id)
         return domainModels;
     }
 
-    public async Task<DomainModels.Product?> GetByIdAsync(int id)
+    public async Task<DomainModels.Product?> GetByIdAsync(string id)
     {
         var storageModel = await db.Products
             .Include(r => r.ReviewAndRatings)
-            .FirstOrDefaultAsync(c => c.ProductId == id);
+            .FirstOrDefaultAsync(c => c.ProductGuid == id);
 
         if (storageModel == null) return null;
 

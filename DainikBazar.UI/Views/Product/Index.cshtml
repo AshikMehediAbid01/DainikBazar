@@ -61,9 +61,10 @@
                 @Html.DisplayFor(modelItem => item.ImageUrl)
             </td>
             <td>
-                    @Html.ActionLink("Edit", "UpdateProduct", new { id = item.ProductId }) |
-                    @Html.ActionLink("Details", "DetailsProduct", new { id = item.ProductId }) |
-                    @Html.ActionLink("Delete", "DeleteProduct", new { id = item.ProductId })
+                    <a asp-action="UpdateProduct" class="btn btn-warning btn-sm" asp-route-id="@item.ProductGuid">Edit</a>
+                    @Html.ActionLink("Edit", "UpdateProduct", new { id = item.ProductGuid }) |
+                    @Html.ActionLink("Details", "DetailsProduct", new { id = item.ProductGuid }) |
+                    @Html.ActionLink("Delete", "DeleteProduct", new { id = item.ProductGuid })
             </td>
         </tr>
 }

@@ -62,7 +62,7 @@ public class ProductController(IProductApiService apiService) : Controller
 
     // Product Details
     [HttpGet]
-    public IActionResult DetailsProduct(int id)
+    public IActionResult DetailsProduct(string id)
     {
         var productDto = apiService.GetProductByIdAsync(id).Result;
 
@@ -80,7 +80,7 @@ public class ProductController(IProductApiService apiService) : Controller
 
     // Update Product
     [HttpGet]
-    public IActionResult UpdateProduct(int id)
+    public IActionResult UpdateProduct(string id)
     {
         var product = apiService.GetProductByIdAsync(id).Result;
 
@@ -116,7 +116,7 @@ public class ProductController(IProductApiService apiService) : Controller
 
     // Delete Product
     [HttpGet]
-    public IActionResult DeleteProduct(int id)
+    public IActionResult DeleteProduct(string id)
     {
         var product = apiService.GetProductByIdAsync(id).Result;
 

@@ -6,7 +6,7 @@ public interface IProductManager
 {
     Task<List<Product>> GetAllAsync();
     Task CreateNewAsync(Product product);
-    Task<Product?> GetByIdAsync(int id);
+    Task<Product?> GetByIdAsync(string id);
     Task UpdateAsync(Product product);
     Task DeleteAsync(int id);
 }
