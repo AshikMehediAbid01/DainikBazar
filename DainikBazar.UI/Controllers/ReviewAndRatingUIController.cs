@@ -19,7 +19,7 @@ public class ReviewAndRatingUIController(IReviewApiService apiService) : Control
         {
             ProductId = Id.Value,
             Rating = 2,
-            UserId = "f15061b4-d79c-4596-b8e5-8ec21f6f69a2"
+            UserId = "358a384a-ae96-44ab-8940-1567b66709d0"
         };
         return View(reviewEntity);
     }
@@ -35,6 +35,7 @@ public class ReviewAndRatingUIController(IReviewApiService apiService) : Control
             CreatedAt = DateTime.Now,
             Rating = Rating,
             Review = Review
+            
         };
 
         if (!ModelState.IsValid) return View(review);

@@ -20,7 +20,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DainikBazar.Client\DainikBazar.Client.csproj" />
     <ProjectReference Include="..\DainikBazar.Domain\DainikBazar.Domain.csproj" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

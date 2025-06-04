@@ -1,7 +1,7 @@
-using DainikBazar.Service.Mapping;
+using Service = DainikBazar.Service.Mapping;
 using DainikBazar.Storage.Extensions;
 using DainikBazar.Domain.Extensions;
-using DainikBazar.Storage.Mapping;
+using Storage = DainikBazar.Storage.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +22,8 @@ builder.Services.ManagerRegistration();
 builder.Services.RepositoryRegistration(builder.Configuration);
 
 builder.Services.AddAutoMapper( 
-    typeof( StorageMappingProfile ),
-    typeof( ServiceMappingProfile)
+    typeof( Storage.MappingProfile ),
+    typeof( Service.MappingProfile)
 );
 
 var app = builder.Build();

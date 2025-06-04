@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DainikBazar.Storage.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250603080452_AddProduct_Guid__")]
-    partial class AddProduct_Guid__
+    [Migration("20250604105738_InitailCreate")]
+    partial class InitailCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace DainikBazar.Storage.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("DainikBazar.Storage.Models.CartItem", b =>
@@ -93,15 +93,18 @@ namespace DainikBazar.Storage.Migrations
 
                     b.Property<string>("OrderHistory")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("OrderStatus")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -111,15 +114,18 @@ namespace DainikBazar.Storage.Migrations
 
                     b.Property<string>("ReceiverAddress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("ReceiverName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("ReceiverPhone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<decimal>("SubtotalPrice")
                         .HasColumnType("decimal(18,2)");
@@ -133,12 +139,15 @@ namespace DainikBazar.Storage.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CartId")
+                        .IsUnique();
+
                     b.HasIndex("ProductId")
                         .IsUnique();
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("DainikBazar.Storage.Models.Product", b =>
@@ -150,7 +159,9 @@ namespace DainikBazar.Storage.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -160,20 +171,23 @@ namespace DainikBazar.Storage.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("ProductguId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ProductGuid")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("DainikBazar.Storage.Models.ReviewAndRating", b =>
@@ -216,11 +230,12 @@ namespace DainikBazar.Storage.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("DainikBazar.Storage.Models.Cart", b =>
@@ -228,7 +243,7 @@ namespace DainikBazar.Storage.Migrations
                     b.HasOne("DainikBazar.Storage.Models.User", "User")
                         .WithMany("Cart")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -239,7 +254,7 @@ namespace DainikBazar.Storage.Migrations
                     b.HasOne("DainikBazar.Storage.Models.Cart", "Cart")
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DainikBazar.Storage.Models.Product", "Product")
@@ -255,17 +270,25 @@ namespace DainikBazar.Storage.Migrations
 
             modelBuilder.Entity("DainikBazar.Storage.Models.Order", b =>
                 {
+                    b.HasOne("DainikBazar.Storage.Models.Cart", "Cart")
+                        .WithOne("Order")
+                        .HasForeignKey("DainikBazar.Storage.Models.Order", "CartId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("DainikBazar.Storage.Models.Product", "Product")
                         .WithOne("Order")
                         .HasForeignKey("DainikBazar.Storage.Models.Order", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DainikBazar.Storage.Models.User", "User")
                         .WithMany("Order")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Cart");
 
                     b.Navigation("Product");
 
@@ -294,6 +317,9 @@ namespace DainikBazar.Storage.Migrations
             modelBuilder.Entity("DainikBazar.Storage.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
+
+                    b.Navigation("Order")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DainikBazar.Storage.Models.Product", b =>
