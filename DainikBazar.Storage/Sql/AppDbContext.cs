@@ -4,11 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DainikBazar.Storage.Data;
 
-public class AppDbContext : DbContext
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
-    {
-    }
     public DbSet<User> Users { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<Cart> Carts { get; set; }
@@ -43,6 +40,7 @@ public class AppDbContext : DbContext
                     .HasForeignKey(o => o.UserId).HasForeignKey(c => c.CartId);
         */
 
+        modelBuilder.Entity<Cart>();
 
         modelBuilder.Entity<CartItem>()
             .HasOne(ci => ci.Cart)
