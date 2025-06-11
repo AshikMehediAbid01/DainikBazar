@@ -48,20 +48,29 @@ public class OrderRepository( AppDbContext dbContext, IMapper mapper ) : IOrderR
         var orderList = await dbContext.Orders.ToListAsync();
         return mapper.Map<List<Domains.Order>>( orderList );
     }
-    public async Task<Domains.Order> GetOrderByIdAsync(int orderId)
+    public async Task ManageOrdersAsync(int orderId, string orderHistory)
     {
         var order = await dbContext.Orders.FirstOrDefaultAsync(o=> o.Id == orderId);
-        return mapper.Map<Domains.Order>( order );
+        if(order == null)
+        {
+            throw new InvalidOperationException("Order not found!");
+        }
+        order.OrderHistory = orderHistory;
+        //return mapper.Map<Domains.Order>( order );
     }
     public async Task<Domains.Product> GetProductByIdAsync(int productId)
     {
         var product = await dbContext.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
         return mapper.Map<Domains.Product>(product);
     }
-    public async Task<Domains.Cart> GetCartByIdAsync(int cartId)
+    public async Task UpdateCartStausAsync(int cartId, string cartStatus)
     {
         var cart = await dbContext.Carts.FirstOrDefaultAsync(c => c.Id == cartId);
-        return mapper.Map<Domains.Cart>(cart);
+        if(cart == null)
+        {
+            throw new InvalidOperationException("Cart Not Available!");
+        }    
+        cart.CartStatus = cartStatus;
     }
     public async Task AddOrderAsync(Domains.Order order)
     {

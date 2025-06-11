@@ -46,6 +46,7 @@
 
         <input type="hidden" asp-for="OrderDate" value="@DateTime.Now" />
         <input type="hidden" asp-for="OrderHistory" value="Pending" />
+        <input type="hidden" asp-for="UserId" value=@Model.UserId />
         @if(Model.PaymentMethod != "COD")
         {
             <input type="hidden" asp-for="OrderStatus" value="Paid" />

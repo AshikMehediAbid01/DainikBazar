@@ -33,6 +33,7 @@ public class CartManager(ICartRepository cartRepository) : ICartManager
             cart.CartItems.Add(cartItem);
             cart.ActualPrice = cart.CartItems.Sum(item => item.Quantity * item.UnitPrice);
             await cartRepository.AddCartAsync(cart);
+            await cartRepository.SaveChangesAsync();
         }
         else
         {
@@ -52,13 +53,16 @@ public class CartManager(ICartRepository cartRepository) : ICartManager
     }
     public async Task UpdateCartAsync( int cartItemId, int quantity )
     {
-        var cartItem = await cartRepository.GetCartItemByIdAsync( cartItemId );
-        if ( cartItem == null )
+        var cartItem = new CartItem { Id = cartItemId, Quantity = quantity};
+        try
         {
-            throw new InvalidOperationException( "Product Not Found!" );
+            await cartRepository.UpdateCartAsync(cartItem);
+            await cartRepository.SaveChangesAsync();
         }
-        cartItem.Quantity = quantity;
-        await cartRepository.SaveChangesAsync();
+        catch(Exception ex)
+        {
+            throw new InvalidOperationException($"DB Update failed: {ex.InnerException?.Message}", ex);
+        }
     }
     public async Task RemoveFromCartAsync( int cartItemId )
     {
@@ -68,8 +72,7 @@ public class CartManager(ICartRepository cartRepository) : ICartManager
 
     public async Task MakeCartStatusActive(string userId)
     {
-        Cart cart = await cartRepository.GetProcessingCartAsync( userId );
-        cart.CartStatus = "Active";
+        await cartRepository.MakeProcessingCartActiveAsync( userId );
         await cartRepository.SaveChangesAsync();
     }
 }

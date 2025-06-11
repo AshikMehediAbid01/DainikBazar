@@ -19,7 +19,7 @@ public class OrderController : Controller
     public IActionResult Index()
     {
         ICollection<OrderVM> orderVM = [];
-        var response = _httpClient.GetAsync( _httpClient.BaseAddress + "Order/GetAllOrders" ).Result;
+        var response = _httpClient.GetAsync( _httpClient.BaseAddress + "order/get-all-order" ).Result;
         if(response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -37,7 +37,7 @@ public class OrderController : Controller
     {
         ICollection<OrderVM> orderVM = [];
         var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"Order/GetOrderByCustomerId/userId?userId={userId}").Result;
+        var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"order/get-customer-orders/{userId}").Result;
         if (response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -55,7 +55,7 @@ public class OrderController : Controller
     {
         ICollection<OrderVM> orderVM = [];
         var sellerId = "";
-        var response = _httpClient.GetAsync( _httpClient.BaseAddress + $"Order/GetOrderByCustomerId/sellerId?sellerId={sellerId}" ).Result;
+        var response = _httpClient.GetAsync( _httpClient.BaseAddress + $"order/get-seller-orders/{sellerId}" ).Result;
         if (response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -73,7 +73,7 @@ public class OrderController : Controller
     {
         var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
         var orderVM = new OrderVM();
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"Order/Checkout/userId?userId={userId}").Result;
+        var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"order/checkout/{userId}").Result;
         if (response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -90,11 +90,12 @@ public class OrderController : Controller
     [HttpPost]
     public IActionResult BuyNow( int productId, int quantity )
     {
+        var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
         var orderVM = new OrderVM();
-        var payload = new { productId, quantity };
+        var payload = new { productId, quantity, userId };
         var content = new StringContent( JsonConvert.SerializeObject( payload ), Encoding.UTF8, "application/json" );
 
-        var response = _httpClient.PostAsync( _httpClient.BaseAddress + "Order/BuyNow", content ).Result;
+        var response = _httpClient.PostAsync( _httpClient.BaseAddress + "order/buy-now", content ).Result;
         var viewData = response.Content.ReadAsStringAsync().Result;
         if (response.IsSuccessStatusCode)
         {
@@ -113,7 +114,7 @@ public class OrderController : Controller
         var payload = new { orderId, orderHistory };
         var content = new StringContent( JsonConvert.SerializeObject( payload ), Encoding.UTF8, "application/json" );
         
-        var response = _httpClient.PostAsync(_httpClient.BaseAddress + "Order/ManageOrders", content).Result;
+        var response = _httpClient.PostAsync(_httpClient.BaseAddress + "order/manage-order", content).Result;
         if (response.IsSuccessStatusCode) 
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -130,14 +131,15 @@ public class OrderController : Controller
     [HttpPost]
     public IActionResult PlaceOrder( OrderVM orderVM ) 
     {
-        ModelState.Remove( "UserId" );
+        //ModelState.Remove( "UserId" );
         ModelState.Remove( "OrderHistory" );
         if(!ModelState.IsValid)
         {
             return View( orderVM );
         }
+
         var content = new StringContent( JsonConvert.SerializeObject( orderVM ), Encoding.UTF8, "application/json" );
-        var response = _httpClient.PostAsync( _httpClient.BaseAddress + "Order/PlaceOrder", content ).Result;
+        var response = _httpClient.PostAsync( _httpClient.BaseAddress + "order/place-order", content ).Result;
         var viewData = response.Content.ReadAsStringAsync().Result;
         if (response.IsSuccessStatusCode) 
         {

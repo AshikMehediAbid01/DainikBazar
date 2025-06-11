@@ -40,8 +40,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<Order>()
             .HasOne(o => o.Product)
-            .WithOne(p => p.Order)
-            .HasForeignKey<Order>(o => o.ProductId)
+            .WithMany(p => p.Order)
+            .HasForeignKey(o => o.ProductId)
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Order>()

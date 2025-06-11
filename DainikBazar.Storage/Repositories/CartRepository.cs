@@ -21,12 +21,17 @@ public class CartRepository( AppDbContext dbContext , IMapper mapper) : ICartRep
         var domainCart = mapper.Map<Domains.Cart>( cart );
         return domainCart;
     }
-    public async Task<Domains.Cart> GetProcessingCartAsync( string userId )
+    public async Task MakeProcessingCartActiveAsync( string userId )
     {
         var cart = await dbContext.Carts
             .FirstOrDefaultAsync( c => c.UserId == userId && c.CartStatus == "Processing" );
-        var domainCart = mapper.Map<Domains.Cart>( cart );
-        return domainCart;
+        if(cart == null)
+        {
+            throw new InvalidOperationException("Cart Not Found");
+        }
+        cart.CartStatus = "Active";
+        //var domainCart = mapper.Map<Domains.Cart>( cart );
+        //return domainCart;
     }
     public async Task< Domains.Product> GetProductByIdAsync(int productId)
     {
@@ -66,6 +71,16 @@ public class CartRepository( AppDbContext dbContext , IMapper mapper) : ICartRep
             throw new InvalidOperationException("Cart not available!");
         }
         mapper.Map(cart, entityCart);
+    }
+    public async Task UpdateCartAsync(Domains.CartItem cartItem)
+    {
+        var entityCartItem = await dbContext.CartItems
+            .FirstOrDefaultAsync(c => c.Id == cartItem.Id);
+        if(entityCartItem == null)
+        {
+            throw new InvalidOperationException("Invalid CartItem!");
+        }
+        entityCartItem.Quantity = cartItem.Quantity;
     }
     public async Task SaveChangesAsync()
     {
