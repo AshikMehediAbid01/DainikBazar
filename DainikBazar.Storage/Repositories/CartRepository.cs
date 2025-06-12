@@ -4,8 +4,6 @@ using Domains = DainikBazar.Domain.Models;
 using DainikBazar.Storage.Models;
 using DainikBazar.Storage.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using System.Threading.Tasks;
 
 namespace DainikBazar.Storage.Repositories;
 
@@ -30,8 +28,6 @@ public class CartRepository( AppDbContext dbContext , IMapper mapper) : ICartRep
             throw new InvalidOperationException("Cart Not Found");
         }
         cart.CartStatus = "Active";
-        //var domainCart = mapper.Map<Domains.Cart>( cart );
-        //return domainCart;
     }
     public async Task< Domains.Product> GetProductByIdAsync(int productId)
     {

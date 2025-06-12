@@ -12,7 +12,8 @@ public static class DependencyInjection
         services.AddScoped<IProductManager, ProductManager>();  
         services.AddScoped<ICartManager, CartManager>();
         services.AddScoped<IOrderManager, OrderManager>();
-
+        services.AddScoped<IReviewManager, ReviewManager>();
+        
         return services;
     }
 }

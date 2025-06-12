@@ -1,7 +1,6 @@
 ﻿using AutoMapper; 
 using DomainModels = DainikBazar.Domain.Models;
 using DainikBazar.Storage.Models;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DainikBazar.Storage.Mapping;
 
@@ -27,5 +26,6 @@ public class StorageMappingProfile : Profile
             .ForMember(dest => dest.Cart, opt => opt.Ignore())
             .ForMember(dest => dest.CartId, opt => opt.MapFrom(src => src.CartId))
             .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId));
+        CreateMap<ReviewAndRating, DomainModels.ReviewAndRating>().ReverseMap();
     }
 }

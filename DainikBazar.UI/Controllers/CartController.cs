@@ -31,7 +31,14 @@ public class CartController : Controller
         if(response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
-            cartVM = JsonConvert.DeserializeObject<CartVM>( viewData );
+            if(!string.IsNullOrWhiteSpace(viewData) && viewData.Trim().StartsWith("{"))
+            {
+                cartVM = JsonConvert.DeserializeObject<CartVM>(viewData);
+            }
+            else
+            {
+                ViewBag.Message = viewData;
+            }
         }
         else 
         {
@@ -62,6 +69,7 @@ public class CartController : Controller
     {
         var payload = new { cartItemId, quantity };
         var content = new StringContent( JsonConvert.SerializeObject( payload ), Encoding.UTF8, "application/json" );
+
         var response = _httpClient.PostAsync( _httpClient.BaseAddress + "cart/update-cart", content ).Result;
         if (response.IsSuccessStatusCode)
         {
@@ -81,6 +89,7 @@ public class CartController : Controller
     {
         var payload = new { cartItemId };
         var content = new StringContent(JsonConvert.SerializeObject( payload ), Encoding.UTF8, "application/json");
+
         var response = _httpClient.DeleteAsync( _httpClient.BaseAddress + $"cart/remove-cart/{cartItemId}" ).Result;
         if (response.IsSuccessStatusCode)
         {

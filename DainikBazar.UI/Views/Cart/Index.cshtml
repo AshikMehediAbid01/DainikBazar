@@ -13,13 +13,9 @@
     }
     @if(!string.IsNullOrEmpty(ViewBag.Message))
     {
-        <div class="alert alert-danger">
+        <div class="alert alert-info mt-4">
             @ViewBag.Message
         </div>
-    }
-    @if (Model?.CartItems == null || !Model.CartItems.Any())
-    {
-        <div class="alert alert-info mt-4">No items added to cart yet</div>
     }
     else
     {

@@ -1,14 +1,13 @@
 ﻿using DainikBazar.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
 namespace DainikBazar.UI.Controllers;
 
 public class OrderController : Controller
 {
     private readonly HttpClient _httpClient;
-    Uri baseAddress = new Uri( "https://localhost:7155/api/" );
+    Uri baseAddress = new("https://localhost:7155/api/");
     public OrderController(  )
     {
         _httpClient = new HttpClient();
