@@ -40,6 +40,15 @@
                                     <td>@((item.UnitPrice * item.Quantity).ToString("C",culture))</td>
                                 </tr>
                             }
+                            @if (order.ProductId != null)
+                            {
+                                <tr>
+                                    <td>@order.ProductName</td>
+                                    <td>@order.Quantity</td>
+                                    <td>@order.UnitPrice.ToString("C", culture)</td>
+                                    <td>@((order.UnitPrice * order.Quantity).ToString("C", culture))</td>
+                                </tr>
+                            }
                             <tr>
                                 <td></td>
                                 <td></td>

@@ -13,16 +13,16 @@ public class CartRepository( AppDbContext dbContext , IMapper mapper) : ICartRep
     public async Task<Domains.Cart> GetCartAsync( string userId )
     {
         var cart = await dbContext.Carts
-            .Include( c => c.CartItems )
-            .ThenInclude( ci => ci.Product )
-            .FirstOrDefaultAsync( c => c.UserId == userId && c.CartStatus == "Active" );
+            .Include(c => c.CartItems)
+            .ThenInclude(ci => ci.Product)
+            .FirstOrDefaultAsync(c => c.UserId == userId && (c.CartStatus == "Active" || c.CartStatus == "Processing"));
         var domainCart = mapper.Map<Domains.Cart>( cart );
         return domainCart;
     }
     public async Task MakeProcessingCartActiveAsync( string userId )
     {
         var cart = await dbContext.Carts
-            .FirstOrDefaultAsync( c => c.UserId == userId && c.CartStatus == "Processing" );
+            .FirstOrDefaultAsync(c => c.UserId == userId && c.CartStatus == "Processing");
         if(cart == null)
         {
             throw new InvalidOperationException("Cart Not Found");
@@ -77,6 +77,10 @@ public class CartRepository( AppDbContext dbContext , IMapper mapper) : ICartRep
             throw new InvalidOperationException("Invalid CartItem!");
         }
         entityCartItem.Quantity = cartItem.Quantity;
+        var cart = await dbContext.Carts
+            .Include(c => c.CartItems)
+            .FirstOrDefaultAsync(c => c.Id == entityCartItem.CartId);
+        cart.ActualPrice = cart.CartItems.Sum(item => item.Quantity * item.UnitPrice);
     }
     public async Task SaveChangesAsync()
     {

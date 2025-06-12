@@ -8,5 +8,4 @@ public interface ICartManager
     Task AddToCartAsync( int productId, string userId );
     Task UpdateCartAsync( int cartItemId, int quantity );
     Task RemoveFromCartAsync( int cartItemId );
-    Task MakeCartStatusActive( string userId );
 }

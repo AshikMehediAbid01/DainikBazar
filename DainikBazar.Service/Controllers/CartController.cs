@@ -21,6 +21,7 @@ public class CartController(ICartManager cartService, IMapper mapper) : Controll
             {
                 return Ok( "No Item in the Cart." );
             }
+            cart.ActualPrice = cart.CartItems.Sum(item => item.UnitPrice * item.Quantity);
             var cartDto = mapper.Map<Cart>( cart );
             return Ok( cartDto );
         }

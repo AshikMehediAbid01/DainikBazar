@@ -87,7 +87,7 @@ public class OrderController : Controller
     }
 
     [HttpPost]
-    public IActionResult BuyNow( int productId, int quantity )
+    public IActionResult BuyNow( int productId, int quantity = 1 )
     {
         var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
         var orderVM = new OrderVM();
@@ -148,6 +148,6 @@ public class OrderController : Controller
         {
             ViewBag.ErrorMessage = response.StatusCode.ToString() + " " + viewData;
         }
-        return RedirectToAction( "Index", "Product" );
+        return RedirectToAction( "Index", "Home" );
     }
 }

@@ -31,7 +31,7 @@ public static class DependencyInjection
         using var scope = serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var seeder = new ProductAndUserSeeder();
-        await seeder.SeedUsersAsync( dbContext );
-        await seeder.SeedProductsAsync( dbContext );
+        await seeder.SeedUsersAsync(dbContext);
+        await seeder.SeedProductsAsync(dbContext);
     }
 }

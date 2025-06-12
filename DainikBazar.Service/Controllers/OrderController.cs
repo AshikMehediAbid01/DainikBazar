@@ -91,10 +91,10 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
         try 
         {
             var order = await orderService.GetCartByUserAsync( userId );
-            if (order.CartId == 0)
-            {
-                order.CartId = null;
-            }
+            //if (order.CartId == 0)
+            //{
+            //    order.CartId = null;
+            //}
             if (order.ProductId == 0)
             {
                 order.ProductId = null;
@@ -127,10 +127,10 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
             {
                 order.CartId = null;
             }
-            if (order.ProductId == 0)
-            {
-                order.ProductId = null;
-            }
+            //if (order.ProductId == 0)
+            //{
+            //    order.ProductId = null;
+            //}
             var orderDto = mapper.Map<Order>(order);
             return Ok( orderDto );
         }

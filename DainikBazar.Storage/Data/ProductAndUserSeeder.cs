@@ -55,4 +55,5 @@ public class ProductAndUserSeeder
         await dbContext.Users.AddRangeAsync( users );
         await dbContext.SaveChangesAsync();
     }
+
 }

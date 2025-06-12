@@ -9,7 +9,12 @@ public class CartManager(ICartRepository cartRepository) : ICartManager
 
     public async Task<Cart> GetCartAsync(string userId)
     {
-        return await cartRepository.GetCartAsync( userId );
+        var cart = await cartRepository.GetCartAsync( userId );
+        if(cart!= null && cart.CartStatus == "Processing")
+        {
+            await MakeCartStatusActive(userId);
+        }
+        return cart;
     }
     public async Task AddToCartAsync( int productId, string userId )
     {
@@ -70,7 +75,7 @@ public class CartManager(ICartRepository cartRepository) : ICartManager
         await cartRepository.SaveChangesAsync();
     }
 
-    public async Task MakeCartStatusActive(string userId)
+    private async Task MakeCartStatusActive(string userId)
     {
         await cartRepository.MakeProcessingCartActiveAsync( userId );
         await cartRepository.SaveChangesAsync();
