@@ -48,11 +48,11 @@ public class ProductsController(IProductManager service, IMapper mapper) : Contr
 
     // Get product
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetProduct(int? id)
+    public async Task<IActionResult> GetProduct(string? id)
     {
-        if (id == null || id <= 0)return BadRequest("Invalid product ID.");
+        if (id == null || id.Length <= 0)return BadRequest("Invalid product ID.");
 
-        var domainModel = await service.GetByIdAsync(id.Value);
+        var domainModel = await service.GetByIdAsync(id);
         if (domainModel == null) return NotFound("Product not found.");
 
         var serviceModel = mapper.Map<Product>(domainModel);

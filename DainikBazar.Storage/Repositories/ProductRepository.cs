@@ -13,7 +13,7 @@ public class ProductRepository(AppDbContext db, IMapper mapper) : IProductReposi
     public async Task CreateNewAsync(DomainModels.Product domainModel)
     {
         var storageModel = mapper.Map<Product>(domainModel);
-
+        storageModel.ProductGuid = Guid.NewGuid().ToString();
         await db.Products.AddAsync(storageModel);
         await db.SaveChangesAsync();
     }
@@ -37,11 +37,11 @@ public async Task DeleteAsync(int id)
         return domainModels;
     }
 
-    public async Task<DomainModels.Product?> GetByIdAsync(int id)
+    public async Task<DomainModels.Product?> GetByIdAsync(string id)
     {
         var storageModel = await db.Products
             .Include(r => r.ReviewAndRatings)
-            .FirstOrDefaultAsync(c => c.ProductId == id);
+            .FirstOrDefaultAsync(c => c.ProductGuid == id);
 
         if (storageModel == null) return null;
 

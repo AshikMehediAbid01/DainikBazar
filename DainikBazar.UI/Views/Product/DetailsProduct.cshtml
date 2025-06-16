@@ -11,7 +11,9 @@
         avgRating = Math.Round(Model.ReviewAndRatings.Average((r => r.Rating)), 1);
     }
 
-    var role = "User";
+    var role = "Admin";
+
+    TempData["ProductId"] = Model.ProductId;
 
 }
 
@@ -22,7 +24,7 @@
 
 <div class="row">
 
-    <div class="col-8">
+    <div class="col-7">
 
         <dl class="row">
             <dt class="col-sm-2">
@@ -61,32 +63,28 @@
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.CreatedAt)
             </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.ImageUrl)
-            </dd>
+
         </dl>
 
         <div class="text-end">
 
             @if (role == "Admin")
             {
-                <a asp-action="UpdateProduct" class="btn btn-warning btn-sm" asp-route-id="@Model.ProductId">Edit</a>
+                <a asp-action="UpdateProduct" class="btn btn-warning btn-sm" asp-route-id="@Model.ProductGuid">Edit</a>
                 <a asp-action="Index" class="btn btn-outline-warning btn-sm">Back to List</a>
             }
             else
             {
-                <a asp-action = "BuyNow" asp-controller = "Order" class="btn btn-primary btn-lg" asp-route-id="@Model.ProductId">Buy Now</a>
+                <a asp-action="BuyNow" asp-controller="Order" class="btn btn-primary btn-lg" asp-route-id="@Model.ProductGuid">Buy Now</a>
                 <a asp-action="Index" class="btn btn-warning btn-lg">Add to Cart</a>
             }
 
         </div>
 
     </div>
+    <div class="col-1"></div>
     <div class="col-4">
-        <p class="text-center">Image</p>
+        <img src="~/@Model.ImageUrl" width="100%" />
     </div>
 
 </div>
@@ -131,7 +129,7 @@
     </div>
 
     <div class="mb-3">
-        <a asp-action="CreateReview" asp-controller="ReviewAndRatingUI" class="btn btn-primary btn-sm" asp-route-Id="@Model.ProductId">
+        <a asp-action="CreateReview" asp-controller="ReviewAndRatingUI" class="btn btn-primary btn-sm" asp-route-id="@Model.ProductGuid">
             <i class="fa fa-plus"></i> Add Review
         </a>
     </div>

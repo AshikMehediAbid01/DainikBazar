@@ -10,9 +10,10 @@ public static class DependencyInjection
     public static IServiceCollection ManagerRegistration(this IServiceCollection services)
     {
         services.AddScoped<IProductManager, ProductManager>();  
-        services.AddScoped<ICartManager, CartManager>();
-        services.AddScoped<IOrderManager, OrderManager>();
+    //    services.AddScoped<ICartManager, CartManager>();
+      //  services.AddScoped<IOrderManager, OrderManager>();
         services.AddScoped<IReviewManager, ReviewManager>();
+        
         
         return services;
     }

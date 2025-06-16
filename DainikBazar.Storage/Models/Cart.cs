@@ -8,7 +8,7 @@ public class Cart
     public User User { get; set; }
     public string CartStatus { get; set; }
     public Order Order { get; set; }
-    public List<CartItem> CartItems { get; set; } = [];
+    public ICollection<CartItem> CartItems { get; set; } = [];
     public decimal ActualPrice => CartItems.Sum( item => item.Quantity * item.Product.Price); 
     public decimal TotalPrice => ActualPrice;  
 }

@@ -1,15 +1,11 @@
-﻿using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using DainikBazar.UI.ApiServices.Interfaces;
+﻿using DainikBazar.UI.ApiServices.Interfaces;
 using DainikBazar.UI.Models;
 
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace DainikBazar.UI.Controllers;
 
-public class ProductController(IProductApiService apiService) : Controller
+public class ProductController(IProductApiService apiService, IImageService _imageService) : Controller
 {
     [HttpGet]
     public IActionResult Index()
@@ -35,11 +31,30 @@ public class ProductController(IProductApiService apiService) : Controller
         return View();
     }
     [HttpPost]
-    public IActionResult CreateProduct(ProductVM product)
+    public async Task<IActionResult> CreateProduct(ProductVM product, IFormFile? ImageUrl)
     {
         if (!ModelState.IsValid) return View(product);
 
-        bool isSuccess = apiService.CreateProductAsync(product).Result;
+        // Handle image upload
+        if (ImageUrl != null && ImageUrl.Length > 0)
+        {
+            try
+            {
+                product.ImageUrl = await _imageService.ImageMappingAsync(ImageUrl);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("ImageUpload", $"Image upload failed: {ex.Message}");
+                return View(product);
+            }
+        }
+        else
+        {
+            product.ImageUrl = "Images/NoImageFound.jpg";
+        }
+
+
+        bool isSuccess = await apiService.CreateProductAsync(product);
 
 
         if (isSuccess)
@@ -62,7 +77,7 @@ public class ProductController(IProductApiService apiService) : Controller
 
     // Product Details
     [HttpGet]
-    public IActionResult DetailsProduct(int id)
+    public IActionResult DetailsProduct(string id)
     {
         var productDto = apiService.GetProductByIdAsync(id).Result;
 
@@ -80,9 +95,11 @@ public class ProductController(IProductApiService apiService) : Controller
 
     // Update Product
     [HttpGet]
-    public IActionResult UpdateProduct(int id)
+
+    public async Task<IActionResult> UpdateProduct(string id)
+
     {
-        var product = apiService.GetProductByIdAsync(id).Result;
+        var product = await apiService.GetProductByIdAsync(id);
 
         if (product == null)
         {
@@ -94,9 +111,19 @@ public class ProductController(IProductApiService apiService) : Controller
     }
 
     [HttpPost]
-    public IActionResult UpdateProduct(ProductVM product)
+    public async Task<IActionResult> UpdateProduct(ProductVM product, IFormFile? ImageUrl)
     {
         if (!ModelState.IsValid) return View(product);
+
+        try
+        {
+            product.ImageUrl = await _imageService.ImageMappingAsync(ImageUrl);
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError("ImageUpload", $"Image upload failed: {ex.Message}");
+            return View(product);
+        }
 
         bool isSuccess = apiService.UpdateProductAsync(product).Result;
 
@@ -116,7 +143,7 @@ public class ProductController(IProductApiService apiService) : Controller
 
     // Delete Product
     [HttpGet]
-    public IActionResult DeleteProduct(int id)
+    public IActionResult DeleteProduct(string id)
     {
         var product = apiService.GetProductByIdAsync(id).Result;
 

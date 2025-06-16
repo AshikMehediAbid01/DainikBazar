@@ -1,4 +1,4 @@
-namespace DainikBazar.Domain.Models;
+﻿namespace DainikBazar.Domain.Models;
 
 public class CartItem
 {
