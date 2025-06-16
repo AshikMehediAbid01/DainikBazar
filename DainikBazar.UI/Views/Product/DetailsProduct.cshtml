@@ -13,6 +13,8 @@
 
     var role = "Admin";
 
+    TempData["ProductId"] = Model.ProductId;
+
 }
 
 
@@ -68,12 +70,12 @@
 
             @if (role == "Admin")
             {
-                <a asp-action="UpdateProduct" class="btn btn-warning btn-sm" asp-route-id="@Model.ProductId">Edit</a>
+                <a asp-action="UpdateProduct" class="btn btn-warning btn-sm" asp-route-id="@Model.ProductGuid">Edit</a>
                 <a asp-action="Index" class="btn btn-outline-warning btn-sm">Back to List</a>
             }
             else
             {
-                <a asp-action = "BuyNow" asp-controller = "Order" class="btn btn-primary btn-lg" asp-route-id="@Model.ProductId">Buy Now</a>
+                <a asp-action="BuyNow" asp-controller="Order" class="btn btn-primary btn-lg" asp-route-id="@Model.ProductGuid">Buy Now</a>
                 <a asp-action="Index" class="btn btn-warning btn-lg">Add to Cart</a>
             }
 
@@ -127,7 +129,7 @@
     </div>
 
     <div class="mb-3">
-        <a asp-action="CreateReview" asp-controller="ReviewAndRatingUI" class="btn btn-primary btn-sm" asp-route-Id="@Model.ProductId">
+        <a asp-action="CreateReview" asp-controller="ReviewAndRatingUI" class="btn btn-primary btn-sm" asp-route-id="@Model.ProductGuid">
             <i class="fa fa-plus"></i> Add Review
         </a>
     </div>

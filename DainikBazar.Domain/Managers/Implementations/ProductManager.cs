@@ -10,7 +10,7 @@ public class ProductManager(IProductRepository productRepo, IGenericRepository g
     {
         // await genericRepo.AddAsync<Product>(product);
 
-        product.ProductguId = Guid.NewGuid().ToString();
+        product.ProductGuid = Guid.NewGuid().ToString();
         await productRepo.CreateNewAsync(product);
     }
 
@@ -20,7 +20,7 @@ public class ProductManager(IProductRepository productRepo, IGenericRepository g
         return products.ToList();
     }
 
-    public async Task<Product?> GetByIdAsync(int id)
+    public async Task<Product?> GetByIdAsync(string id)
     {
         var product = await productRepo.GetByIdAsync(id);
         return product;

@@ -46,7 +46,7 @@ public class ProductApiService : IProductApiService
 
 
 
-    public async Task<ProductVM?> GetProductByIdAsync(int id)
+    public async Task<ProductVM?> GetProductByIdAsync(string id)
     {
         var response = _httpClient.GetAsync(_httpClient.BaseAddress + "Products/GetProduct/" + id).Result;
 

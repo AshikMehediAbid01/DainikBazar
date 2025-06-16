@@ -4,9 +4,9 @@ using DainikBazar.Storage.Models;
 
 namespace DainikBazar.Storage.Mapping;
 
-public class StorageMappingProfile : Profile
+public class MappingProfile : Profile
 {
-    public StorageMappingProfile()
+    public MappingProfile()
     {
         CreateMap<Product, DomainModels.Product>().ReverseMap();
         CreateMap<ReviewAndRating, DomainModels.ReviewAndRating>().ReverseMap();

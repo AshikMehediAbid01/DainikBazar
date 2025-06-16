@@ -24,7 +24,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DainikBazar.Client\DainikBazar.Client.csproj" />
-		<ProjectReference Include="..\DainikBazar.Domain\DainikBazar.Domain.csproj" /> 
+		<ProjectReference Include="..\DainikBazar.Domain\DainikBazar.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

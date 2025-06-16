@@ -1,12 +1,7 @@
-﻿using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using DainikBazar.UI.ApiServices.Interfaces;
+﻿using DainikBazar.UI.ApiServices.Interfaces;
 using DainikBazar.UI.Models;
 
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DainikBazar.UI.Controllers;
 
@@ -82,7 +77,7 @@ public class ProductController(IProductApiService apiService, IImageService _ima
 
     // Product Details
     [HttpGet]
-    public IActionResult DetailsProduct(int id)
+    public IActionResult DetailsProduct(string id)
     {
         var productDto = apiService.GetProductByIdAsync(id).Result;
 
@@ -100,7 +95,9 @@ public class ProductController(IProductApiService apiService, IImageService _ima
 
     // Update Product
     [HttpGet]
-    public async Task<IActionResult> UpdateProduct(int id)
+
+    public async Task<IActionResult> UpdateProduct(string id)
+
     {
         var product = await apiService.GetProductByIdAsync(id);
 
@@ -146,7 +143,7 @@ public class ProductController(IProductApiService apiService, IImageService _ima
 
     // Delete Product
     [HttpGet]
-    public IActionResult DeleteProduct(int id)
+    public IActionResult DeleteProduct(string id)
     {
         var product = apiService.GetProductByIdAsync(id).Result;
 
