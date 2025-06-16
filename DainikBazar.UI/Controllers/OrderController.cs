@@ -1,14 +1,13 @@
 ﻿using DainikBazar.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
 namespace DainikBazar.UI.Controllers;
 
 public class OrderController : Controller
 {
     private readonly HttpClient _httpClient;
-    Uri baseAddress = new Uri( "https://localhost:7155/api/" );
+    Uri baseAddress = new("https://localhost:7155/api/");
     public OrderController(  )
     {
         _httpClient = new HttpClient();
@@ -18,8 +17,8 @@ public class OrderController : Controller
     [HttpGet]
     public IActionResult Index()
     {
-        ICollection<OrderVM> orderVM = new List<OrderVM>();
-        var response = _httpClient.GetAsync( _httpClient.BaseAddress + "Order/GetAllOrders" ).Result;
+        ICollection<OrderVM> orderVM = [];
+        var response = _httpClient.GetAsync( _httpClient.BaseAddress + "order/get-all-order" ).Result;
         if(response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -35,13 +34,13 @@ public class OrderController : Controller
     [HttpGet]
     public IActionResult OrderHistory()
     {
-        ICollection<OrderVM> orderVM = new List<OrderVM>();
+        ICollection<OrderVM> orderVM = [];
         var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"Order/GetOrderByCustomerId/userId?userId={userId}").Result;
+        var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"order/get-customer-orders/{userId}").Result;
         if (response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
-            orderVM = JsonConvert.DeserializeObject<ICollection<OrderVM>>( viewData );
+            orderVM = JsonConvert.DeserializeObject<ICollection<OrderVM>>(viewData);
         }
         else
         {
@@ -53,9 +52,9 @@ public class OrderController : Controller
     [HttpGet]
     public IActionResult GetOrderBySeller()
     {
-        ICollection<OrderVM> orderVM = new List<OrderVM>();
+        ICollection<OrderVM> orderVM = [];
         var sellerId = "";
-        var response = _httpClient.GetAsync( _httpClient.BaseAddress + $"Order/GetOrderByCustomerId/sellerId?sellerId={sellerId}" ).Result;
+        var response = _httpClient.GetAsync( _httpClient.BaseAddress + $"order/get-seller-orders/{sellerId}" ).Result;
         if (response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -73,7 +72,7 @@ public class OrderController : Controller
     {
         var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
         var orderVM = new OrderVM();
-        var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"Order/Checkout/userId?userId={userId}").Result;
+        var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"order/checkout/{userId}").Result;
         if (response.IsSuccessStatusCode)
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -88,13 +87,14 @@ public class OrderController : Controller
     }
 
     [HttpPost]
-    public IActionResult BuyNow( int productId, int quantity )
+    public IActionResult BuyNow( int productId, int quantity = 1 )
     {
+        var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
         var orderVM = new OrderVM();
-        var payload = new { productId, quantity };
+        var payload = new { productId, quantity, userId };
         var content = new StringContent( JsonConvert.SerializeObject( payload ), Encoding.UTF8, "application/json" );
 
-        var response = _httpClient.PostAsync( _httpClient.BaseAddress + "Order/BuyNow", content ).Result;
+        var response = _httpClient.PostAsync( _httpClient.BaseAddress + "order/buy-now", content ).Result;
         var viewData = response.Content.ReadAsStringAsync().Result;
         if (response.IsSuccessStatusCode)
         {
@@ -113,7 +113,7 @@ public class OrderController : Controller
         var payload = new { orderId, orderHistory };
         var content = new StringContent( JsonConvert.SerializeObject( payload ), Encoding.UTF8, "application/json" );
         
-        var response = _httpClient.PostAsync(_httpClient.BaseAddress + "Order/ManageOrders", content).Result;
+        var response = _httpClient.PostAsync(_httpClient.BaseAddress + "order/manage-order", content).Result;
         if (response.IsSuccessStatusCode) 
         {
             var viewData = response.Content.ReadAsStringAsync().Result;
@@ -130,14 +130,15 @@ public class OrderController : Controller
     [HttpPost]
     public IActionResult PlaceOrder( OrderVM orderVM ) 
     {
-        ModelState.Remove( "UserId" );
+        //ModelState.Remove( "UserId" );
         ModelState.Remove( "OrderHistory" );
         if(!ModelState.IsValid)
         {
             return View( orderVM );
         }
+
         var content = new StringContent( JsonConvert.SerializeObject( orderVM ), Encoding.UTF8, "application/json" );
-        var response = _httpClient.PostAsync( _httpClient.BaseAddress + "Order/PlaceOrder", content ).Result;
+        var response = _httpClient.PostAsync( _httpClient.BaseAddress + "order/place-order", content ).Result;
         var viewData = response.Content.ReadAsStringAsync().Result;
         if (response.IsSuccessStatusCode) 
         {
@@ -147,6 +148,6 @@ public class OrderController : Controller
         {
             ViewBag.ErrorMessage = response.StatusCode.ToString() + " " + viewData;
         }
-        return RedirectToAction( "Index", "Product" );
+        return RedirectToAction( "Index", "Home" );
     }
 }

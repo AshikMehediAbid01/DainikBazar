@@ -6,6 +6,6 @@ public class Cart
     public string UserId { get; set; }
     public string CartStatus { get; set; }
     public ICollection<CartItem> CartItems { get; set; } = [];
-    public decimal SubtotalPrice {get; set; }
-    public decimal TotalPrice => SubtotalPrice;
+    public decimal ActualPrice {get; set; }
+    public decimal TotalPrice => ActualPrice;
 }

@@ -8,6 +8,7 @@ public class OrderVM
     public decimal DeliveryCharge { get; set; }
     public decimal TotalPrice => SubtotalPrice + DeliveryCharge;
     public int? ProductId { get; set; }
+    public string? ProductName { get; set; }
     public ICollection<CartItemVM>? CartItems { get; set; }
     public int? CartId { get; set; }
     public int Quantity { get; set; }

@@ -45,8 +45,20 @@
             <span asp-validation-for="PaymentMethod" class="text-danger"></span>
         </div>
 
+        <input type="hidden" asp-for="ProductId" value="@Model.ProductId" />
         <input type="hidden" asp-for="OrderDate" value="@DateTime.Now" />
-        <input type="hidden" asp-for="OrderStatus" value="Pending" />
+        <input type="hidden" asp-for="OrderHistory" value="Pending" />
+        <input type="hidden" asp-for="UserId" value=@Model.UserId />
+        @if(Model.PaymentMethod != "COD")
+        {
+            <input type="hidden" asp-for="OrderStatus" value="Paid" />
+        }
+        else
+        {
+            <input type="hidden" asp-for="OrderStatus" value="Unpaid" />
+        }
+        <input type="hidden" asp-for="UnitPrice" value="@Model.UnitPrice" />
+        <input type="hidden" asp-for="Quantity" value="@Model.Quantity" />
         <input type="hidden" asp-for="SubtotalPrice" value="@Model.SubtotalPrice" />
         <input type="hidden" asp-for="DeliveryCharge" value="@Model.DeliveryCharge" />
         <input type="hidden" asp-for="TotalPrice" value="@Model.TotalPrice" />
@@ -54,7 +66,7 @@
         <hr />
         <h4>Your Order Summary</h4>
         <div>
-            <p><strong>Total Book Price:</strong> @Model.SubtotalPrice.ToString( "C", culture )</p>
+            <p><strong>Total Price:</strong> @Model.SubtotalPrice.ToString( "C", culture )</p>
             <p><strong>Delivery Charge:</strong> @Model.DeliveryCharge.ToString( "C", culture )</p>
             <p><strong>Grand Total:</strong> @Model.TotalPrice.ToString( "C", culture )</p>
         </div>
@@ -63,7 +75,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Home">Back to Home</a>
 </div>
 
 @section Scripts {

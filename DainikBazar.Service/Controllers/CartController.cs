@@ -10,7 +10,7 @@ namespace DainikBazar.Service.Controllers;
 public class CartController(ICartManager cartService, IMapper mapper) : ControllerBase
 {
     [HttpGet]
-    [Route("{userId}")]
+    [Route("get-cart/{userId}")]
     public async Task<IActionResult> GetCart(string userId)
     {
         try
@@ -21,6 +21,7 @@ public class CartController(ICartManager cartService, IMapper mapper) : Controll
             {
                 return Ok( "No Item in the Cart." );
             }
+            cart.ActualPrice = cart.CartItems.Sum(item => item.UnitPrice * item.Quantity);
             var cartDto = mapper.Map<Cart>( cart );
             return Ok( cartDto );
         }
@@ -36,7 +37,7 @@ public class CartController(ICartManager cartService, IMapper mapper) : Controll
     /// <param name="addCart"></param>
     /// <returns></returns>
     [HttpPost]
-    [Route("")]
+    [Route("add-to-cart")]
     public async Task<IActionResult> AddToCart( [FromBody] AddCart addCart )//string userId, int productId
     {
         try
@@ -56,8 +57,8 @@ public class CartController(ICartManager cartService, IMapper mapper) : Controll
     }
 
     [HttpPost]
-    [Route("{cartId}")]
-    public async Task<IActionResult> UpdateCart([FromQuery] string cartId, [FromBody] UpdateCart updateProduct ) //int cartItemId, int quantity
+    [Route("update-cart")]
+    public async Task<IActionResult> UpdateCart([FromBody] UpdateCart updateProduct ) //int cartItemId, int quantity
     {
         try
         {
@@ -74,7 +75,7 @@ public class CartController(ICartManager cartService, IMapper mapper) : Controll
         }
     }
 
-    [HttpDelete( "{cartItemId}" )]
+    [HttpDelete( "remove-cart/{cartItemId}" )]
     public async Task<IActionResult> RemoveCart( int cartItemId )
     {
         try

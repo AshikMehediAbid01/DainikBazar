@@ -15,62 +15,66 @@
             @ViewBag.ErrorMessage
         </div>
     }
-    <form asp-action="PlaceOrder" asp-controller="Order" method="post">
-        <div class="form-group mb-2">
-            <label asp-for="ReceiverName" class="mb-1">Receiver Name</label>
-            <input type="text" asp-for="ReceiverName" class="form-control" required />
-            <span asp-validation-for="ReceiverName" class="text-danger"></span>
-        </div>
+    else
+    {
+        <form asp-action="PlaceOrder" asp-controller="Order" method="post">
+            <div class="form-group mb-2">
+                <label asp-for="ReceiverName" class="mb-1">Receiver Name</label>
+                <input type="text" asp-for="ReceiverName" class="form-control" required />
+                <span asp-validation-for="ReceiverName" class="text-danger"></span>
+            </div>
 
-        <div class="form-group mb-2">
-            <label asp-for="ReceiverPhone" class="mb-1">Receiver Phone</label>
-            <input type="text" asp-for="ReceiverPhone" class="form-control" maxlength="11" required />
-            <span asp-validation-for="ReceiverPhone" class="text-danger"></span>
-        </div>
+            <div class="form-group mb-2">
+                <label asp-for="ReceiverPhone" class="mb-1">Receiver Phone</label>
+                <input type="text" asp-for="ReceiverPhone" class="form-control" maxlength="11" required />
+                <span asp-validation-for="ReceiverPhone" class="text-danger"></span>
+            </div>
 
-        <div class="form-group mb-2">
-            <label asp-for="ReceiverAddress" class="mb-1">Receiver Address</label>
-            <textarea asp-for="ReceiverAddress" class="form-control" rows="3" required></textarea>
-            <span asp-validation-for="ReceiverAddress" class="text-danger"></span>
-        </div>
+            <div class="form-group mb-2">
+                <label asp-for="ReceiverAddress" class="mb-1">Receiver Address</label>
+                <textarea asp-for="ReceiverAddress" class="form-control" rows="3" required></textarea>
+                <span asp-validation-for="ReceiverAddress" class="text-danger"></span>
+            </div>
 
-        <div class="form-group mb-2">
-            <label asp-for="PaymentMethod" class="mb-1">Payment Method</label>
-            <select name="PaymentMethod" id="PaymentMethod" class="form-control">
-                <option value="">Select Payment Method</option>
-                <option value="COD" selected="@(Model.PaymentMethod == "COD" ? "selected" : null)">COD</option>
+            <div class="form-group mb-2">
+                <label asp-for="PaymentMethod" class="mb-1">Payment Method</label>
+                <select name="PaymentMethod" id="PaymentMethod" class="form-control">
+                    <option value="">Select Payment Method</option>
+                    <option value="COD" selected="@(Model.PaymentMethod == "COD" ? "selected" : null)">COD</option>
 
-            </select>
-            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
-        </div>
+                </select>
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="CartId" value="@Model.CartId" />
+            <input type="hidden" asp-for="OrderDate" value="@DateTime.Now" />
+            <input type="hidden" asp-for="OrderHistory" value="Pending" />
+            <input type="hidden" asp-for="UserId" value=@Model.UserId />
+            @if(Model.PaymentMethod != "COD")
+            {
+                <input type="hidden" asp-for="OrderStatus" value="Paid" />
+            }
+            else
+            {
+                <input type="hidden" asp-for="OrderStatus" value="Unpaid" />
+            }
+            <input type="hidden" asp-for="SubtotalPrice" value="@Model.SubtotalPrice" />
+            <input type="hidden" asp-for="DeliveryCharge" value="@Model.DeliveryCharge" />
+            <input type="hidden" asp-for="TotalPrice" value="@Model.TotalPrice" />
 
-        <input type="hidden" asp-for="OrderDate" value="@DateTime.Now" />
-        <input type="hidden" asp-for="OrderHistory" value="Pending" />
-        @if(Model.PaymentMethod != "COD")
-        {
-            <input type="hidden" asp-for="OrderStatus" value="Paid" />
-        }
-        else
-        {
-            <input type="hidden" asp-for="OrderStatus" value="Unpaid" />
-        }
-        <input type="hidden" asp-for="SubtotalPrice" value="@Model.SubtotalPrice" />
-        <input type="hidden" asp-for="DeliveryCharge" value="@Model.DeliveryCharge" />
-        <input type="hidden" asp-for="TotalPrice" value="@Model.TotalPrice" />
-
-        <hr />
-        <div>
-            <h4>Your Order Summary</h4>
-            <p><strong>Total Price:</strong> @Model.SubtotalPrice.ToString( "C", new System.Globalization.CultureInfo( "bn-BD" ) )</p>
-            <p><strong>Delivery Charge:</strong> @Model.DeliveryCharge.ToString( "C", new System.Globalization.CultureInfo( "bn-BD" ) )</p>
-            <p><strong>Grand Total:</strong> @Model.TotalPrice.ToString( "C", new System.Globalization.CultureInfo( "bn-BD" ) )</p>
-        </div>
-        <button type="submit" class="btn btn-primary">Place Order</button>
-    </form>
+            <hr />
+            <div>
+                <h4>Your Order Summary</h4>
+                <p><strong>Total Price:</strong> @Model.SubtotalPrice.ToString( "C", new System.Globalization.CultureInfo( "bn-BD" ) )</p>
+                <p><strong>Delivery Charge:</strong> @Model.DeliveryCharge.ToString( "C", new System.Globalization.CultureInfo( "bn-BD" ) )</p>
+                <p><strong>Grand Total:</strong> @Model.TotalPrice.ToString( "C", new System.Globalization.CultureInfo( "bn-BD" ) )</p>
+            </div>
+            <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+    }
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" asp-controller="Home">Back to Home</a>
 </div>
 
 @section Scripts {

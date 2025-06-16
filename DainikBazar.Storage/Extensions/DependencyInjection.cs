@@ -17,7 +17,7 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>( options =>
             options.UseSqlServer(configuration.GetConnectionString( "DefaultConnection" ))
         );
-        services.AddScoped<IGenericRepository, GenericRepository>();
+        //services.AddScoped<IGenericRepository, GenericRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICartRepository, CartRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
@@ -31,7 +31,7 @@ public static class DependencyInjection
         using var scope = serviceProvider.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         var seeder = new ProductAndUserSeeder();
-        await seeder.SeedUsersAsync( dbContext );
-        await seeder.SeedProductsAsync( dbContext );
+        await seeder.SeedUsersAsync(dbContext);
+        await seeder.SeedProductsAsync(dbContext);
     }
 }

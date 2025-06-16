@@ -5,14 +5,15 @@ using Domains = DainikBazar.Domain.Models;
 using DainikBazar.Service.Models;
 using System.Data.Common;
 
-namespace DainikBazar.WebApi.Controllers;
+namespace DainikBazar.Service.Controllers;
 
-[Route( "api/[controller]/[action]" )]
+[Route( "api/order" )]
 [ApiController]
 public class OrderController( IOrderManager orderService, IMapper mapper ) : ControllerBase
 {
     [HttpGet]
     //Getting All Orders For Management By Admin 
+    [Route("get-all-order")]
     public async Task<IActionResult> GetAllOrders()
     {
         try
@@ -35,7 +36,8 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
         }
     }
 
-    [HttpGet("userId")]
+    [HttpGet]
+    [Route("get-customer-orders/{userId}")]
     public async Task<IActionResult> GetOrderByCustomerId(string userId)
     {
         try 
@@ -58,7 +60,8 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
         }
     }
 
-    [HttpGet("sellerId")]
+    [HttpGet]
+    [Route("get-seller-orders/{sellerId}")]
     public async Task<IActionResult> GetAllOrderBySeller(string sellerId)
     {
         try
@@ -82,16 +85,16 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
         }
     }
 
-    [HttpGet("userId")]
+    [HttpGet("checkout/{userId}")]
     public async Task<IActionResult> Checkout(string userId)
     {
         try 
         {
             var order = await orderService.GetCartByUserAsync( userId );
-            if (order.CartId == 0)
-            {
-                order.CartId = null;
-            }
+            //if (order.CartId == 0)
+            //{
+            //    order.CartId = null;
+            //}
             if (order.ProductId == 0)
             {
                 order.ProductId = null;
@@ -114,19 +117,20 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
     }
 
     [HttpPost]
+    [Route("buy-now")]
     public async Task<IActionResult> BuyNow( [FromBody] BuyNow buyNow) //int productId, int quantity
     {
         try 
         {
-            var order = await orderService.BuyNowAsync( buyNow.ProductId, buyNow.Quantity );
+            var order = await orderService.BuyNowAsync(buyNow.ProductId, buyNow.Quantity, buyNow.UserId);
             if (order.CartId == 0)
             {
                 order.CartId = null;
             }
-            if (order.ProductId == 0)
-            {
-                order.ProductId = null;
-            }
+            //if (order.ProductId == 0)
+            //{
+            //    order.ProductId = null;
+            //}
             var orderDto = mapper.Map<Order>(order);
             return Ok( orderDto );
         }
@@ -141,6 +145,7 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
     }
 
     [HttpPost]
+    [Route("manage-order")]
     public async Task<IActionResult> ManageOrders( [FromBody] ManageOrders manageOrder) //int orderId, string orderStatus
     {
         try 
@@ -159,6 +164,7 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
     }
 
     [HttpPost]
+    [Route("place-order")]
     public async Task<IActionResult> PlaceOrder([FromBody] Order orderDto)
     {
         try
@@ -182,11 +188,11 @@ public class OrderController( IOrderManager orderService, IMapper mapper ) : Con
         }
         catch (DbException ex)
         {
-            return StatusCode( 500, ex.Message );
+            return StatusCode( 500, ex.InnerException?.Message ?? ex.Message);
         }
         catch (Exception ex)
         {
-            return StatusCode( 404, ex.Message );
+            return StatusCode( 404, ex.InnerException?.Message ?? ex.Message);
         }
     }
 }
