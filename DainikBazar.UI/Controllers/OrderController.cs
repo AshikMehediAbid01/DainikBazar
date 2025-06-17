@@ -89,7 +89,7 @@ public class OrderController : Controller
     [HttpPost]
     public IActionResult BuyNow( int productId, int quantity = 1 )
     {
-        var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
+        var userId = "358a384a-ae96-44ab-8940-1567b66709d0";
         var orderVM = new OrderVM();
         var payload = new { productId, quantity, userId };
         var content = new StringContent( JsonConvert.SerializeObject( payload ), Encoding.UTF8, "application/json" );

@@ -25,6 +25,11 @@ public class CartMapping
             .HasForeignKey<Order>(o => o.CartId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        builder.HasMany(c => c.CartItems)
+            .WithOne(ci => ci.Cart)
+            .HasForeignKey(ci => ci.CartId)
+            .OnDelete(DeleteBehavior.Cascade);
+
 
 
     }

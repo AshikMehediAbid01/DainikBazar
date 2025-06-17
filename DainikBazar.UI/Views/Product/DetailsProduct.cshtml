@@ -11,7 +11,8 @@
         avgRating = Math.Round(Model.ReviewAndRatings.Average((r => r.Rating)), 1);
     }
 
-    var role = "Admin";
+    //var role = "Admin";
+    var role = "Customer";
 
     TempData["ProductId"] = Model.ProductId;
 
@@ -75,10 +76,10 @@
             }
             else
             {
-<<<<<<< HEAD
+@* 
                 <a asp-action="BuyNow" asp-controller="Order" class="btn btn-primary btn-lg" asp-route-id="@Model.ProductGuid">Buy Now</a>
                 <a asp-action="Index" class="btn btn-warning btn-lg">Add to Cart</a>
-=======
+ *@
                 <div class="d-flex gap-lg-5">
                     <form asp-controller="Cart" asp-action="AddToCart" method="post">
                         <input type="hidden" name="productId" value="@Model.ProductId" />
@@ -88,10 +89,10 @@
                     <form asp-controller="Order" asp-action="BuyNow" method="post" class="d-flex align-items-center gap-2">
                         <input type="hidden" name="productId" value="@Model.ProductId" />
                         <input type="number" name="quantity" value="1" min="1" max="5" class="form-control p-2" style="width: 100px;" />
-                        <button type="submit" class="btn btn-warning btn-lg">Buy Now</button>
+                        <button type="submit" class="btn btn-primary btn-lg">Buy Now</button>
                     </form>
                 </div>
->>>>>>> origin/develop
+
             }
 
         </div>

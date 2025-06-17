@@ -25,7 +25,7 @@ public class CartController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
+        var userId = "358a384a-ae96-44ab-8940-1567b66709d0";
         var response = _httpClient.GetAsync(_httpClient.BaseAddress + $"cart/get-cart/{userId}").Result;
         var cartVM = new CartVM();
         if(response.IsSuccessStatusCode)
@@ -49,7 +49,7 @@ public class CartController : Controller
     [HttpPost]
     public async Task<IActionResult> AddToCart( int productId)
     {
-        var userId = "226e5677-3d24-4518-aaf0-c6709fade9d5";
+        var userId = "358a384a-ae96-44ab-8940-1567b66709d0";
         var payload = new { userId, productId };
         var content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
         var response = _httpClient.PostAsync(_httpClient.BaseAddress + "cart/add-to-cart", content).Result;
