@@ -13,8 +13,6 @@ public class Product
     public ICollection<ReviewAndRating>? ReviewAndRatings { get; set; } = [];
 
     //    public int? OrderId { get; set; }
-
-   // public Order? Order { get; set; }
-
+    public Order? Order { get; set; }
 
 }

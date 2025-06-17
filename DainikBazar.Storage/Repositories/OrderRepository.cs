@@ -1,16 +1,16 @@
 ﻿using DainikBazar.Domain.Interfaces;
 using Domains = DainikBazar.Domain.Models;
 using DainikBazar.Storage.Models;
-using DainikBazar.Storage.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using DainikBazar.Storage.Data;
 
 namespace DainikBazar.Storage.Repositories;
 
 public class OrderRepository(AppDbContext dbContext, IMapper mapper) : IOrderRepository
 {
 
-    public async Task<List<Domains.Order>> GetOrdersByCustomerIdAsync(string userId)
+    public async Task<List<Domains.Order>> GetOrdersByCustomerIdAsync( string userId )
     {
         var orderList = await dbContext.Orders
             .Include(o => o.Cart)
@@ -19,10 +19,10 @@ public class OrderRepository(AppDbContext dbContext, IMapper mapper) : IOrderRep
             .Where(o => o.UserId == userId)
             .OrderByDescending(o => o.OrderDate)
             .ToListAsync();
-        var domainOrderList = mapper.Map<List<Domains.Order>>(orderList);
+        var domainOrderList = mapper.Map<List<Domains.Order>>( orderList );
         return domainOrderList;
     }
-    public async Task<List<Domains.Order>> GetOrdersBySellerIdAsync(string sellerId)
+    public async Task<List<Domains.Order>> GetOrdersBySellerIdAsync( string sellerId )
     {
         var orderList = await dbContext.Orders
             .Include(o => o.Cart)
@@ -31,27 +31,27 @@ public class OrderRepository(AppDbContext dbContext, IMapper mapper) : IOrderRep
             //.Where( p => p.SellerId == sellerId )
             .OrderByDescending(o => o.OrderDate)
             .ToListAsync();
-        var domainOrderList = mapper.Map<List<Domains.Order>>(orderList);
+        var domainOrderList = mapper.Map<List<Domains.Order>>( orderList );
         return domainOrderList;
     }
-    public async Task<Domains.Cart> GetCartByUserAsync(string userId)
+    public async Task<Domains.Cart> GetCartByUserAsync( string userId )
     {
         var cart = await dbContext.Carts
-            .Include(c => c.CartItems)
-            .ThenInclude(ci => ci.Product)
-            .FirstOrDefaultAsync(c => c.UserId == userId && c.CartStatus == "Active");
-        var domainCart = mapper.Map<Domains.Cart>(cart);
+            .Include( c => c.CartItems )
+            .ThenInclude( ci => ci.Product )
+            .FirstOrDefaultAsync( c => c.UserId == userId && c.CartStatus == "Active" );
+        var domainCart = mapper.Map<Domains.Cart>( cart );
         return domainCart;
     }
     public async Task<List<Domains.Order>> GetAllOrdersAsync()
     {
         var orderList = await dbContext.Orders.ToListAsync();
-        return mapper.Map<List<Domains.Order>>(orderList);
+        return mapper.Map<List<Domains.Order>>( orderList );
     }
     public async Task ManageOrdersAsync(int orderId, string orderHistory)
     {
-        var order = await dbContext.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
-        if (order == null)
+        var order = await dbContext.Orders.FirstOrDefaultAsync(o=> o.Id == orderId);
+        if(order == null)
         {
             throw new InvalidOperationException("Order not found!");
         }
@@ -74,11 +74,12 @@ public class OrderRepository(AppDbContext dbContext, IMapper mapper) : IOrderRep
     }
     public async Task AddOrderAsync(Domains.Order order)
     {
-        var entityOrder = mapper.Map<Order>(order);
-        await dbContext.Orders.AddAsync(entityOrder);
+        var entityOrder = mapper.Map<Order>( order );
+        await dbContext.Orders.AddAsync( entityOrder );
     }
     public async Task SaveChangesAsync()
     {
         await dbContext.SaveChangesAsync();
     }
 }
+

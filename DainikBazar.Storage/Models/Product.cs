@@ -15,5 +15,4 @@ public class Product
     // public int? OrderId { get; set; }
     public ICollection<Order>? Orders { get; set; }
 
-
 }

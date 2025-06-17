@@ -13,4 +13,6 @@ public interface IOrderRepository
     Task UpdateCartStausAsync(int cartId, string cartStatus);
     Task AddOrderAsync(Order order);
     Task SaveChangesAsync();
+
 }
+

@@ -1,4 +1,4 @@
-﻿namespace DainikBazar.Domain.Models;
+﻿namespace DainikBazar.Service.Models;
 
 public class Cart
 {
@@ -6,7 +6,6 @@ public class Cart
     public string UserId { get; set; }
     public string CartStatus { get; set; }
     public ICollection<CartItem> CartItems { get; set; } = [];
-    public decimal ActualPrice { get; set; }
+    public decimal ActualPrice {get; set; }
     public decimal TotalPrice => ActualPrice;
 }
-

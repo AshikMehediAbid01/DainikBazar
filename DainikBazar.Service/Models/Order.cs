@@ -1,17 +1,16 @@
-﻿namespace DainikBazar.Storage.Models;
+namespace DainikBazar.Service.Models;
 
 public class Order
 {
     public int Id { get; set; }
     public string UserId { get; set; }
-    public User User { get; set; }
-    public decimal SubtotalPrice {  get; set; }
-    public decimal DeliveryCharge {  get; set; }
-    public decimal TotalPrice => SubtotalPrice + DeliveryCharge; 
+    public decimal SubtotalPrice { get; set; }
+    public decimal DeliveryCharge { get; set; }
+    public decimal TotalPrice => SubtotalPrice + DeliveryCharge;
     public int? ProductId { get; set; }
-    public Product Product { get; set; }
+    public string? ProductName { get; set; }
+    public List<CartItem>? CartItems { get; set; }
     public int? CartId { get; set; }
-    public Cart Cart { get; set; }
     public int Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public string OrderStatus { get; set; }

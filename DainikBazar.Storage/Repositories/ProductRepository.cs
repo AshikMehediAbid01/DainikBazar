@@ -32,7 +32,7 @@ public async Task DeleteAsync(int id)
 
     public async Task<IEnumerable<DomainModels.Product>> GetAllAsync()
     {
-        var storageMOdel = await db.Products.Include(r=>r.ReviewAndRatings).ToListAsync();
+        var storageMOdel = await db.Products.Include(r => r.ReviewAndRatings).ToListAsync();
         var domainModels = mapper.Map<IEnumerable<DomainModels.Product>>(storageMOdel);
         return domainModels;
     }

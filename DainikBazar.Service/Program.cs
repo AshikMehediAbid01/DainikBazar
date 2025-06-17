@@ -3,6 +3,7 @@ using DainikBazar.Storage.Extensions;
 using DainikBazar.Domain.Extensions;
 using Storage = DainikBazar.Storage.Mapping;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.AddConsole().SetMinimumLevel( LogLevel.Information );

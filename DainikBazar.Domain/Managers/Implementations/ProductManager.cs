@@ -4,13 +4,12 @@ using DainikBazar.Domain.Interfaces;
 
 namespace DainikBazar.Domain.Managers.Implementations;
 
-public class ProductManager(IProductRepository productRepo, IGenericRepository genericRepo) : IProductManager
+public class ProductManager(IProductRepository productRepo) : IProductManager
 {
     public async Task CreateNewAsync(Product product)
     {
-        // await genericRepo.AddAsync<Product>(product);
-
         product.ProductGuid = Guid.NewGuid().ToString();
+
         await productRepo.CreateNewAsync(product);
     }
 
